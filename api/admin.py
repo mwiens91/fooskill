@@ -1,10 +1,12 @@
 from django.contrib import admin
 from .models import Player, Game
 
+
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
-    list_display=("name",)
+    list_display = ("name",)
+
 
 @admin.register(Game)
 class GameAdmin(admin.ModelAdmin):
-    list_display=("player1", "player2")
+    list_display = ("player1", "player2")
