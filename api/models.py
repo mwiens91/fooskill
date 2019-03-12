@@ -12,12 +12,14 @@ class User(AbstractUser):
 
 
 class Player(models.Model):
+    """A model of a player and their stats."""
     name = models.CharField(
         max_length=200, unique=True, help_text="The player's name."
     )
 
 
 class Game(models.Model):
+    """A model for a particular game."""
     player1 = models.ForeignKey(
         Player, on_delete=models.PROTECT, related_name="player1"
     )
