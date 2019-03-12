@@ -1,7 +1,9 @@
+"""Contains models definitions."""
+
 from django.db import models
 from django.utils import timezone
 
-# Create your models here.
+
 class Player(models.Model):
     name = models.CharField(
         max_length=200, unique=True, help_text="The player's name."
