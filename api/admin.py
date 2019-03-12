@@ -9,7 +9,13 @@ from .models import Game, Player, User
 class GameAdmin(admin.ModelAdmin):
     """Settings for Game model on admin page."""
 
-    list_display = ("player1", "player2")
+    list_display = (
+        "pk",
+        "player1",
+        "player2",
+        "player1_score",
+        "player2_score",
+    )
 
 
 @admin.register(Player)
