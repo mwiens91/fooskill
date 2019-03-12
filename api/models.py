@@ -18,6 +18,13 @@ class Player(models.Model):
         max_length=200, unique=True, help_text="The player's name."
     )
 
+    class Meta:
+        """Model metadata."""
+
+        # Order by name in ascending order
+        ordering = ["name"]
+
+
     def __str__(self):
         """String representation of player."""
         return self.name
@@ -53,6 +60,12 @@ class Game(models.Model):
         on_delete=models.PROTECT,
         help_text="The user which submitted the game.",
     )
+
+    class Meta:
+        """Model metadata."""
+
+        # Order by most recently played
+        ordering = ["-datetime_played"]
 
     def __str__(self):
         """String representation of player."""
