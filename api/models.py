@@ -44,3 +44,8 @@ class Game(models.Model):
         default=timezone.now,
         help_text="The date and time when the game was played.",
     )
+    submitted_by = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        help_text="The user which submitted the game.",
+    )
