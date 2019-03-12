@@ -10,7 +10,7 @@ class GameAdmin(admin.ModelAdmin):
     """Settings for Game model on admin page."""
 
     list_display = (
-        "pk",
+        "datetime_played",
         "player1",
         "player2",
         "player1_score",
