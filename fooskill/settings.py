@@ -20,13 +20,23 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "@np-i$26&!#vr*ap@@!m!^-!t)*1y!c7l)gbdlxz&*z_gw!9xl"
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG_RAW = os.environ["DEBUG"]
 
-ALLOWED_HOSTS = []
+if DEBUG_RAW == "False":
+    DEBUG = False
+elif DEBUG_RAW == "True":
+    DEBUG = True
+else:
+    # Bad value in config file!
+    raise ValueError("DEBUG must be True/False")
 
+# Hosts - separate the comma-separated hosts and clean up any empty
+# strings caused by a terminal comma in ".env"
+ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].replace("'", "").split(",")
+ALLOWED_HOSTS = list(filter(None, ALLOWED_HOSTS))
 
 # Application definition
 
@@ -82,8 +92,12 @@ WSGI_APPLICATION = "fooskill.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": os.environ["DATABASE_NAME"],
+        "USER": os.environ["DATABASE_USER"],
+        "PASSWORD": os.environ["DATABASE_USER_PASSWORD"],
+        "HOST": os.environ["DATABASE_HOST"],
+        "PORT": os.environ["DATABASE_PORT"],
     }
 }
 
@@ -110,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = os.environ["TIME_ZONE"]
 
 USE_I18N = True
 
