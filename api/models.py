@@ -18,6 +18,10 @@ class Player(models.Model):
         max_length=200, unique=True, help_text="The player's name."
     )
 
+    def __str__(self):
+        """String representation of player."""
+        return self.name
+
 
 class Game(models.Model):
     """A model for a particular game."""
@@ -49,3 +53,12 @@ class Game(models.Model):
         on_delete=models.PROTECT,
         help_text="The user which submitted the game.",
     )
+
+    def __str__(self):
+        """String representation of player."""
+        return "%s vs %s (%s-%s)" % (
+            self.player1,
+            self.player2,
+            self.player1_score,
+            self.player2_score,
+        )
