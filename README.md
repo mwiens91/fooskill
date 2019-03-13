@@ -71,6 +71,6 @@ Now you can run a local fooskill server with
 ./manage runserver
 ```
 
-### Part 2: B: frontend
+### Part B: frontend
 
 coming in a bit
