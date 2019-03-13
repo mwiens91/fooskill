@@ -24,7 +24,6 @@ class Player(models.Model):
         # Order by name in ascending order
         ordering = ["name"]
 
-
     def __str__(self):
         """String representation of player."""
         return self.name
