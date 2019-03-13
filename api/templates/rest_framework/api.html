@@ -1,0 +1,11 @@
+{% extends "rest_framework/base.html" %}
+
+{% load static %}
+
+{% block title %}fooskill API{% if name %} - {{ name|lower }}{% endif %}{% endblock %}
+
+{% block branding %}
+	<a class='navbar-brand' href='{% url "api:api-root" %}'>
+		fooskill
+	</a>
+{% endblock %}
