@@ -41,7 +41,7 @@ To get your database tables set up, run
 
 ### Step 5: collect static files
 
-(This step is unnecessary if you set `DEBUG=True` in your `.env`. Run
+(This step is unnecessary if you set `DEBUG=True` in your `.env`.) Run
 
 ```
 ./manage collectstatic
