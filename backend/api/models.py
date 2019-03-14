@@ -17,6 +17,12 @@ class Player(models.Model):
     name = models.CharField(
         max_length=200, unique=True, help_text="The player's name."
     )
+    user = models.ForeignKey(
+        User,
+        null=True,
+        on_delete=models.SET_NULL,
+        help_text="The user associated with the player.",
+    )
 
     class Meta:
         """Model metadata."""
