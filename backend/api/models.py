@@ -38,23 +38,23 @@ class Player(models.Model):
 class Game(models.Model):
     """A model for a particular game."""
 
-    player1 = models.ForeignKey(
+    winner = models.ForeignKey(
         Player,
         on_delete=models.PROTECT,
-        related_name="player1",
-        help_text="One of the players.",
+        related_name="winner",
+        help_text="The game's winner.",
     )
-    player2 = models.ForeignKey(
+    loser = models.ForeignKey(
         Player,
         on_delete=models.PROTECT,
-        related_name="player2",
-        help_text="The other player.",
+        related_name="loser",
+        help_text="The game's loser.",
     )
-    player1_score = models.PositiveSmallIntegerField(
-        default=0, help_text="Player 1's score."
+    winner_score = models.PositiveSmallIntegerField(
+        default=8, help_text="The winner's score."
     )
-    player2_score = models.PositiveSmallIntegerField(
-        default=0, help_text="Player 2's score."
+    loser_score = models.PositiveSmallIntegerField(
+        default=0, help_text="The loser's score."
     )
     datetime_played = models.DateTimeField(
         default=timezone.now,
@@ -75,8 +75,8 @@ class Game(models.Model):
     def __str__(self):
         """String representation of player."""
         return "%s vs %s (%s-%s)" % (
-            self.player1,
-            self.player2,
-            self.player1_score,
-            self.player2_score,
+            self.winner,
+            self.loser,
+            self.winner_score,
+            self.loser_score,
         )

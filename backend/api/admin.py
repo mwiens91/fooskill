@@ -11,10 +11,10 @@ class GameAdmin(admin.ModelAdmin):
 
     list_display = (
         "datetime_played",
-        "player1",
-        "player2",
-        "player1_score",
-        "player2_score",
+        "winner",
+        "loser",
+        "winner_score",
+        "loser_score",
     )
 
 
