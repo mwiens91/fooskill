@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.utils import timezone
 
 
@@ -71,6 +72,13 @@ class Game(models.Model):
 
         # Order by most recently played
         ordering = ["-datetime_played"]
+
+    def clean(self):
+        """Make sure the winner's score is greater than the loser's."""
+        if not self.winner_score > self.loser_score:
+            raise ValidationError(
+                "Winner score must be greater than loser score!"
+            )
 
     def __str__(self):
         """String representation of player."""
