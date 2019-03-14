@@ -74,11 +74,16 @@ class Game(models.Model):
         ordering = ["-datetime_played"]
 
     def clean(self):
-        """Make sure the winner's score is greater than the loser's."""
+        """Perform basic validation."""
+        # Make sure the winner's score is greater than the loser's
         if not self.winner_score > self.loser_score:
             raise ValidationError(
                 "Winner score must be greater than loser score!"
             )
+
+        # Make sure the two players are distinct
+        if self.winner == self.loser:
+            raise ValidationError("Winner and loser must be distinct!")
 
     def __str__(self):
         """String representation of player."""
