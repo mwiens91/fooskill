@@ -20,6 +20,7 @@ class Player(models.Model):
     )
     user = models.ForeignKey(
         User,
+        blank=True,
         null=True,
         on_delete=models.SET_NULL,
         help_text="The user associated with the player.",
