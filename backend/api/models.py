@@ -9,7 +9,11 @@ from django.utils import timezone
 class User(AbstractUser):
     """Custom user model."""
 
-    pass
+    class Meta:
+        """Model metadata."""
+
+        # Order by username in ascending order
+        ordering = ["username"]
 
 
 class Player(models.Model):
