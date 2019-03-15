@@ -1,6 +1,7 @@
 """Contains models definitions."""
 
 from django.db import models
+from django.db.models.functions import Upper
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.utils import timezone
@@ -13,7 +14,7 @@ class User(AbstractUser):
         """Model metadata."""
 
         # Order by username in ascending order
-        ordering = ["username"]
+        ordering = [Upper("username")]
 
 
 class Player(models.Model):
@@ -34,7 +35,7 @@ class Player(models.Model):
         """Model metadata."""
 
         # Order by name in ascending order
-        ordering = ["name"]
+        ordering = [Upper("name")]
 
     def __str__(self):
         """String representation of player."""
