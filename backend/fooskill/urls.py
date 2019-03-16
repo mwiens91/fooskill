@@ -18,7 +18,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-urlpatterns = [path("", include("api.urls")), path("admin/", admin.site.urls)]
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("api/", include("api.urls")),
+]
 
 # Serve static files properly during development (see
 # https://docs.djangoproject.com/en/2.0/howto/static-files/)
