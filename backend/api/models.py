@@ -22,7 +22,7 @@ class Player(models.Model):
     name = models.CharField(
         max_length=200, unique=True, help_text="The player's name."
     )
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         User,
         blank=True,
         null=True,
