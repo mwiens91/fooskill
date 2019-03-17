@@ -6,11 +6,15 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1>FANTASTIC FOOSKILL FRONTEND</h1>
-          <p>
+          <div>
             some stuff got moved around. here are some links.
+          </div>
+          <div>
+            <br/>
             <a href="https://api.meowder.com/">browsable api</a>
+            <br/>
             <a href="https://api.meowder.com/admin">admin page</a>
-          </p>
+          </div>
         </header>
       </div>
     );
