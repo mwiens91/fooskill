@@ -5,8 +5,11 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
+          <h1>FANTASTIC FOOSKILL FRONTEND</h1>
           <p>
-            this be fooskill
+            some stuff got moved around. here are some links.
+            <a href="https://api.meowder.com/">browsable api</a>
+            <a href="https://api.meowder.com/admin">admin page</a>
           </p>
         </header>
       </div>
