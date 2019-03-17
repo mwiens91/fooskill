@@ -2,6 +2,10 @@
 
 {% load static %}
 
+{% block bootstrap_theme %}
+	<link rel="stylesheet" href="{% static "rest_framework/css/bootstrap.min.css" %}" type="text/css">
+{% endblock %}
+
 {% block title %}fooskill API{% if name %} - {{ name|lower }}{% endif %}{% endblock %}
 
 {% block branding %}
