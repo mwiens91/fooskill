@@ -24,8 +24,7 @@ https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgres
 
 ### Step 2: let fooskill know about your database
 
-From the base of this repository, copy
-[`.env.example`](backend/.env.example) to `.env` and fill in the
+Copy [`.env.example`](backend/.env.example) to `.env` and fill in the
 `DATABASE_*` variables. All the other variables you can leave as-is,
 although you probably want to set `DEBUG=True`.
 
