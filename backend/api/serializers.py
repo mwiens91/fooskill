@@ -1,6 +1,7 @@
 """Contains serializers for models."""
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.utils import timezone
 from rest_framework import serializers
 from .models import Game, Player, User
@@ -63,3 +64,14 @@ class GameSerializer(serializers.ModelSerializer):
             "loser_score",
             "submitted_by",
         ]
+
+    def validate(self, attrs):
+        """Call model's clean method."""
+        attrs = super().validate(attrs)
+
+        try:
+            Game(**attrs).clean()
+        except ValidationError as e:
+            raise serializers.ValidationError(str(e))
+
+        return attrs
