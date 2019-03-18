@@ -33,10 +33,10 @@ class GameSerializer(serializers.ModelSerializer):
     """A serializer for a game."""
 
     datetime_played = serializers.DateTimeField(
-        default=lambda: timezone.now().strftime(
+        default=lambda: timezone.localtime().strftime(
             settings.REST_FRAMEWORK["DATETIME_FORMAT"]
         ),
-        initial=lambda: timezone.now().strftime(
+        initial=lambda: timezone.localtime().strftime(
             settings.REST_FRAMEWORK["DATETIME_FORMAT"]
         ),
     )
