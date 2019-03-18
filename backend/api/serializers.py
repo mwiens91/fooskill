@@ -15,14 +15,36 @@ class UserReadOnlySerializer(serializers.ModelSerializer):
 class PlayerSerializer(serializers.ModelSerializer):
     """A serializer for a player."""
 
+    user = serializers.SlugRelatedField(
+        queryset=User.objects.all(), slug_field="username"
+    )
+
     class Meta:
         model = Player
-        fields = "__all__"
+        fields = ["id", "name", "user"]
 
 
 class GameSerializer(serializers.ModelSerializer):
     """A serializer for a game."""
 
+    winner = serializers.SlugRelatedField(
+        queryset=Player.objects.all(), slug_field="name"
+    )
+    loser = serializers.SlugRelatedField(
+        queryset=Player.objects.all(), slug_field="name"
+    )
+    submitted_by = serializers.SlugRelatedField(
+        queryset=User.objects.all(), slug_field="username"
+    )
+
     class Meta:
         model = Game
-        fields = "__all__"
+        fields = [
+            "id",
+            "datetime_played",
+            "winner",
+            "loser",
+            "winner_score",
+            "loser_score",
+            "submitted_by",
+        ]
