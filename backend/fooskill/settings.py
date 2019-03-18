@@ -145,4 +145,9 @@ AUTH_USER_MODEL = "api.User"
 
 # Django REST Framework settings
 
-REST_FRAMEWORK = {"DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S"}
+REST_FRAMEWORK = {
+    "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S",
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.BasicAuthentication",
+    ),
+}
