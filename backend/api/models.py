@@ -81,7 +81,7 @@ class Game(models.Model):
     def clean(self):
         """Perform basic validation."""
         # Make sure the winner's score is greater than the loser's
-        if not self.winner_score > self.loser_score:
+        if self.winner_score <= self.loser_score:
             raise ValidationError(
                 "Winner score must be greater than loser score!"
             )
