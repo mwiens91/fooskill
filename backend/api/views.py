@@ -31,3 +31,17 @@ class GameViewSet(viewsets.ModelViewSet):
 
     queryset = Game.objects.all()
     serializer_class = GameSerializer
+
+    def get_serializer(self, *args, **kwargs):
+        """Inject the user into the serializer if logged in."""
+        serializer = super().get_serializer(*args, **kwargs)
+
+        if (
+            hasattr(serializer, "fields")
+            and self.request.user.is_authenticated
+        ):
+            serializer.fields[
+                "submitted_by"
+            ].initial = self.request.user.username
+
+        return serializer
