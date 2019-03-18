@@ -142,3 +142,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 # User model to use
 
 AUTH_USER_MODEL = "api.User"
+
+# Django REST Framework settings
+
+REST_FRAMEWORK = {"DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S"}
