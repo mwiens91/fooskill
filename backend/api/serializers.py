@@ -4,7 +4,7 @@ from rest_framework import serializers
 from .models import Game, Player, User
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserReadOnlySerializer(serializers.ModelSerializer):
     """A serializer for a user."""
 
     class Meta:
