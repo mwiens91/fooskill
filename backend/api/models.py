@@ -145,6 +145,12 @@ class PlayerStatsNode(models.Model):
         help_text="The average number of goals scored per game by the player"
     )
 
+    class Meta:
+        """Model metadata."""
+
+        # Order by creation date (in order from most recent to oldest)
+        ordering = ["-pk"]
+
     def __str__(self):
         """String repesentation of a player stats node."""
         return "%s (linked game: %s; date: %s)" % (
