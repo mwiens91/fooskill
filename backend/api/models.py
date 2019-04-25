@@ -37,7 +37,14 @@ class Player(models.Model):
         ordering = ["name"]
 
     def __str__(self):
-        """String representation of a player."""
+        """String representation of a player.
+
+        Use the username of the player's user if there's a user linked;
+        otherwise just use the player name.
+        """
+        if self.user:
+            return self.user.username
+
         return self.name
 
     @property
