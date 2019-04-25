@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Game, Player, User
+from .models import Game, Player, PlayerStatsNode, User
 
 
 @admin.register(Game)
@@ -26,6 +26,13 @@ class PlayerAdmin(admin.ModelAdmin):
     """Settings for Player model on admin page."""
 
     list_display = ("name",)
+
+
+@admin.register(PlayerStatsNode)
+class PlayerStatsNodeAdmin(admin.ModelAdmin):
+    """Settings for PlayerStatsNode model on admin page."""
+
+    list_display = ("datetime", "player", "game")
 
 
 # Register custom user model
