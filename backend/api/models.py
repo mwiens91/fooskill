@@ -63,7 +63,7 @@ class Game(models.Model):
         default=0, help_text="The loser's score."
     )
     datetime_played = models.DateTimeField(
-        default=timezone.now,
+        auto_now_add=True,
         help_text="The date and time when the game was played.",
     )
     submitted_by = models.ForeignKey(

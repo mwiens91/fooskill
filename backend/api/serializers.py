@@ -48,14 +48,6 @@ class PlayerStatsNodeSerializer(serializers.ModelSerializer):
 class GameSerializer(serializers.ModelSerializer):
     """A serializer for a game."""
 
-    datetime_played = serializers.DateTimeField(
-        default=lambda: timezone.localtime().strftime(
-            settings.REST_FRAMEWORK["DATETIME_FORMAT"]
-        ),
-        initial=lambda: timezone.localtime().strftime(
-            settings.REST_FRAMEWORK["DATETIME_FORMAT"]
-        ),
-    )
     winner = serializers.SlugRelatedField(
         queryset=Player.objects.all(), slug_field="name"
     )
