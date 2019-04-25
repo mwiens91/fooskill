@@ -41,6 +41,7 @@ class PlayerStatsNodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = PlayerStatsNode
         fields = [
+            "id",
             "datetime",
             "player",
             "game",
