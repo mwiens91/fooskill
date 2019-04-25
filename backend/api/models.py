@@ -37,7 +37,7 @@ class Player(models.Model):
         ordering = ["name"]
 
     def __str__(self):
-        """String representation of player."""
+        """String representation of a player."""
         return self.name
 
 
@@ -91,7 +91,7 @@ class Game(models.Model):
             raise ValidationError("Winner and loser must be distinct!")
 
     def __str__(self):
-        """String representation of player."""
+        """String representation of a game."""
         return "%s vs %s (%s-%s)" % (
             self.winner,
             self.loser,
