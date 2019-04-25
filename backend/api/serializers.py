@@ -48,12 +48,6 @@ class PlayerStatsNodeSerializer(serializers.ModelSerializer):
 class GameSerializer(serializers.ModelSerializer):
     """A serializer for a game."""
 
-    winner = serializers.SlugRelatedField(
-        queryset=Player.objects.all(), slug_field="name"
-    )
-    loser = serializers.SlugRelatedField(
-        queryset=Player.objects.all(), slug_field="name"
-    )
     winner_score = serializers.IntegerField(min_value=0, initial=8)
     loser_score = serializers.IntegerField(min_value=0, initial=0)
     submitted_by = serializers.SlugRelatedField(
