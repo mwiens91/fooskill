@@ -70,6 +70,8 @@ class GameSerializer(serializers.ModelSerializer):
             "winner_score",
             "loser_score",
             "submitted_by",
+            "winner_stats_node",
+            "loser_stats_node",
         ]
 
     def validate(self, attrs):

@@ -90,20 +90,22 @@ class Game(models.Model):
     @property
     def winner_stats_node(self):
         """Return the player stats node for the winner."""
-        nodes = self.playerstatsnode_set
+        node_queryset = self.playerstatsnode_set.filter(player=self.winner)
 
-        for node in nodes:
-            if node.player == self.winner:
-                return node
+        if node_queryset:
+            return node_queryset.first().pk
+        else:
+            return None
 
     @property
     def loser_stats_node(self):
         """Return the player stats node for the loser."""
-        nodes = self.playerstatsnode_set
+        node_queryset = self.playerstatsnode_set.filter(player=self.loser)
 
-        for node in nodes:
-            if node.player == self.loser:
-                return node
+        if node_queryset:
+            return node_queryset.first().pk
+        else:
+            return None
 
     def clean(self):
         """Perform basic validation."""
