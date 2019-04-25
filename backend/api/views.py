@@ -22,7 +22,6 @@ class PlayerViewSet(viewsets.ModelViewSet):
     """A viewset for players."""
 
     queryset = Player.objects.all()
-    lookup_field = "name"
     serializer_class = PlayerSerializer
 
 
