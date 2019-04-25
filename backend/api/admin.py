@@ -8,6 +8,7 @@ from .models import Game, Player, User
 @admin.register(Game)
 class GameAdmin(admin.ModelAdmin):
     """Settings for Game model on admin page."""
+
     list_max_show_all = 10000
     list_per_page = 200
 
