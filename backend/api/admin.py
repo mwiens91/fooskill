@@ -25,7 +25,7 @@ class GameAdmin(admin.ModelAdmin):
 class PlayerAdmin(admin.ModelAdmin):
     """Settings for Player model on admin page."""
 
-    list_display = ("name",)
+    list_display = ("name", "user", "wins", "losses", "average_goals_per_game")
 
 
 @admin.register(PlayerStatsNode)
