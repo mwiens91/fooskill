@@ -1,6 +1,6 @@
 """Contains functions for calculating statistics and ratings."""
 
-from .models import PlayerStatsNode
+from . import models
 
 
 def calculate_new_average(avg, N, new_val):
@@ -51,7 +51,7 @@ def create_player_stats_node(player, game, previous_node=None):
     )
 
     # Create the node
-    PlayerStatsNode.objects.create(
+    models.PlayerStatsNode.objects.create(
         player=player,
         game=game,
         wins=wins,

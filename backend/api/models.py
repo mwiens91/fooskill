@@ -3,6 +3,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
+from . import stats
 
 
 class User(AbstractUser):
@@ -38,6 +39,52 @@ class Player(models.Model):
     def __str__(self):
         """String representation of a player."""
         return self.name
+
+    @property
+    def wins(self):
+        """Returns the players win count."""
+        node = self.get_latest_player_stats_node()
+
+        if node is None:
+            return 0
+
+        return node.wins
+
+    @property
+    def losses(self):
+        """Returns the players losses count."""
+        node = self.get_latest_player_stats_node()
+
+        if node is None:
+            return 0
+
+        return node.losses
+
+    @property
+    def average_goals_per_game(self):
+        """Returns the players average goals per game."""
+        node = self.get_latest_player_stats_node()
+
+        if node is None:
+            return 0
+
+        return node.average_goals_per_game
+
+    def get_all_player_stats_nodes(self):
+        """Returns all of the player's stats nodes."""
+        return PlayerStatsNode.objects.filter(player=self)
+
+    def get_latest_player_stats_node(self):
+        """Returns the player's latest stats node.
+
+        Returns None if no stats nodes exist for the plyaer.
+        """
+        nodes = self.get_all_player_stats_nodes()
+
+        if nodes:
+            return nodes.first()
+
+        return None
 
 
 class Game(models.Model):

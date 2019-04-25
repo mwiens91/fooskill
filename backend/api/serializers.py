@@ -25,7 +25,14 @@ class PlayerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = ["id", "name", "user"]
+        fields = [
+            "id",
+            "name",
+            "user",
+            "wins",
+            "losses",
+            "average_goals_per_game",
+        ]
 
 
 class PlayerStatsNodeSerializer(serializers.ModelSerializer):
