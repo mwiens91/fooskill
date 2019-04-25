@@ -93,8 +93,8 @@ class Game(models.Model):
 
         if node_queryset:
             return node_queryset.first().pk
-        else:
-            return None
+
+        return None
 
     @property
     def loser_stats_node(self):
@@ -103,8 +103,8 @@ class Game(models.Model):
 
         if node_queryset:
             return node_queryset.first().pk
-        else:
-            return None
+
+        return None
 
     def clean(self):
         """Perform basic validation."""
