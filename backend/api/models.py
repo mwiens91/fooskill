@@ -78,6 +78,33 @@ class Game(models.Model):
         # Order by most recently played
         ordering = ["-datetime_played"]
 
+    def __str__(self):
+        """String representation of a game."""
+        return "%s vs %s (%s-%s)" % (
+            self.winner,
+            self.loser,
+            self.winner_score,
+            self.loser_score,
+        )
+
+    @property
+    def winner_stats_node(self):
+        """Return the player stats node for the winner."""
+        nodes = self.playerstatsnode_set
+
+        for node in nodes:
+            if node.player == self.winner:
+                return node
+
+    @property
+    def loser_stats_node(self):
+        """Return the player stats node for the loser."""
+        nodes = self.playerstatsnode_set
+
+        for node in nodes:
+            if node.player == self.loser:
+                return node
+
     def clean(self):
         """Perform basic validation."""
         # Make sure the winner's score is greater than the loser's
@@ -90,11 +117,42 @@ class Game(models.Model):
         if self.winner == self.loser:
             raise ValidationError("Winner and loser must be distinct!")
 
+
+class PlayerStatsNode(models.Model):
+    """A player's stats snapshot at a particular point in time
+
+    A node will be generated for each game played by a player.
+    """
+
+    player = models.ForeignKey(
+        Player,
+        on_delete=models.CASCADE,
+        help_text="The player to record stats for.",
+    )
+    game = models.ForeignKey(
+        Game,
+        on_delete=models.CASCADE,
+        help_text="The latest game which updated the player's stats.",
+    )
+    wins = models.PositiveIntegerField(
+        help_text="The number of wins the player has"
+    )
+    losses = models.PositiveIntegerField(
+        help_text="The number of losses the player has"
+    )
+    average_goals_per_game = models.PositiveSmallIntegerField(
+        help_text="The average number of goals scored per game by the player"
+    )
+
     def __str__(self):
-        """String representation of a game."""
-        return "%s vs %s (%s-%s)" % (
-            self.winner,
-            self.loser,
-            self.winner_score,
-            self.loser_score,
+        """String repesentation of a player stats node."""
+        return "%s (linked game: %s; date: %s)" % (
+            self.player.name,
+            self.game.pk,
+            self.datetime,
         )
+
+    @property
+    def datetime(self):
+        """Returns the date of the node's game."""
+        return self.game.datetime_played
