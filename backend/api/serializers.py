@@ -4,7 +4,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from rest_framework import serializers
-from .models import Game, Player, User
+from .models import Game, Player, PlayerStatsNode, User
 
 
 class UserReadOnlySerializer(serializers.ModelSerializer):
@@ -28,6 +28,21 @@ class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
         fields = ["id", "name", "user"]
+
+
+class PlayerStatsNodeSerializer(serializers.ModelSerializer):
+    """A serializer for a player stats node."""
+
+    class Meta:
+        model = PlayerStatsNode
+        fields = [
+            "datetime",
+            "player",
+            "game",
+            "wins",
+            "losses",
+            "average_goals_per_game",
+        ]
 
 
 class GameSerializer(serializers.ModelSerializer):
