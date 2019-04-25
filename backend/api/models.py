@@ -165,6 +165,23 @@ class Game(models.Model):
         if self.winner == self.loser:
             raise ValidationError("Winner and loser must be distinct!")
 
+    def process_game(self):
+        """Process a game (e.g., update player stats)."""
+        # Create winner and loser stats nodes
+        if self.winner_stats_node is None:
+            stats.create_player_stats_node(
+                player=self.winner,
+                game=self,
+                previous_node=self.winner.get_latest_player_stats_node(),
+            )
+
+        if self.loser_stats_node is None:
+            stats.create_player_stats_node(
+                player=self.loser,
+                game=self,
+                previous_node=self.loser.get_latest_player_stats_node(),
+            )
+
 
 class PlayerStatsNode(models.Model):
     """A player's stats snapshot at a particular point in time
