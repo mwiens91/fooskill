@@ -140,7 +140,7 @@ class PlayerStatsNode(models.Model):
     losses = models.PositiveIntegerField(
         help_text="The number of losses the player has"
     )
-    average_goals_per_game = models.PositiveSmallIntegerField(
+    average_goals_per_game = models.FloatField(
         help_text="The average number of goals scored per game by the player"
     )
 
