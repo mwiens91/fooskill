@@ -47,7 +47,8 @@ class PlayerSerializer(serializers.ModelSerializer):
 
 class PlayerStatsNodeSerializer(serializers.ModelSerializer):
     """A serializer for a player stats node.
-This is meant to be read-only (stats nodes are handled exclusively
+
+    This is meant to be read-only (stats nodes are handled exclusively
     by the backend).
     """
 
