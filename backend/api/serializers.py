@@ -25,22 +25,27 @@ class PlayerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = [
+        fields = (
             "id",
             "name",
             "user",
             "wins",
             "losses",
             "average_goals_per_game",
-        ]
+        )
+        read_only_fields = ("id", "wins", "losses", "average_goals_per_game")
 
 
 class PlayerStatsNodeSerializer(serializers.ModelSerializer):
-    """A serializer for a player stats node."""
+    """A serializer for a player stats node.
+
+    This is meant to be read-only (stats nodes are handled exclusively
+    by the backend).
+    """
 
     class Meta:
         model = PlayerStatsNode
-        fields = [
+        fields = (
             "id",
             "datetime",
             "player",
@@ -48,11 +53,14 @@ class PlayerStatsNodeSerializer(serializers.ModelSerializer):
             "wins",
             "losses",
             "average_goals_per_game",
-        ]
+        )
 
 
 class GameSerializer(serializers.ModelSerializer):
-    """A serializer for a game."""
+    """A serializer for a game.
+
+    TODO: Automatically inject user into the submitted_by field.
+    """
 
     winner_score = serializers.IntegerField(min_value=0, initial=8)
     loser_score = serializers.IntegerField(min_value=0, initial=0)
@@ -62,7 +70,7 @@ class GameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Game
-        fields = [
+        fields = (
             "id",
             "datetime_played",
             "winner",
@@ -72,7 +80,13 @@ class GameSerializer(serializers.ModelSerializer):
             "submitted_by",
             "winner_stats_node",
             "loser_stats_node",
-        ]
+        )
+        read_only_fields = (
+            "id",
+            "datetime_played",
+            "winner_stats_node",
+            "loser_stats_node",
+        )
 
     def validate(self, attrs):
         """Call model's clean method."""
