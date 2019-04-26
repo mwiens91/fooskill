@@ -50,6 +50,16 @@ class Player(models.Model):
         return self.name
 
     @property
+    def games(self):
+        """Returns the players game count."""
+        node = self.get_latest_player_stats_node()
+
+        if node is None:
+            return 0
+
+        return node.games
+
+    @property
     def wins(self):
         """Returns the players win count."""
         node = self.get_latest_player_stats_node()
@@ -207,6 +217,9 @@ class PlayerStatsNode(models.Model):
         Game,
         on_delete=models.CASCADE,
         help_text="The latest game which updated the player's stats.",
+    )
+    games = models.PositiveIntegerField(
+        help_text="The number of games a player has played."
     )
     wins = models.PositiveIntegerField(
         help_text="The number of wins the player has."

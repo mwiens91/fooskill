@@ -27,15 +27,19 @@ def create_player_stats_node(player, game, previous_node=None):
     """
     # Grab previous stats (if they exist)
     if previous_node is not None:
+        games = previous_node.games
         wins = previous_node.wins
         losses = previous_node.losses
         average_goals_per_game = previous_node.average_goals_per_game
     else:
+        games = 0
         wins = 0
         losses = 0
         average_goals_per_game = 0
 
     # Calculate new stats
+    games += 1
+
     if game.winner == player:
         # Grab the score
         score = game.winner_score
@@ -54,6 +58,7 @@ def create_player_stats_node(player, game, previous_node=None):
     models.PlayerStatsNode.objects.create(
         player=player,
         game=game,
+        games=games,
         wins=wins,
         losses=losses,
         average_goals_per_game=average_goals_per_game,

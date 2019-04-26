@@ -31,11 +31,18 @@ class PlayerSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "user",
+            "games",
             "wins",
             "losses",
             "average_goals_per_game",
         )
-        read_only_fields = ("id", "wins", "losses", "average_goals_per_game")
+        read_only_fields = (
+            "id",
+            "games",
+            "wins",
+            "losses",
+            "average_goals_per_game",
+        )
 
 
 class PlayerStatsNodeSerializer(serializers.ModelSerializer):
@@ -64,6 +71,7 @@ class PlayerStatsNodeSerializer(serializers.ModelSerializer):
             "datetime",
             "player",
             "game",
+            "games",
             "wins",
             "losses",
             "average_goals_per_game",
