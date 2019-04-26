@@ -1,6 +1,13 @@
 """Contains view(sets) for the API."""
 
 from rest_framework import viewsets
+from .filters import (
+    GameFilter,
+    MatchupStatsNodeFilter,
+    PlayerFilter,
+    PlayerStatsNodeFilter,
+    UserFilter,
+)
 from .models import Game, MatchupStatsNode, Player, PlayerStatsNode, User
 from .serializers import (
     GameSerializer,
@@ -18,6 +25,7 @@ class UserViewSet(viewsets.ModelViewSet):
     lookup_field = "username"
     http_method_names = ["get"]
     serializer_class = UserReadOnlySerializer
+    filter_class = UserFilter
 
 
 class PlayerViewSet(viewsets.ModelViewSet):
@@ -26,6 +34,7 @@ class PlayerViewSet(viewsets.ModelViewSet):
     queryset = Player.objects.all()
     http_method_names = ["get", "post", "patch"]
     serializer_class = PlayerSerializer
+    filter_class = PlayerFilter
 
 
 class PlayerStatsNodeViewSet(viewsets.ModelViewSet):
@@ -34,6 +43,7 @@ class PlayerStatsNodeViewSet(viewsets.ModelViewSet):
     queryset = PlayerStatsNode.objects.all()
     http_method_names = ["get"]
     serializer_class = PlayerStatsNodeSerializer
+    filter_class = PlayerStatsNodeFilter
 
 
 class MatchupStatsNodeViewSet(viewsets.ModelViewSet):
@@ -42,6 +52,7 @@ class MatchupStatsNodeViewSet(viewsets.ModelViewSet):
     queryset = MatchupStatsNode.objects.all()
     http_method_names = ["get"]
     serializer_class = MatchupStatsNodeSerializer
+    filter_class = MatchupStatsNodeFilter
 
 
 class GameViewSet(viewsets.ModelViewSet):
@@ -50,6 +61,7 @@ class GameViewSet(viewsets.ModelViewSet):
     queryset = Game.objects.all()
     http_method_names = ["get", "post"]
     serializer_class = GameSerializer
+    filter_class = GameFilter
 
     def get_serializer(self, *args, **kwargs):
         """Inject the user into the serializer if logged in."""
