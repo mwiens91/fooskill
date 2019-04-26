@@ -209,13 +209,13 @@ class PlayerStatsNode(models.Model):
         help_text="The latest game which updated the player's stats.",
     )
     wins = models.PositiveIntegerField(
-        help_text="The number of wins the player has"
+        help_text="The number of wins the player has."
     )
     losses = models.PositiveIntegerField(
-        help_text="The number of losses the player has"
+        help_text="The number of losses the player has."
     )
     average_goals_per_game = models.FloatField(
-        help_text="The average number of goals scored per game by the player"
+        help_text="The average number of goals scored per game by the player."
     )
 
     class Meta:
