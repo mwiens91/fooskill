@@ -1,6 +1,8 @@
 """Contains serializers for models."""
 
+from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 from rest_framework import serializers
 from .models import Game, Player, PlayerStatsNode, User
 
@@ -42,6 +44,18 @@ class PlayerStatsNodeSerializer(serializers.ModelSerializer):
     This is meant to be read-only (stats nodes are handled exclusively
     by the backend).
     """
+
+    # Need to specify this manually here since datetime is a property
+    # and hence the default timezone settings don't automatically apply
+    # to this
+    datetime = serializers.DateTimeField(
+        default=lambda: timezone.localtime().strftime(
+            settings.REST_FRAMEWORK["DATETIME_FORMAT"]
+        ),
+        initial=lambda: timezone.localtime().strftime(
+            settings.REST_FRAMEWORK["DATETIME_FORMAT"]
+        ),
+    )
 
     class Meta:
         model = PlayerStatsNode
