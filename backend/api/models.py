@@ -1,8 +1,10 @@
 """Contains models definitions."""
 
-from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
+from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from . import stats
 
 
@@ -234,3 +236,10 @@ class PlayerStatsNode(models.Model):
     def datetime(self):
         """Returns the date of the node's game."""
         return self.game.datetime_played
+
+
+@receiver(post_save, sender=Game)
+def process_game_hook(instance, created, **_):
+    """Process a game immediately after game creation."""
+    if created:
+        instance.process_game()
