@@ -77,7 +77,7 @@ class Player(models.Model):
     @property
     def rating(self):
         """Returns the players rating."""
-        node = self.get_latest_player_ratings_node()
+        node = self.get_latest_player_rating_node()
 
         if node is None:
             return settings.GLICKO2_BASE_RATING
@@ -87,7 +87,7 @@ class Player(models.Model):
     @property
     def rating_deviation(self):
         """Returns the players rating deviation."""
-        node = self.get_latest_player_ratings_node()
+        node = self.get_latest_player_rating_node()
 
         if node is None:
             return settings.GLICKO2_BASE_RD
@@ -97,7 +97,7 @@ class Player(models.Model):
     @property
     def rating_volatility(self):
         """Returns the players rating volatility."""
-        node = self.get_latest_player_ratings_node()
+        node = self.get_latest_player_rating_node()
 
         if node is None:
             return settings.GLICKO2_BASE_VOLATILITY
@@ -187,7 +187,7 @@ class Player(models.Model):
 
     def get_all_player_rating_nodes(self):
         """Returns all of the player's rating nodes."""
-        return PlayerRatingsNode.objects.filter(player=self)
+        return PlayerRatingNode.objects.filter(player=self)
 
     def get_latest_player_rating_node(self):
         """Returns the player's latest rating node.
@@ -460,7 +460,7 @@ class MatchupStatsNode(models.Model):
         return self.game.datetime_played
 
 
-class PlayerRatingsNode(models.Model):
+class PlayerRatingNode(models.Model):
     """A player's rating for a given rating period."""
 
     player = models.ForeignKey(
