@@ -1,4 +1,4 @@
-"""Contains functions for calculating statistics and ratings."""
+"""Contains functions for calculating player and matchup statistics."""
 
 from . import models
 
