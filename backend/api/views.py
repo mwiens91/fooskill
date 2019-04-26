@@ -23,6 +23,7 @@ class PlayerViewSet(viewsets.ModelViewSet):
     """A viewset for players."""
 
     queryset = Player.objects.all()
+    http_method_names = ["get", "post", "patch"]
     serializer_class = PlayerSerializer
 
 
@@ -30,6 +31,7 @@ class PlayerStatsNodeViewSet(viewsets.ModelViewSet):
     """A viewset for players."""
 
     queryset = PlayerStatsNode.objects.all()
+    http_method_names = ["get"]
     serializer_class = PlayerStatsNodeSerializer
 
 
@@ -37,6 +39,7 @@ class GameViewSet(viewsets.ModelViewSet):
     """A viewset for games."""
 
     queryset = Game.objects.all()
+    http_method_names = ["get", "post"]
     serializer_class = GameSerializer
 
     def get_serializer(self, *args, **kwargs):
