@@ -12,7 +12,7 @@ class UserReadOnlySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["username", "date_joined", "last_login", "is_staff"]
+        fields = ("username", "date_joined", "last_login", "is_staff")
 
 
 class PlayerSerializer(serializers.ModelSerializer):
