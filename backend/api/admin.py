@@ -2,7 +2,22 @@
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Game, MatchupStatsNode, Player, PlayerStatsNode, User
+from .models import (
+    Game,
+    MatchupStatsNode,
+    Player,
+    PlayerRatingNode,
+    PlayerStatsNode,
+    RatingPeriod,
+    User,
+)
+
+
+@admin.register(RatingPeriod)
+class RatingPeriodAdmin(admin.ModelAdmin):
+    """Settings for RatingPeriod model on admin page."""
+
+    list_display = ("id", "start_datetime", "end_datetime")
 
 
 @admin.register(Game)
@@ -13,11 +28,13 @@ class GameAdmin(admin.ModelAdmin):
     list_per_page = 200
 
     list_display = (
+        "id",
         "datetime_played",
         "winner",
         "loser",
         "winner_score",
         "loser_score",
+        "rating_period",
     )
 
 
@@ -26,8 +43,12 @@ class PlayerAdmin(admin.ModelAdmin):
     """Settings for Player model on admin page."""
 
     list_display = (
+        "id",
         "name",
         "user",
+        "rating",
+        "rating_deviation",
+        "rating_volatility",
         "games",
         "wins",
         "losses",
@@ -47,6 +68,20 @@ class PlayerStatsNodeAdmin(admin.ModelAdmin):
         "wins",
         "losses",
         "average_goals_per_game",
+    )
+
+
+@admin.register(PlayerRatingNode)
+class PlayerRatingNodeAdmin(admin.ModelAdmin):
+    """Settings for PlayerRatingNode model on admin page."""
+
+    list_display = (
+        "id",
+        "player",
+        "rating_period",
+        "rating",
+        "rating_deviation",
+        "rating_volatility",
     )
 
 
