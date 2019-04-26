@@ -59,7 +59,8 @@ class PlayerStatsNodeSerializer(serializers.ModelSerializer):
 class GameSerializer(serializers.ModelSerializer):
     """A serializer for a game.
 
-    TODO: Automatically inject user into the submitted_by field.
+    Note that the user is automatically injected into the submitted_by
+    field for post methods.
     """
 
     winner_score = serializers.IntegerField(min_value=0, initial=8)
