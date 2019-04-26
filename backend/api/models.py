@@ -1,5 +1,6 @@
 """Contains models definitions."""
 
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -16,6 +17,30 @@ class User(AbstractUser):
 
         # Order by username in ascending order
         ordering = ["username"]
+
+
+class RatingPeriod(models.Model):
+    """A model for a Glicko rating period."""
+
+    start_datetime = models.DateTimeField(
+        help_text="The starting datetime for the rating period."
+    )
+    end_datetime = models.DateTimeField(
+        help_text="The starting datetime for the rating period."
+    )
+
+    class Meta:
+        """Model metadata."""
+
+        # Order by creation date (in order from most recent to oldest)
+        ordering = ["-end_datetime"]
+
+    def __str__(self):
+        """String repesentation of a rating period."""
+        return "Rating period: %s to %s" % (
+            self.start_datetime,
+            self.end_datetime,
+        )
 
 
 class Player(models.Model):
@@ -48,6 +73,36 @@ class Player(models.Model):
             return self.user.username
 
         return self.name
+
+    @property
+    def rating(self):
+        """Returns the players rating."""
+        node = self.get_latest_player_ratings_node()
+
+        if node is None:
+            return settings.GLICKO2_BASE_RATING
+
+        return node.rating
+
+    @property
+    def rating_deviation(self):
+        """Returns the players rating deviation."""
+        node = self.get_latest_player_ratings_node()
+
+        if node is None:
+            return settings.GLICKO2_BASE_RD
+
+        return node.rating_deviation
+
+    @property
+    def rating_volatility(self):
+        """Returns the players rating volatility."""
+        node = self.get_latest_player_ratings_node()
+
+        if node is None:
+            return settings.GLICKO2_BASE_VOLATILITY
+
+        return node.rating_volatility
 
     @property
     def games(self):
@@ -130,6 +185,22 @@ class Player(models.Model):
 
         return None
 
+    def get_all_player_rating_nodes(self):
+        """Returns all of the player's rating nodes."""
+        return PlayerRatingsNode.objects.filter(player=self)
+
+    def get_latest_player_rating_node(self):
+        """Returns the player's latest rating node.
+
+        Returns None if no rating nodes exist for the plyaer.
+        """
+        nodes = self.get_all_player_rating_nodes()
+
+        if nodes:
+            return nodes.first()
+
+        return None
+
 
 class Game(models.Model):
     """A model for a particular game."""
@@ -160,6 +231,13 @@ class Game(models.Model):
         User,
         on_delete=models.PROTECT,
         help_text="The user which submitted the game.",
+    )
+    rating_period = models.ForeignKey(
+        RatingPeriod,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        help_text="The rating period this game is apart of",
     )
 
     class Meta:
@@ -380,6 +458,45 @@ class MatchupStatsNode(models.Model):
     def datetime(self):
         """Returns the date of the node's game."""
         return self.game.datetime_played
+
+
+class PlayerRatingsNode(models.Model):
+    """A player's rating for a given rating period."""
+
+    player = models.ForeignKey(
+        Player,
+        on_delete=models.CASCADE,
+        help_text="The player corresponding whose ratings this node is for.",
+    )
+    rating_period = models.ForeignKey(
+        RatingPeriod,
+        on_delete=models.CASCADE,
+        help_text="The rating period this rating was calculated in",
+    )
+    rating = models.FloatField(
+        help_text="The player's rating for this rating period."
+    )
+    rating_deviation = models.FloatField(
+        help_text="The player's rating deviation for this rating period."
+    )
+    rating_volatility = models.FloatField(
+        help_text="The player's rating volatility for this rating period."
+    )
+
+    class Meta:
+        """Model metadata."""
+
+        # Order by creation date (in order from most recent to oldest)
+        ordering = ["-pk"]
+
+    def __str__(self):
+        """String repesentation of a rating period."""
+        return "[RP %s] r=%d, RD=%d, σ=%.2f" % (
+            self.rating_period.id,
+            self.rating,
+            self.rating_deviation,
+            self.rating_volatility,
+        )
 
 
 @receiver(post_save, sender=Game)
