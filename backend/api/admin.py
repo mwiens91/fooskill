@@ -39,7 +39,7 @@ class PlayerAdmin(admin.ModelAdmin):
 class PlayerStatsNodeAdmin(admin.ModelAdmin):
     """Settings for PlayerStatsNode model on admin page."""
 
-    list_display = ("datetime", "player", "game")
+    list_display = ("pk", "player", "game", "datetime")
 
 
 # Register custom user model
