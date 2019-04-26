@@ -6,14 +6,24 @@ from .filters import (
     MatchupStatsNodeFilter,
     PlayerFilter,
     PlayerStatsNodeFilter,
+    RatingPeriodFilter,
     UserFilter,
 )
-from .models import Game, MatchupStatsNode, Player, PlayerStatsNode, User
+from .models import (
+    Game,
+    MatchupStatsNode,
+    Player,
+    PlayerRatingNode,
+    PlayerStatsNode,
+    RatingPeriod,
+    User,
+)
 from .serializers import (
     GameSerializer,
     MatchupStatsNodeSerializer,
     PlayerSerializer,
     PlayerStatsNodeSerializer,
+    RatingPeriodSerializer,
     UserReadOnlySerializer,
 )
 
@@ -26,6 +36,15 @@ class UserViewSet(viewsets.ModelViewSet):
     http_method_names = ["get"]
     serializer_class = UserReadOnlySerializer
     filter_class = UserFilter
+
+
+class RatingPeriodViewSet(viewsets.ModelViewSet):
+    """A viewset for rating periods."""
+
+    queryset = RatingPeriod.objects.all()
+    http_method_names = ["get"]
+    serializer_class = RatingPeriodSerializer
+    filter_class = RatingPeriodFilter
 
 
 class PlayerViewSet(viewsets.ModelViewSet):

@@ -1,7 +1,15 @@
 """Contains filtersets for REST API viewsets."""
 
 from django_filters import rest_framework as filters
-from .models import Game, MatchupStatsNode, Player, PlayerStatsNode, User
+from .models import (
+    Game,
+    MatchupStatsNode,
+    Player,
+    PlayerRatingNode,
+    PlayerStatsNode,
+    RatingPeriod,
+    User,
+)
 
 
 # Common lookups for filter fields
@@ -26,6 +34,18 @@ class UserFilter(filters.FilterSet):
     class Meta:
         model = User
         fields = {"is_staff": BOOLEAN_FIELD_LOOKUPS}
+
+
+class RatingPeriodFilter(filters.FilterSet):
+    """A filterset to support queries for RatingPeriods."""
+
+    class Meta:
+        model = RatingPeriod
+        fields = {
+            "id": NUM_FIELD_LOOKUPS,
+            "start_datetime": DATE_FIELD_LOOKUPS,
+            "end_datetime": DATE_FIELD_LOOKUPS,
+        }
 
 
 class PlayerFilter(filters.FilterSet):
@@ -78,4 +98,5 @@ class GameFilter(filters.FilterSet):
             "winner_score": NUM_FIELD_LOOKUPS,
             "loser_score": NUM_FIELD_LOOKUPS,
             "submitted_by": FOREIGN_KEY_FIELD_LOOKUPS,
+            "rating_period": FOREIGN_KEY_FIELD_LOOKUPS,
         }

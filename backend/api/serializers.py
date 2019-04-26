@@ -4,7 +4,15 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from rest_framework import serializers
-from .models import Game, MatchupStatsNode, Player, PlayerStatsNode, User
+from .models import (
+    Game,
+    MatchupStatsNode,
+    Player,
+    PlayerRatingNode,
+    PlayerStatsNode,
+    RatingPeriod,
+    User,
+)
 
 
 class UserReadOnlySerializer(serializers.ModelSerializer):
@@ -13,6 +21,17 @@ class UserReadOnlySerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("username", "date_joined", "last_login", "is_staff")
+
+
+class RatingPeriodSerializer(serializers.ModelSerializer):
+    """A serializer for a rating period.
+
+    This should be read-only.
+    """
+
+    class Meta:
+        model = RatingPeriod
+        fields = ("id", "start_datetime", "end_datetime")
 
 
 class PlayerSerializer(serializers.ModelSerializer):
@@ -31,6 +50,9 @@ class PlayerSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "user",
+            "rating",
+            "rating_deviation",
+            "rating_volatility",
             "games",
             "wins",
             "losses",
@@ -38,6 +60,9 @@ class PlayerSerializer(serializers.ModelSerializer):
         )
         read_only_fields = (
             "id",
+            "rating",
+            "rating_deviation",
+            "rating_volatility",
             "games",
             "wins",
             "losses",
@@ -135,6 +160,7 @@ class GameSerializer(serializers.ModelSerializer):
             "winner_score",
             "loser_score",
             "submitted_by",
+            "rating_period",
             "winner_player_stats_node",
             "loser_player_stats_node",
             "winner_matchup_stats_node",
@@ -143,6 +169,7 @@ class GameSerializer(serializers.ModelSerializer):
         read_only_fields = (
             "id",
             "datetime_played",
+            "rating_period",
             "winner_player_stats_node",
             "loser_player_stats_node",
             "winner_matchup_stats_node",

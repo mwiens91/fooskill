@@ -10,6 +10,7 @@ from .views import (
     MatchupStatsNodeViewSet,
     PlayerViewSet,
     PlayerStatsNodeViewSet,
+    RatingPeriodViewSet,
     UserViewSet,
 )
 
@@ -33,6 +34,7 @@ router.register("games", GameViewSet)
 router.register("matchupstatsnodes", MatchupStatsNodeViewSet)
 router.register("players", PlayerViewSet)
 router.register("playerstatsnodes", PlayerStatsNodeViewSet)
+router.register("ratingperiods", RatingPeriodViewSet)
 router.register("users", UserViewSet)
 
 
