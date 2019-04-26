@@ -158,3 +158,10 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ),
 }
+
+# Glicko-2 settings
+
+GLICKO2_BASE_RATING = float(os.environ["GLICKO2_BASE_RATING"])
+GLICKO2_BASE_RD = float(os.environ["GLICKO2_BASE_RD"])
+GLICKO2_SYSTEM_CONSTANT = float(os.environ["GLICKO2_SYSTEM_CONSTANT"])
+GLICKO2_RATING_PERIOD_DAYS = int(os.environ["GLICKO2_RATING_PERIOD_DAYS"])
