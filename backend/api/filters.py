@@ -85,6 +85,18 @@ class MatchupStatsNodeFilter(filters.FilterSet):
         }
 
 
+class PlayerRatingNodeFilter(filters.FilterSet):
+    """A filterset to support queries for PlayerRatingNodes."""
+
+    class Meta:
+        model = PlayerRatingNode
+        fields = {
+            "id": ID_FIELD_LOOKUPS,
+            "player": FOREIGN_KEY_FIELD_LOOKUPS,
+            "rating_period": FOREIGN_KEY_FIELD_LOOKUPS,
+        }
+
+
 class GameFilter(filters.FilterSet):
     """A filterset to support queries for Games."""
 

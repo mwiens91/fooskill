@@ -5,6 +5,7 @@ from .filters import (
     GameFilter,
     MatchupStatsNodeFilter,
     PlayerFilter,
+    PlayerRatingNodeFilter,
     PlayerStatsNodeFilter,
     RatingPeriodFilter,
     UserFilter,
@@ -22,6 +23,7 @@ from .serializers import (
     GameSerializer,
     MatchupStatsNodeSerializer,
     PlayerSerializer,
+    PlayerRatingNodeSerializer,
     PlayerStatsNodeSerializer,
     RatingPeriodSerializer,
     UserReadOnlySerializer,
@@ -72,6 +74,15 @@ class MatchupStatsNodeViewSet(viewsets.ModelViewSet):
     http_method_names = ["get"]
     serializer_class = MatchupStatsNodeSerializer
     filter_class = MatchupStatsNodeFilter
+
+
+class PlayerRatingNodeViewSet(viewsets.ModelViewSet):
+    """A viewset for player rating nodes."""
+
+    queryset = PlayerRatingNode.objects.all()
+    http_method_names = ["get"]
+    serializer_class = PlayerRatingNodeSerializer
+    filter_class = PlayerRatingNodeFilter
 
 
 class GameViewSet(viewsets.ModelViewSet):

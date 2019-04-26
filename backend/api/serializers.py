@@ -137,6 +137,24 @@ class MatchupStatsNodeSerializer(serializers.ModelSerializer):
         )
 
 
+class PlayerRatingNodeSerializer(serializers.ModelSerializer):
+    """A serializer for a player rating node.
+
+    This is meant to be read-only.
+    """
+
+    class Meta:
+        model = PlayerRatingNode
+        fields = (
+            "id",
+            "player",
+            "rating_period",
+            "rating",
+            "rating_deviation",
+            "rating_volatility",
+        )
+
+
 class GameSerializer(serializers.ModelSerializer):
     """A serializer for a game.
 

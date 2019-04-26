@@ -9,6 +9,7 @@ from .views import (
     GameViewSet,
     MatchupStatsNodeViewSet,
     PlayerViewSet,
+    PlayerRatingNodeViewSet,
     PlayerStatsNodeViewSet,
     RatingPeriodViewSet,
     UserViewSet,
@@ -33,6 +34,7 @@ router = OptionalSlashRouter()
 router.register("games", GameViewSet)
 router.register("matchupstatsnodes", MatchupStatsNodeViewSet)
 router.register("players", PlayerViewSet)
+router.register("playerratingnodes", PlayerRatingNodeViewSet)
 router.register("playerstatsnodes", PlayerStatsNodeViewSet)
 router.register("ratingperiods", RatingPeriodViewSet)
 router.register("users", UserViewSet)
