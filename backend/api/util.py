@@ -4,19 +4,19 @@ from django.db import connection
 from .models import Game, MatchupStatsNode, PlayerStatsNode
 
 
-def reprocess_all_games(reset_pk_counter=True):
+def reprocess_all_games(reset_id_counter=True):
     """Wipes all existing stats nodes and creates new stats nodes.
 
     Args:
-        reset_pk_counter: An optional boolean specifying whether to
-            reset to pk counter for stats nodes back to 1.
+        reset_id_counter: An optional boolean specifying whether to
+            reset to ID counter for stats nodes back to 1.
     """
     # Wipe existing nodes
     PlayerStatsNode.objects.all().delete()
     MatchupStatsNode.objects.all().delete()
 
-    # Reset pk counter
-    if reset_pk_counter:
+    # Reset ID counter
+    if reset_id_counter:
         with connection.cursor() as cursor:
             cursor.execute(
                 "ALTER SEQUENCE api_playerstatsnode_id_seq RESTART with 1"

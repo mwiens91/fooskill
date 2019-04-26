@@ -40,7 +40,7 @@ class PlayerStatsNodeAdmin(admin.ModelAdmin):
     """Settings for PlayerStatsNode model on admin page."""
 
     list_display = (
-        "pk",
+        "id",
         "player",
         "datetime",
         "games",
@@ -55,7 +55,7 @@ class MatchupStatsNodeAdmin(admin.ModelAdmin):
     """Settings for MatchupStatsNode model on admin page."""
 
     list_display = (
-        "pk",
+        "id",
         "player1",
         "player2",
         "datetime",

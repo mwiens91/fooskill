@@ -263,7 +263,7 @@ class Game(models.Model):
         )
 
         if node_queryset:
-            return node_queryset.first().pk
+            return node_queryset.first().id
 
         return None
 
@@ -275,7 +275,7 @@ class Game(models.Model):
         )
 
         if node_queryset:
-            return node_queryset.first().pk
+            return node_queryset.first().id
 
         return None
 
@@ -287,7 +287,7 @@ class Game(models.Model):
         )
 
         if node_queryset:
-            return node_queryset.first().pk
+            return node_queryset.first().id
 
         return None
 
@@ -299,7 +299,7 @@ class Game(models.Model):
         )
 
         if node_queryset:
-            return node_queryset.first().pk
+            return node_queryset.first().id
 
         return None
 
@@ -386,13 +386,13 @@ class PlayerStatsNode(models.Model):
         """Model metadata."""
 
         # Order by creation date (in order from most recent to oldest)
-        ordering = ["-pk"]
+        ordering = ["-id"]
 
     def __str__(self):
         """String repesentation of a player stats node."""
-        return "%s (game pk: %s; date: %s)" % (
+        return "%s (game ID: %s; date: %s)" % (
             self.player,
-            self.game.pk,
+            self.game.id,
             self.datetime,
         )
 
@@ -443,14 +443,14 @@ class MatchupStatsNode(models.Model):
         """Model metadata."""
 
         # Order by creation date (in order from most recent to oldest)
-        ordering = ["-pk"]
+        ordering = ["-id"]
 
     def __str__(self):
         """String repesentation of a matchup stats node."""
-        return "%s vs %s (game pk: %s; date: %s)" % (
+        return "%s vs %s (game ID: %s; date: %s)" % (
             self.player1,
             self.player2,
-            self.game.pk,
+            self.game.id,
             self.datetime,
         )
 
@@ -487,7 +487,7 @@ class PlayerRatingNode(models.Model):
         """Model metadata."""
 
         # Order by creation date (in order from most recent to oldest)
-        ordering = ["-pk"]
+        ordering = ["-id"]
 
     def __str__(self):
         """String repesentation of a rating period."""

@@ -11,10 +11,10 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "--reset_pk_counter",
+            "--reset-id-counter",
             action="store_true",
-            help="Reset pk counter back to 1 before recreating stats nodes.",
+            help="Reset ID counter back to 1 before recreating stats nodes.",
         )
 
     def handle(self, *args, **options):
-        reprocess_all_games(reset_pk_counter=options["reset_pk_counter"])
+        reprocess_all_games(reset_id_counter=options["reset_id_counter"])
