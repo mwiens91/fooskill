@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Game, Player, PlayerStatsNode, User
+from .models import Game, MatchupStatsNode, Player, PlayerStatsNode, User
 
 
 @admin.register(Game)
@@ -39,7 +39,31 @@ class PlayerAdmin(admin.ModelAdmin):
 class PlayerStatsNodeAdmin(admin.ModelAdmin):
     """Settings for PlayerStatsNode model on admin page."""
 
-    list_display = ("pk", "player", "game", "datetime")
+    list_display = (
+        "pk",
+        "player",
+        "datetime",
+        "games",
+        "wins",
+        "losses",
+        "average_goals_per_game",
+    )
+
+
+@admin.register(MatchupStatsNode)
+class MatchupStatsNodeAdmin(admin.ModelAdmin):
+    """Settings for MatchupStatsNode model on admin page."""
+
+    list_display = (
+        "pk",
+        "player1",
+        "player2",
+        "datetime",
+        "games",
+        "wins",
+        "losses",
+        "average_goals_per_game",
+    )
 
 
 # Register custom user model

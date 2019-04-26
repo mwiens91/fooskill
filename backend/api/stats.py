@@ -63,3 +63,58 @@ def create_player_stats_node(player, game, previous_node=None):
         losses=losses,
         average_goals_per_game=average_goals_per_game,
     )
+
+
+def create_matchup_stats_node(player1, player2, game, previous_node=None):
+    """Create a stats node for a player.
+
+    Args:
+        player1: An instance of the Player model corresponding to the
+            player whose perspective to take.
+        player2: An instance of the Player model corresponding to the
+            opponent player.
+        game: An instance of the Game model corresponding to the game to
+            adjust stats from.
+        previous_node: An optional instance of the MatchupStatsNode
+            model corresponding to the matchup's last stats node
+            (between player 1 and 2—in that order—as provided).
+    """
+    # Grab previous stats (if they exist)
+    if previous_node is not None:
+        games = previous_node.games
+        wins = previous_node.wins
+        losses = previous_node.losses
+        average_goals_per_game = previous_node.average_goals_per_game
+    else:
+        games = 0
+        wins = 0
+        losses = 0
+        average_goals_per_game = 0
+
+    # Calculate new stats
+    games += 1
+
+    if game.winner == player1:
+        # Grab the score
+        score = game.winner_score
+
+        wins += 1
+    else:
+        score = game.loser_score
+
+        losses += 1
+
+    average_goals_per_game = calculate_new_average(
+        avg=average_goals_per_game, N=wins + losses - 1, new_val=score
+    )
+
+    # Create the node
+    models.MatchupStatsNode.objects.create(
+        player1=player1,
+        player2=player2,
+        game=game,
+        games=games,
+        wins=wins,
+        losses=losses,
+        average_goals_per_game=average_goals_per_game,
+    )

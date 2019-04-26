@@ -1,9 +1,10 @@
 """Contains view(sets) for the API."""
 
 from rest_framework import viewsets
-from .models import Game, Player, PlayerStatsNode, User
+from .models import Game, MatchupStatsNode, Player, PlayerStatsNode, User
 from .serializers import (
     GameSerializer,
+    MatchupStatsNodeSerializer,
     PlayerSerializer,
     PlayerStatsNodeSerializer,
     UserReadOnlySerializer,
@@ -28,11 +29,19 @@ class PlayerViewSet(viewsets.ModelViewSet):
 
 
 class PlayerStatsNodeViewSet(viewsets.ModelViewSet):
-    """A viewset for players."""
+    """A viewset for player stats nodes."""
 
     queryset = PlayerStatsNode.objects.all()
     http_method_names = ["get"]
     serializer_class = PlayerStatsNodeSerializer
+
+
+class MatchupStatsNodeViewSet(viewsets.ModelViewSet):
+    """A viewset for matchup stats nodes."""
+
+    queryset = MatchupStatsNode.objects.all()
+    http_method_names = ["get"]
+    serializer_class = MatchupStatsNodeSerializer
 
 
 class GameViewSet(viewsets.ModelViewSet):

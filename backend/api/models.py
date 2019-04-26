@@ -105,6 +105,31 @@ class Player(models.Model):
 
         return None
 
+    def get_all_matchup_stats_nodes(self, opponent):
+        """Returns all of the player's matchup stats nodes against an opponent.
+
+        Args:
+            opponent: A Player model instance to filter against. If this
+                isn't provided, matchup nodes will be returned for all
+                opponents.
+        """
+        return MatchupStatsNode.objects.filter(player1=self, player2=opponent)
+
+    def get_latest_matchup_stats_node(self, opponent):
+        """Returns the player's latest matchup stats node against an opponent.
+
+        Args:
+            opponent: A Player model instance to filter against. If this
+                isn't provided, matchup nodes will be returned for all
+                opponents.
+        """
+        nodes = self.get_all_matchup_stats_nodes(opponent)
+
+        if nodes:
+            return nodes.first()
+
+        return None
+
 
 class Game(models.Model):
     """A model for a particular game."""
@@ -153,9 +178,11 @@ class Game(models.Model):
         )
 
     @property
-    def winner_stats_node(self):
+    def winner_player_stats_node(self):
         """Return the player stats node for the winner."""
-        node_queryset = self.playerstatsnode_set.filter(player=self.winner)
+        node_queryset = self.playerstatsnode_set.filter(
+            player=self.winner, game=self
+        )
 
         if node_queryset:
             return node_queryset.first().pk
@@ -163,9 +190,35 @@ class Game(models.Model):
         return None
 
     @property
-    def loser_stats_node(self):
+    def loser_player_stats_node(self):
         """Return the player stats node for the loser."""
-        node_queryset = self.playerstatsnode_set.filter(player=self.loser)
+        node_queryset = self.playerstatsnode_set.filter(
+            player=self.loser, game=self
+        )
+
+        if node_queryset:
+            return node_queryset.first().pk
+
+        return None
+
+    @property
+    def winner_matchup_stats_node(self):
+        """Return the matchup stats node for the winner."""
+        node_queryset = self.matchupstatsnode_set.filter(
+            player1=self.winner, player2=self.loser, game=self
+        )
+
+        if node_queryset:
+            return node_queryset.first().pk
+
+        return None
+
+    @property
+    def loser_matchup_stats_node(self):
+        """Return the matchup stats node for the loser."""
+        node_queryset = self.matchupstatsnode_set.filter(
+            player1=self.loser, player2=self.winner, game=self
+        )
 
         if node_queryset:
             return node_queryset.first().pk
@@ -185,20 +238,40 @@ class Game(models.Model):
             raise ValidationError("Winner and loser must be distinct!")
 
     def process_game(self):
-        """Process a game (e.g., update player stats)."""
-        # Create winner and loser stats nodes
-        if self.winner_stats_node is None:
+        """Update player and matchup stats based on game results."""
+        # Create stats nodes
+        if self.winner_player_stats_node is None:
             stats.create_player_stats_node(
                 player=self.winner,
                 game=self,
                 previous_node=self.winner.get_latest_player_stats_node(),
             )
 
-        if self.loser_stats_node is None:
+        if self.loser_player_stats_node is None:
             stats.create_player_stats_node(
                 player=self.loser,
                 game=self,
                 previous_node=self.loser.get_latest_player_stats_node(),
+            )
+
+        if self.winner_matchup_stats_node is None:
+            stats.create_matchup_stats_node(
+                player1=self.winner,
+                player2=self.loser,
+                game=self,
+                previous_node=self.winner.get_latest_matchup_stats_node(
+                    self.loser
+                ),
+            )
+
+        if self.loser_matchup_stats_node is None:
+            stats.create_matchup_stats_node(
+                player1=self.loser,
+                player2=self.winner,
+                game=self,
+                previous_node=self.loser.get_latest_matchup_stats_node(
+                    self.winner
+                ),
             )
 
 
@@ -239,8 +312,66 @@ class PlayerStatsNode(models.Model):
 
     def __str__(self):
         """String repesentation of a player stats node."""
-        return "%s (linked game: %s; date: %s)" % (
-            self.player.name,
+        return "%s (game pk: %s; date: %s)" % (
+            self.player,
+            self.game.pk,
+            self.datetime,
+        )
+
+    @property
+    def datetime(self):
+        """Returns the date of the node's game."""
+        return self.game.datetime_played
+
+
+class MatchupStatsNode(models.Model):
+    """A player matchup's stats snapshot at a particular point in time
+
+    Two matchup nodes will be generated for each game played by a given
+    matchup, each from the perspective of one of the players.
+    """
+
+    player1 = models.ForeignKey(
+        Player,
+        on_delete=models.CASCADE,
+        related_name="player1",
+        help_text="The player in the matchup whose perspective to take.",
+    )
+    player2 = models.ForeignKey(
+        Player,
+        on_delete=models.CASCADE,
+        related_name="player2",
+        help_text='The "opponent" player in the matchup.',
+    )
+    game = models.ForeignKey(
+        Game,
+        on_delete=models.CASCADE,
+        help_text="The latest game which updated the matchup's stats.",
+    )
+    games = models.PositiveIntegerField(
+        help_text="The number of games played by the matchup."
+    )
+    wins = models.PositiveIntegerField(
+        help_text="The number of wins the player1 has."
+    )
+    losses = models.PositiveIntegerField(
+        help_text="The number of losses the player1 has."
+    )
+    average_goals_per_game = models.FloatField(
+        help_text="The average number of goals scored per game by player1."
+    )
+
+    class Meta:
+        """Model metadata."""
+
+        # Order by creation date (in order from most recent to oldest)
+        ordering = ["-pk"]
+
+    def __str__(self):
+        """String repesentation of a matchup stats node."""
+        return "%s vs %s (game pk: %s; date: %s)" % (
+            self.player1,
+            self.player2,
             self.game.pk,
             self.datetime,
         )

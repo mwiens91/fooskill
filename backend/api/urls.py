@@ -7,6 +7,7 @@ from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
 from .views import (
     GameViewSet,
+    MatchupStatsNodeViewSet,
     PlayerViewSet,
     PlayerStatsNodeViewSet,
     UserViewSet,
@@ -29,6 +30,7 @@ class OptionalSlashRouter(DefaultRouter):
 # Register the routes
 router = OptionalSlashRouter()
 router.register("games", GameViewSet)
+router.register("matchupstatsnodes", MatchupStatsNodeViewSet)
 router.register("players", PlayerViewSet)
 router.register("playerstatsnodes", PlayerStatsNodeViewSet)
 router.register("users", UserViewSet)
