@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from . import stats
@@ -200,6 +201,18 @@ class Player(models.Model):
             return nodes.first()
 
         return None
+
+    def get_first_game_played(self):
+        """Returns the first game played by the player.
+
+        Returns None if the player has not played games.
+        """
+        games_played = Game.objects.filter(Q(winner=self) | Q(loser=self))
+
+        if not games_played:
+            return None
+
+        return games_played.last()
 
 
 class Game(models.Model):
