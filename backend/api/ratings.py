@@ -4,12 +4,13 @@ See http://www.glicko.net/glicko/glicko2.pdf for Glicko-2 implementation
 details.
 """
 
-from math import exp, pi, sqrt
+from math import exp, log, pi, sqrt
 from django.conf import settings
 from . import models
 
 # Glicko-2 parameters
 SCALE_FACTOR = 173.7178
+CONVERGENCE_TOLERANCE = 1e-6
 
 # Customizable Glicko-2 parameters
 BASE_RATING = settings.GLICKO2_BASE_RATING
@@ -19,28 +20,42 @@ TAU = settings.GLICKO2_SYSTEM_CONSTANT
 
 
 # Functions used in Glicko-2 calculations
-def g(phi):
+def _g(phi):
     return 1 / sqrt(1 + 3 * phi ** 2 / pi ** 2)
 
 
-def E(mu, mu_j, phi_j):
-    return 1 / (1 + exp(-g(phi_j) * (mu - mu_j)))
+def _E(mu, mu_j, phi_j):
+    return 1 / (1 + exp(-_g(phi_j) * (mu - mu_j)))
 
 
-def v(mu, mu_js, phi_js):
-    # Sanity check: The list of mus and phis passed in should be of the
-    # same length.
-    assert len(mu_js) == len(phi_js)
-
-    # Build up list to sum over
+def _v(mu, mu_js, phi_js):
     summands = []
 
     for mu_j, phi_j in zip(mu_js, phi_js):
-        gj = g(phi_j)
-        Ej = E(mu, mu_j, phi_j)
+        g_j = _g(phi_j)
+        E_j = _E(mu, mu_j, phi_j)
 
-        summands.append(gj ** 2 * Ej * (1 - Ej))
+        summands.append(g_j ** 2 * E_j * (1 - E_j))
 
     return 1 / sum(summands)
 
-# TODO a few more functions needed here, but taking a break for now
+
+def _delta(v, mu, s_js, mu_js, phi_js):
+    summands = []
+
+    for s_j, mu_j, phi_j in zip(s_js, mu_js, phi_js):
+        summands.append(_g(phi_j) * (s_j - _E(mu, mu_j, phi_j)))
+
+    return v * sum(summands)
+
+
+def f_closure(delta, v, sigma, tau, phi):
+    def f(x):
+        return (
+            exp(x)
+            * (delta ** 2 - phi ** 2 - v - exp(x))
+            / (2 * (phi ** 2 + v + exp(x)) ** 2)
+            - (x - log(sigma ** 2)) / tau ** 2
+        )
+
+    return f
