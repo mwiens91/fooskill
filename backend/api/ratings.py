@@ -39,7 +39,7 @@ def calculate_new_rating_period(start_datetime, end_datetime):
 
         if (
             first_game_played is None
-            or first_game_played.datetime_played > start_datetime
+            or first_game_played.datetime_played > end_datetime
         ):
             continue
 
