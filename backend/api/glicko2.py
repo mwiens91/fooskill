@@ -57,7 +57,7 @@ def f_closure(delta, v, sigma, phi):
 
 # The "main" rating calculating function
 def calculate_player_rating(
-    r, RD, sigma, opponent_rs=None, opponent_RDs=None, opponent_scores=None
+    r, RD, sigma, opponent_rs=None, opponent_RDs=None, scores=None
 ):
     """Calculates a players rating given a set of games in a rating period.
 
@@ -76,12 +76,13 @@ def calculate_player_rating(
             respective opponent per game.
         opponent_RDs: A list of floats representing the rating
             deviations of each respective opponent per game.
-        opponent_scores: A list of floats representing the scores of
-            each game. The scores are either 0 or 1, corresponding to a
-            win by the opponent and a win by the player, respectively.
+        scores: A list of floats representing the scores of each game.
+            The scores are either 0 or 1, corresponding to a win by the
+            opponent and a win by the player, respectively.
 
     Returns:
-        A two-tuple containing the player's new rating and rating
-        deviation.
+        A three-tuple containing the player's new rating, rating
+        deviation, and rating volatility.
     """
-    pass
+    # TODO actually implement this
+    return (420, 0.69, 0.5)

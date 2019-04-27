@@ -1,7 +1,7 @@
 """Custom command to reprocess stats over all games."""
 
 from django.core.management.base import BaseCommand
-from api.util import reprocess_all_games
+from api.util import reprocess_all_stats
 
 
 class Command(BaseCommand):
@@ -17,4 +17,4 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        reprocess_all_games(reset_id_counter=options["reset_id_counter"])
+        reprocess_all_stats(reset_id_counter=options["reset_id_counter"])
