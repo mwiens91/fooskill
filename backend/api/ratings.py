@@ -21,6 +21,11 @@ def calculate_new_rating_period(start_datetime, end_datetime):
         datetime_played__gte=start_datetime, datetime_played__lte=end_datetime
     )
 
+    # Mark all of the above games as belonging in this rating period
+    for game in games:
+        game.rating_period = rating_period
+        game.save()
+
     # For each player, find all their matches, their scores in those
     # matches; then calculate their ratings. The new_ratings dictionary
     # contains players as keys, and dictionaries containing their new
