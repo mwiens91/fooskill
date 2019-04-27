@@ -38,10 +38,7 @@ class RatingPeriod(models.Model):
 
     def __str__(self):
         """String repesentation of a rating period."""
-        return "Rating period: %s to %s" % (
-            self.start_datetime,
-            self.end_datetime,
-        )
+        return str(self.id)
 
 
 class Player(models.Model):
