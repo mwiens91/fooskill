@@ -3,17 +3,17 @@ import React, { Component } from "react";
 const urls = [
   {
     title: "admin page",
-    url: "https://api.meowder.com/admin",
+    url: process.env.REACT_APP_FOOSKILL_ADMIN_URL,
     key: 0
   },
   {
     title: "browsable API",
-    url: "https://api.meowder.com/",
+    url: process.env.REACT_APP_FOOSKILL_API_URL,
     key: 1
   },
   {
     title: "API specification",
-    url: "https://api.meowder.com/redoc/",
+    url: process.env.REACT_APP_FOOSKILL_API_SPEC_URL,
     key: 2
   }
 ];
