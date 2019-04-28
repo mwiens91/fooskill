@@ -56,37 +56,39 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar />
+        <Container>
 
-        {this.state.urls.map(item => (
-          <div key={item.key}>
-            <a href={item.url}>{item.title}</a>
-          </div>
-        ))}
+          {this.state.urls.map(item => (
+            <div key={item.key}>
+              <a href={item.url}>{item.title}</a>
+            </div>
+          ))}
 
-        <h2>PLAYAS</h2>
+          <h2>PLAYAS</h2>
 
-        <Table striped bordered hover size="sm">
-          <thead>
-            <tr>
-              <th>rank</th>
-              <th>name</th>
-              <th>rating</th>
-              <th>rating deviation</th>
-            </tr>
-          </thead>
-          <tbody>
-            {players
-              .sort((p1, p2) => p1.rating < p2.rating)
-              .map((player, index) => (
-                <tr key={player.id}>
-                  <td>{index + 1}</td>
-                  <td>{player.name}</td>
-                  <td>{Math.round(player.rating)}</td>
-                  <td>{Math.round(player.rating_deviation)}</td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
+          <Table striped bordered hover size="sm">
+            <thead>
+              <tr>
+                <th>rank</th>
+                <th>name</th>
+                <th>rating</th>
+                <th>rating deviation</th>
+              </tr>
+            </thead>
+            <tbody>
+              {players
+                .sort((p1, p2) => p1.rating < p2.rating)
+                .map((player, index) => (
+                  <tr key={player.id}>
+                    <td>{index + 1}</td>
+                    <td>{player.name}</td>
+                    <td>{Math.round(player.rating)}</td>
+                    <td>{Math.round(player.rating_deviation)}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        </Container>
       </div>
     );
   }
