@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Container from "react-bootstrap/Container";
-import Jumbotron from "react-bootstrap/Jumbotron";
-import Table from 'react-bootstrap/Table';
+import Table from "react-bootstrap/Table";
+import Navbar from "./Navbar";
 
 const API_BASE_URL = process.env.REACT_APP_FOOSKILL_API_URL;
 
@@ -55,12 +55,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Jumbotron fluid>
-          <Container>
-            <h1>fooskill</h1>
-            <p>this time it's bootstrap</p>
-          </Container>
-        </Jumbotron>
+        <Navbar />
 
         {this.state.urls.map(item => (
           <div key={item.key}>
@@ -80,21 +75,18 @@ class App extends Component {
             </tr>
           </thead>
           <tbody>
-
-          {players
-            .sort((p1, p2) => p1.rating < p2.rating)
-            .map((player, index) => (
-              <tr key={player.id}>
-                <td>{index + 1}</td>
-                <td>{player.name}</td>
-                <td>{Math.round(player.rating)}</td>
-                <td>{Math.round(player.rating_deviation)}</td>
-              </tr>
-            ))}
-
+            {players
+              .sort((p1, p2) => p1.rating < p2.rating)
+              .map((player, index) => (
+                <tr key={player.id}>
+                  <td>{index + 1}</td>
+                  <td>{player.name}</td>
+                  <td>{Math.round(player.rating)}</td>
+                  <td>{Math.round(player.rating_deviation)}</td>
+                </tr>
+              ))}
           </tbody>
         </Table>
-
       </div>
     );
   }
