@@ -1,21 +1,41 @@
 import React, { Component } from "react";
 
+const urls = [
+  {
+    title: "admin page",
+    url: "https://api.meowder.com/admin",
+    key: 0
+  },
+  {
+    title: "browsable API",
+    url: "https://api.meowder.com/",
+    key: 1
+  },
+  {
+    title: "API specification",
+    url: "https://api.meowder.com/redoc/",
+    key: 2
+  }
+];
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      urls
+    };
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1>FANTASTIC FOOSKILL FRONTEND</h1>
-          <div>
-            some stuff got moved around. here are some links.
+        <h1>FANTASTIC FOOSKILL FRONTEND</h1>
+        {this.state.urls.map(item => (
+          <div key={item.key}>
+            <a href={item.url}>{item.title}</a>
           </div>
-          <div>
-            <br/>
-            <a href="https://api.meowder.com/">browsable api</a>
-            <br/>
-            <a href="https://api.meowder.com/admin">admin page</a>
-          </div>
-        </header>
+        ))}
       </div>
     );
   }
