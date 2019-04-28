@@ -76,6 +76,7 @@ class App extends Component {
               <th>rank</th>
               <th>name</th>
               <th>rating</th>
+              <th>rating deviation</th>
             </tr>
           </thead>
           <tbody>
@@ -87,6 +88,7 @@ class App extends Component {
                 <td>{index + 1}</td>
                 <td>{player.name}</td>
                 <td>{Math.round(player.rating)}</td>
+                <td>{Math.round(player.rating_deviation)}</td>
               </tr>
             ))}
 
