@@ -500,7 +500,7 @@ class PlayerRatingNode(models.Model):
         ordering = ["-id"]
 
     def __str__(self):
-        """String repesentation of a rating period."""
+        """String repesentation of a player rating node."""
         return "[RP %s] r=%d, RD=%d, σ=%.2f" % (
             self.rating_period.id,
             self.rating,
