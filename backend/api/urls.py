@@ -4,7 +4,7 @@ from django.urls import include, path, re_path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
-from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.routers import DefaultRouter
 from .views import (
     current_user,
@@ -55,7 +55,7 @@ app_name = "api"
 urlpatterns = [
     path(r"", include(router.urls)),
     path(r"auth/", include("rest_framework.urls")),
-    path(r"api-token-auth/", obtain_auth_token),
+    path(r"api-token-obtain/", ObtainAuthToken.as_view()),
     path(r"api-token-current-user/", current_user),
     path(
         r"redoc/",
