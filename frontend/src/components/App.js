@@ -11,15 +11,16 @@ import Container from "react-bootstrap/Container";
 import Table from "react-bootstrap/Table";
 import Navbar from "./Navbar";
 import SignInForm from "./SignInForm";
+import Api from "../Api";
 
 // Import FontAwesome stuff
 library.add(fab, faChartBar, faCog, faEdit, faUserFriends);
 
-const API_BASE_URL = process.env.REACT_APP_FOOSKILL_API_URL;
-
 class App extends Component {
   constructor(props) {
     super(props);
+
+    this.Api = new Api(process.env.REACT_APP_FOOSKILL_API_URL);
 
     this.state = {
       displayedForm: null,
@@ -36,23 +37,15 @@ class App extends Component {
   handleSignIn = (e, data) => {
     e.preventDefault();
 
-    fetch(`${API_BASE_URL}/api-token-auth/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-      .then(response => response.json())
-      .then(json => {
-        localStorage.setItem("token", json.token);
+    this.Api.getUserToken.then(json => {
+      localStorage.setItem("token", json.token);
 
-        console.log(json); // DEBUG
+      console.log(json); // DEBUG
 
-        this.setState({
-          logged_in: true
-        });
+      this.setState({
+        logged_in: true
       });
+    });
   };
 
   setPlayers = players => this.setState({ players });
@@ -60,10 +53,7 @@ class App extends Component {
 
   componentDidMount() {
     // Fetch list of players from API
-    fetch(`${API_BASE_URL}/players`)
-      .then(response => response.json())
-      .then(response => this.setPlayers(response))
-      .catch(error => error);
+    this.Api.fetchPlayers().then(response => this.setPlayers(response));
 
     // If logged in, get user info
     if (this.state.loggedIn) {
