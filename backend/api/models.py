@@ -7,6 +7,7 @@ from django.db import models
 from django.db.models import Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
 from . import stats
 
 
@@ -514,3 +515,10 @@ def process_game_hook(instance, created, **_):
     """Process a game immediately after game creation."""
     if created:
         instance.process_game()
+
+
+@receiver(post_save, sender=User)
+def create_auth_token(instance, created, **_):
+    """Create an auth token for each new user."""
+    if created:
+        Token.objects.create(user=instance)
