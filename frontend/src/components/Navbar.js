@@ -27,7 +27,7 @@ const FooskillNavbar = (props) => (
             alignRight
             title={
               <span>
-                <FontAwesomeIcon icon="cog" /> sign in
+                <FontAwesomeIcon icon="cog" />
               </span>
             }
             id="basic-nav-dropdown"

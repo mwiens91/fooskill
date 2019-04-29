@@ -1,43 +1,40 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 class SignInForm extends Component {
-  state = {
-    username: "",
-    password: ""
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      username: "",
+      password: ""
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
 
   handleChange = e => {
-    const name = e.target.name;
-    const value = e.target.value;
-
-    this.setState(prevState => {
-      const newState = { ...prevState };
-      newState[name] = value;
-      return newState;
-    });
+    this.setState({ [e.currentTarget.name]: e.currentTarget.value });
   };
 
   render() {
     return (
-      <form onSubmit={e => this.props.handleSignIn(e, this.state)}>
-        <h4>sign in</h4>
-        <label htmlFor="username">username</label>
-        <input
-          type="text"
-          name="username"
-          value={this.state.username}
-          onChange={this.handleChange}
-        />
-        <label htmlFor="password">password</label>
-        <input
-          type="password"
-          name="password"
-          value={this.state.password}
-          onChange={this.handleChange}
-        />
-        <input type="submit" />
-      </form>
+      <Form onSubmit={e => this.props.handleSubmit(e, this.state)}>
+        <h4>Sign in</h4>
+        <Form.Group controlId="formUsername">
+          <Form.Label>Username</Form.Label>
+          <Form.Control type="username" placeholder="Enter username" />
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
     );
   }
 }
@@ -45,5 +42,5 @@ class SignInForm extends Component {
 export default SignInForm;
 
 SignInForm.propTypes = {
-  handleSignIn: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired
 };
