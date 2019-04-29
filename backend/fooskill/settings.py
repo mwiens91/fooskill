@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "crispy_forms",
     "django_extensions",
     "django_filters",
@@ -59,6 +60,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -161,6 +163,13 @@ REST_FRAMEWORK = {
     ),
     "EXCEPTION_HANDLER": "rollbar.contrib.django_rest_framework.post_exception_handler",
 }
+
+# CORS settings - separate the comma-separated hostnames and clean up
+# any empty strings caused by a terminal comma in ".env"
+CORS_ORIGIN_WHITELIST = (
+    os.environ["CORS_ORIGIN_WHITELIST"].replace("'", "").split(",")
+)
+CORS_ORIGIN_WHITELIST = list(filter(None, CORS_ORIGIN_WHITELIST))
 
 # Rollbar error-tracking settings
 
