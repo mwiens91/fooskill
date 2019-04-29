@@ -1,41 +1,27 @@
 import React, { Component } from "react";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
-import { faChartBar, faUserFriends } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChartBar,
+  faCog,
+  faEdit,
+  faUserFriends
+} from "@fortawesome/free-solid-svg-icons";
 import Container from "react-bootstrap/Container";
 import Table from "react-bootstrap/Table";
 import Navbar from "./Navbar";
 
 // Import FontAwesome stuff
-library.add(fab, faChartBar, faUserFriends);
+library.add(fab, faChartBar, faCog, faEdit, faUserFriends);
 
 const API_BASE_URL = process.env.REACT_APP_FOOSKILL_API_URL;
-
-const urls = [
-  {
-    title: "admin page",
-    url: process.env.REACT_APP_FOOSKILL_ADMIN_URL,
-    key: 0
-  },
-  {
-    title: "browsable API",
-    url: process.env.REACT_APP_FOOSKILL_API_URL,
-    key: 1
-  },
-  {
-    title: "API specification",
-    url: process.env.REACT_APP_FOOSKILL_API_SPEC_URL,
-    key: 2
-  }
-];
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      players: null,
-      urls: urls
+      players: null
     };
 
     this.setPlayers = this.setPlayers.bind(this);
@@ -63,12 +49,7 @@ class App extends Component {
       <div className="App">
         <Navbar />
         <Container>
-          {this.state.urls.map(item => (
-            <div key={item.key}>
-              <a href={item.url}>{item.title}</a>
-            </div>
-          ))}
-
+          <br />
           <h2>PLAYAS</h2>
 
           <Table striped bordered hover size="sm">
