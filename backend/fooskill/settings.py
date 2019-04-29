@@ -64,6 +64,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "rollbar.contrib.django.middleware.RollbarNotifierMiddleware",
 ]
 
 ROOT_URLCONF = "fooskill.urls"
@@ -158,6 +159,16 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ),
+    "EXCEPTION_HANDLER": "rollbar.contrib.django_rest_framework.post_exception_handler",
+}
+
+# Rollbar error-tracking settings
+
+ROLLBAR = {
+    "access_token": os.environ["ROLLBAR_ACCESS_TOKEN"],
+    "environment": "development" if DEBUG else "production",
+    "branch": "master",
+    "root": BASE_DIR,
 }
 
 # Glicko-2 settings
