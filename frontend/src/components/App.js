@@ -1,7 +1,13 @@
 import React, { Component } from "react";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { faChartBar, faUserFriends } from "@fortawesome/free-solid-svg-icons";
 import Container from "react-bootstrap/Container";
 import Table from "react-bootstrap/Table";
 import Navbar from "./Navbar";
+
+// Import FontAwesome stuff
+library.add(fab, faChartBar, faUserFriends);
 
 const API_BASE_URL = process.env.REACT_APP_FOOSKILL_API_URL;
 
@@ -57,7 +63,6 @@ class App extends Component {
       <div className="App">
         <Navbar />
         <Container>
-
           {this.state.urls.map(item => (
             <div key={item.key}>
               <a href={item.url}>{item.title}</a>
