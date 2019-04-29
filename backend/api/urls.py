@@ -4,6 +4,7 @@ from django.urls import include, path, re_path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
+from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework.routers import DefaultRouter
 from .views import (
     GameViewSet,
@@ -53,6 +54,7 @@ app_name = "api"
 urlpatterns = [
     path(r"", include(router.urls)),
     path(r"auth/", include("rest_framework.urls")),
+    path(r"api-token-auth/", obtain_auth_token),
     path(
         r"redoc/",
         schema_view.with_ui("redoc", cache_timeout=None),
