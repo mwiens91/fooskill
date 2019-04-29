@@ -22,21 +22,53 @@ class App extends Component {
     super(props);
 
     this.state = {
-      players: null
+      displayedForm: null,
+      loggedIn: localStorage.getItem("token") ? true : false,
+      players: null,
+      user: null
     };
 
+    this.handleSignIn = this.handleSignIn.bind(this);
     this.setPlayers = this.setPlayers.bind(this);
+    this.setUser = this.setUser.bind(this);
   }
 
-  setPlayers(players) {
-    this.setState({ players });
-  }
+  handleSignIn = (e, data) => {
+    e.preventDefault();
+
+    fetch(`${API_BASE_URL}/api-token-auth/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(json => {
+        localStorage.setItem("token", json.token);
+
+        console.log(json); // DEBUG
+
+        this.setState({
+          logged_in: true
+        });
+      });
+  };
+
+  setPlayers = players => this.setState({ players });
+  setUser = user => this.setState({ user });
 
   componentDidMount() {
+    // Fetch list of players from API
     fetch(`${API_BASE_URL}/players`)
       .then(response => response.json())
       .then(response => this.setPlayers(response))
       .catch(error => error);
+
+    // If logged in, get user info
+    if (this.state.loggedIn) {
+      // stuff here
+    }
   }
 
   render() {
@@ -51,7 +83,7 @@ class App extends Component {
         <Navbar />
         <Container>
           <br />
-          <SignInForm handleSignIn={() => {}}/>
+          <SignInForm handleSubmit={this.handleSignIn} />
           <h2>PLAYAS</h2>
 
           <Table striped bordered hover size="sm">

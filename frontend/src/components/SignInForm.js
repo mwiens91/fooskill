@@ -25,11 +25,20 @@ class SignInForm extends Component {
         <h4>Sign in</h4>
         <Form.Group controlId="formUsername">
           <Form.Label>Username</Form.Label>
-          <Form.Control type="username" placeholder="Enter username" />
+          <Form.Control
+            name="username"
+            onChange={this.handleChange}
+            placeholder="Enter username"
+          />
         </Form.Group>
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
+          <Form.Control
+            name="password"
+            onChange={this.handleChange}
+            type="password"
+            placeholder="Password"
+          />
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit
