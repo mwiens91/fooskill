@@ -10,6 +10,7 @@ import {
 import Container from "react-bootstrap/Container";
 import Table from "react-bootstrap/Table";
 import Navbar from "./Navbar";
+import SignInForm from "./SignInForm";
 
 // Import FontAwesome stuff
 library.add(fab, faChartBar, faCog, faEdit, faUserFriends);
@@ -50,6 +51,7 @@ class App extends Component {
         <Navbar />
         <Container>
           <br />
+          <SignInForm handleSignIn={() => {}}/>
           <h2>PLAYAS</h2>
 
           <Table striped bordered hover size="sm">

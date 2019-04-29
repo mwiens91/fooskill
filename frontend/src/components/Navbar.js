@@ -5,7 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
-const FooskillNavbar = () => (
+const FooskillNavbar = (props) => (
   <Navbar bg="primary" variant="dark" expand="sm">
     <Container>
       <Navbar.Brand>fooskill</Navbar.Brand>
@@ -24,7 +24,12 @@ const FooskillNavbar = () => (
             <FontAwesomeIcon icon="edit" /> add game
           </Nav.Link>
           <NavDropdown
-            title=<FontAwesomeIcon icon="cog" />
+            alignRight
+            title={
+              <span>
+                <FontAwesomeIcon icon="cog" /> sign in
+              </span>
+            }
             id="basic-nav-dropdown"
           >
             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
