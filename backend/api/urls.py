@@ -7,6 +7,7 @@ from rest_framework import permissions
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework.routers import DefaultRouter
 from .views import (
+    current_user,
     GameViewSet,
     MatchupStatsNodeViewSet,
     PlayerViewSet,
@@ -55,6 +56,7 @@ urlpatterns = [
     path(r"", include(router.urls)),
     path(r"auth/", include("rest_framework.urls")),
     path(r"api-token-auth/", obtain_auth_token),
+    path(r"api-token-current-user/", current_user),
     path(
         r"redoc/",
         schema_view.with_ui("redoc", cache_timeout=None),

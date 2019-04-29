@@ -1,6 +1,9 @@
 """Contains view(sets) for the API."""
 
 from rest_framework import viewsets
+from rest_framework.authtoken.models import Token
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from .filters import (
     GameFilter,
     MatchupStatsNodeFilter,
@@ -28,6 +31,14 @@ from .serializers import (
     RatingPeriodSerializer,
     UserReadOnlySerializer,
 )
+
+
+@api_view(["GET"])
+def current_user(request, token):
+    """Determine the current user by their token, and return their data."""
+    return Response(
+        UserReadOnlySerializer(Token.objects.get(key=token).user).data
+    )
 
 
 class UserViewSet(viewsets.ModelViewSet):
