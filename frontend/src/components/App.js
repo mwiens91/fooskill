@@ -47,7 +47,7 @@ class App extends Component {
     this.setLoggedIn({ token: tokenJson.token });
   };
 
-  handleSignOut = async e => {
+  handleSignOut = e => {
     e.preventDefault();
     this.setLoggedOut();
   };
