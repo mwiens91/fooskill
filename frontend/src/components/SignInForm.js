@@ -27,6 +27,7 @@ class SignInForm extends Component {
           <Form.Control
             name="username"
             onChange={this.handleChange}
+            type="text"
             placeholder="Enter username"
           />
         </Form.Group>
