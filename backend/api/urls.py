@@ -56,7 +56,7 @@ urlpatterns = [
     path(r"", include(router.urls)),
     path(r"auth/", include("rest_framework.urls")),
     path(r"api-token-obtain/", ObtainAuthToken.as_view()),
-    path(r"api-token-current-user/", current_user),
+    path(r"api-token-current-user/<str:token>/", current_user),
     path(
         r"redoc/",
         schema_view.with_ui("redoc", cache_timeout=None),
