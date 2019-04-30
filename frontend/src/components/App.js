@@ -30,7 +30,6 @@ class App extends Component {
 
     this.handleSignIn = this.handleSignIn.bind(this);
     this.setLoggedIn = this.setLoggedIn.bind(this);
-    this.setPlayers = this.setPlayers.bind(this);
     this.setUserFromToken = this.setUserFromToken.bind(this);
   }
 
@@ -47,27 +46,25 @@ class App extends Component {
     localStorage.setItem("token", token);
     this.setState({ logged_in: true });
   };
-  setPlayers = players => this.setState({ players });
   setUserFromToken = token => {};
 
-  componentDidMount() {
+  async componentDidMount() {
     // Fetch list of players from API
-    this.Api.getPlayers().then(response => this.setPlayers(response));
+    let players = await this.Api.getPlayers();
+    this.setState({ players });
 
     // If logged in, get user info and give the token to the Api class
     if (this.state.loggedIn) {
       this.Api.setToken(localStorage.getItem("token"));
 
-      this.Api.getUserFromApiToken().then(json =>
-        this.setState({ user: json })
-      );
+      let user = await this.Api.getUserFromApiToken();
+      this.setState({ user });
     }
   }
 
   render() {
-    const { players } = this.state;
-
-    if (!players) {
+    // Make sure we have the basics loaded
+    if (!this.state.players || (this.state.loggedIn && !this.state.user)) {
       return null;
     }
 
@@ -81,8 +78,7 @@ class App extends Component {
           {this.state.loggedIn && <div>{this.state.user.username}</div>}
           {!this.state.loggedIn && <div>fuck me</div>}
 
-          <Leaderboard players={players} />
-
+          <Leaderboard players={this.state.players} />
         </Container>
       </div>
     );
