@@ -79,7 +79,7 @@ class ObtainAuthTokenView(APIView):
         )
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
-        token, created = Token.objects.get(user=user)
+        token = Token.objects.get(user=user)
         return Response({"token": token.key})
 
 
