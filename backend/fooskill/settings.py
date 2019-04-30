@@ -167,7 +167,6 @@ REST_FRAMEWORK = {
 # Swagger and ReDoc settings (see
 # https://drf-yasg.readthedocs.io/en/stable/settings.html)
 SWAGGER_SETTINGS = {
-    "USE_SESSION_AUTH": False,
     "SECURITY_DEFINITIONS": {
         "Basic": {"type": "basic", "description": "Basic authentication"},
         "Token": {
