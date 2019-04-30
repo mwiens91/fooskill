@@ -33,7 +33,8 @@ const Leaderboard = ({ players }) => (
         style={{
           display: "flex",
           marginRight: "4em",
-          marginTop: "10em",
+          marginTop: "4em",
+          marginBottom: "4em",
           justifyContent: "center"
         }}
       >
