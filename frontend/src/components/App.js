@@ -65,7 +65,7 @@ class App extends Component {
 
     try {
       const user = await this.Api.getUserFromApiToken();
-      this.setState({ logged_in: true, user: user });
+      this.setState({ loggedIn: true, user: user });
     } catch (e) {
       this.Api.setToken(null);
       localStorage.removeItem("token");
