@@ -89,15 +89,10 @@ class App extends Component {
 
   render() {
     // Modal parameters
-    let signInModalOpen = () => this.setState({ signInModalShow: true });
-    let signOutModalOpen = () => this.setState({ signOutModalShow: true });
-    let signInModalClose = () => this.setState({ signInModalShow: false });
-    let signOutModalClose = () => this.setState({ signOutModalShow: false });
-
-    // Make sure we have the basics loaded
-    if (!this.state.players || (this.state.loggedIn && !this.state.user)) {
-      return null;
-    }
+    const signInModalOpen = () => this.setState({ signInModalShow: true });
+    const signOutModalOpen = () => this.setState({ signOutModalShow: true });
+    const signInModalClose = () => this.setState({ signInModalShow: false });
+    const signOutModalClose = () => this.setState({ signOutModalShow: false });
 
     return (
       <div className="App">

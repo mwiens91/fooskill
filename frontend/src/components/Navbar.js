@@ -5,6 +5,19 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
+const navDropdownTitle = ({ loggedIn, user }) => {
+  let title = "";
+
+  if (!loggedIn) {
+    title = " sign in";
+  } else if (user !== null) {
+    console.log(user)
+    title = ` ${user.username}`;
+  }
+
+  return title;
+};
+
 const FooskillNavbar = ({ loggedIn, user, signInHandle, signOutHandle }) => (
   <Navbar bg="primary" variant="dark" expand="sm">
     <Container>
@@ -27,11 +40,7 @@ const FooskillNavbar = ({ loggedIn, user, signInHandle, signOutHandle }) => (
             title={
               <span>
                 <FontAwesomeIcon icon="cog" />
-                {loggedIn ? (
-                  <span> {user.username}</span>
-                ) : (
-                  <span> sign in</span>
-                )}
+                {navDropdownTitle({ loggedIn, user })}
               </span>
             }
             id="basic-nav-dropdown"
