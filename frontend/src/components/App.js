@@ -75,7 +75,7 @@ class App extends Component {
   setLoggedOut = () => {
     localStorage.removeItem("token");
     this.Api.setToken(null);
-    this.setState({ logged_in: false, user: null });
+    this.setState({ loggedIn: false, user: null });
   };
 
   async componentDidMount() {
