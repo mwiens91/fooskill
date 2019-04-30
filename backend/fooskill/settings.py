@@ -164,6 +164,21 @@ REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "rollbar.contrib.django_rest_framework.post_exception_handler",
 }
 
+# Swagger and ReDoc settings (see
+# https://drf-yasg.readthedocs.io/en/stable/settings.html)
+SWAGGER_SETTINGS = {
+    "USE_SESSION_AUTH": False,
+    "SECURITY_DEFINITIONS": {
+        "Basic": {"type": "basic", "description": "Basic authentication"},
+        "Token": {
+            "type": "apiKey",
+            "description": "Token authentication",
+            "name": "Authorization",
+            "in": "header",
+        },
+    },
+}
+
 # CORS settings - separate the comma-separated hostnames and clean up
 # any empty strings caused by a terminal comma in ".env"
 CORS_ORIGIN_WHITELIST = (
