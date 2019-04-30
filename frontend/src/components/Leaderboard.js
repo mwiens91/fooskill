@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Table from "react-bootstrap/Table";
 
 const Leaderboard = ({ players }) => (
@@ -31,7 +30,3 @@ const Leaderboard = ({ players }) => (
 );
 
 export default Leaderboard;
-
-Leaderboard.propTypes = {
-  players: PropTypes.array.isRequired
-};

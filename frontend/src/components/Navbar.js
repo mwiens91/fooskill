@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -56,8 +55,3 @@ const FooskillNavbar = ({ loggedIn, user }) => (
 );
 
 export default FooskillNavbar;
-
-FooskillNavbar.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
-  user: PropTypes.object
-};
