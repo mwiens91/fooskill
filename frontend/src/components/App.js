@@ -37,7 +37,6 @@ class App extends Component {
     this.handleSignOut = this.handleSignOut.bind(this);
     this.setLoggedIn = this.setLoggedIn.bind(this);
     this.setLoggedOut = this.setLoggedOut.bind(this);
-    this.setUserFromToken = this.setUserFromToken.bind(this);
   }
 
   handleSignIn = async (e, data) => {
@@ -73,8 +72,6 @@ class App extends Component {
     this.Api.setToken(null);
     this.setState({ logged_in: false, user: null });
   };
-
-  setUserFromToken = token => {};
 
   async componentDidMount() {
     // Fetch list of players from API
