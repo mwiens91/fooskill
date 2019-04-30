@@ -47,6 +47,7 @@ def calculate_new_rating_period(start_datetime, end_datetime):
         player_rating = player.rating
         player_rating_deviation = player.rating_deviation
         player_rating_volatility = player.rating_volatility
+        player_inactivity = player.inactivity
 
         # Build up the per-game rating parameters of opponents
         opponent_ratings = []
@@ -80,10 +81,17 @@ def calculate_new_rating_period(start_datetime, end_datetime):
             scores=scores,
         )
 
+        # Calculate new inactivity
+        if opponent_ratings is None:
+            new_player_inactivity = player_inactivity + 1
+        else:
+            new_player_inactivity = 0
+
         new_ratings[player] = {
             "player_rating": new_player_rating,
             "player_rating_deviation": new_player_rating_deviation,
             "player_rating_volatility": new_player_rating_volatility,
+            "player_inactivity": new_player_inactivity,
         }
 
     # Now save all ratings
@@ -94,4 +102,5 @@ def calculate_new_rating_period(start_datetime, end_datetime):
             rating=ratings_dict["player_rating"],
             rating_deviation=ratings_dict["player_rating_deviation"],
             rating_volatility=ratings_dict["player_rating_volatility"],
+            inactivity=ratings_dict["player_inactivity"],
         )

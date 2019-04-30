@@ -46,9 +46,11 @@ class PlayerAdmin(admin.ModelAdmin):
         "id",
         "name",
         "user",
+        "is_active",
         "rating",
         "rating_deviation",
         "rating_volatility",
+        "inactivity",
         "games",
         "wins",
         "losses",
@@ -82,6 +84,7 @@ class PlayerRatingNodeAdmin(admin.ModelAdmin):
         "rating",
         "rating_deviation",
         "rating_volatility",
+        "inactivity",
     )
 
 

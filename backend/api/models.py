@@ -104,6 +104,28 @@ class Player(models.Model):
         return node.rating_volatility
 
     @property
+    def inactivity(self):
+        """Returns the players rating period inactivity."""
+        node = self.get_latest_player_rating_node()
+
+        if node is None:
+            return 0
+
+        return node.inactivity
+
+    @property
+    def is_active(self):
+        """Returns whether the player is active."""
+        if (
+            self.games
+            and self.inactivity
+            < settings.NUMBER_OF_RATING_PERIODS_MISSED_TO_BE_INACTIVE
+        ):
+            return True
+
+        return False
+
+    @property
     def games(self):
         """Returns the players game count."""
         node = self.get_latest_player_stats_node()
@@ -492,6 +514,9 @@ class PlayerRatingNode(models.Model):
     )
     rating_volatility = models.FloatField(
         help_text="The player's rating volatility for this rating period."
+    )
+    inactivity = models.PositiveSmallIntegerField(
+        help_text="How many rating periods the player has been inactive for."
     )
 
     class Meta:

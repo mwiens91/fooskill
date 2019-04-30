@@ -50,9 +50,11 @@ class PlayerSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "user",
+            "is_active",
             "rating",
             "rating_deviation",
             "rating_volatility",
+            "inactivity",
             "games",
             "wins",
             "losses",
@@ -60,9 +62,11 @@ class PlayerSerializer(serializers.ModelSerializer):
         )
         read_only_fields = (
             "id",
+            "is_active",
             "rating",
             "rating_deviation",
             "rating_volatility",
+            "inactivity",
             "games",
             "wins",
             "losses",
@@ -152,6 +156,7 @@ class PlayerRatingNodeSerializer(serializers.ModelSerializer):
             "rating",
             "rating_deviation",
             "rating_volatility",
+            "inactivity",
         )
 
 
