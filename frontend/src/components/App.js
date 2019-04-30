@@ -28,7 +28,7 @@ class App extends Component {
     this.state = {
       loggedIn: localStorage.getItem("token") ? true : false,
       players: null,
-      signInModalShow: true,
+      signInModalShow: false,
       user: null
     };
 
@@ -37,18 +37,26 @@ class App extends Component {
     this.setUserFromToken = this.setUserFromToken.bind(this);
   }
 
-  handleSignIn = (e, data) => {
+  handleSignIn = async (e, data) => {
     e.preventDefault();
 
-    this.Api.getApiTokenWithBasicAuth(data).then(json => {
-      // TODO some error catching here if login no good
-      this.setLoggedIn(json.token);
-    });
+    // TODO some error catching here if login no good
+    let tokenJson = await this.Api.getApiTokenWithBasicAuth(data);
+    this.setLoggedIn(tokenJson.token);
+  };
+  handleSignOut = async (e, data) => {
+    e.preventDefault();
+    this.setLoggedOut();
   };
 
   setLoggedIn = token => {
     localStorage.setItem("token", token);
     this.setState({ logged_in: true });
+  };
+  setLoggedOut = () => {
+    localStorage.removeItem("token");
+    this.Api.setToken(null);
+    this.setState({ logged_in: false, user: null });
   };
   setUserFromToken = token => {};
 
