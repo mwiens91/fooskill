@@ -52,10 +52,15 @@ class App extends Component {
     this.setLoggedOut();
   };
 
-  setLoggedIn = async ({ token = null, setToken = true }) => {
-    if (setToken) {
+  setLoggedIn = async ({ token = null, setTokenInStorage = true }) => {
+    if (setTokenInStorage) {
       localStorage.setItem("token", token);
+    }
+
+    if (token) {
       this.Api.setToken(token);
+    } else {
+      this.Api.setToken(localStorage.getItem("token"));
     }
 
     try {
@@ -78,9 +83,10 @@ class App extends Component {
     const players = await this.Api.getActivePlayers();
     this.setState({ players });
 
-    // If logged in, get user info and give the token to the Api class
+    // If there's a token stored, get user info and give the token to
+    // the Api class
     if (localStorage.getItem("token")) {
-      this.setLoggedIn({ setToken: false });
+      this.setLoggedIn({ setTokenInStorage: false });
     }
   }
 

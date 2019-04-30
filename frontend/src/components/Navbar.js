@@ -11,7 +11,6 @@ const navDropdownTitle = ({ loggedIn, user }) => {
   if (!loggedIn) {
     title = " sign in";
   } else if (user !== null) {
-    console.log(user)
     title = ` ${user.username}`;
   }
 
