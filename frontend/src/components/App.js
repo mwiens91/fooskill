@@ -70,7 +70,7 @@ class App extends Component {
 
   async componentDidMount() {
     // Fetch list of players from API
-    let players = await this.Api.getPlayers();
+    let players = await this.Api.getActivePlayers();
     this.setState({ players });
 
     // If logged in, get user info and give the token to the Api class
