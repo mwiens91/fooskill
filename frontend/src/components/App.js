@@ -78,7 +78,7 @@ class App extends Component {
 
         <Container>
           <Row>
-            <Col>
+            <Col md={5}>
               <Leaderboard players={this.state.players} />
             </Col>
             <Col>
