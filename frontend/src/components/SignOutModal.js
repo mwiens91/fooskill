@@ -15,7 +15,7 @@ const SignOutModal = ({ handleSubmit, onHide, show }) => (
     </Modal.Header>
     <Modal.Body>
       <SignOutForm
-        handleSubmit={(e) => {
+        handleSubmit={e => {
           handleSubmit(e);
           onHide();
         }}

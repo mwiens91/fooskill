@@ -49,9 +49,13 @@ const FooskillNavbar = ({ loggedIn, user, signInHandle, signOutHandle }) => (
             </NavDropdown.Item>
             <NavDropdown.Divider />
             {loggedIn ? (
-              <NavDropdown.Item onClick={signOutHandle}>Sign out</NavDropdown.Item>
+              <NavDropdown.Item onClick={signOutHandle}>
+                Sign out
+              </NavDropdown.Item>
             ) : (
-              <NavDropdown.Item onClick={signInHandle}>Sign in</NavDropdown.Item>
+              <NavDropdown.Item onClick={signInHandle}>
+                Sign in
+              </NavDropdown.Item>
             )}
           </NavDropdown>
         </Nav>
