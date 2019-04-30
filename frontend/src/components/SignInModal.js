@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 import SignInForm from "./SignInForm";
 
@@ -29,3 +30,9 @@ class SignInModal extends Component {
 }
 
 export default SignInModal;
+
+SignInModal.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  onHide: PropTypes.func.isRequired,
+  show: PropTypes.func.isRequired
+};
