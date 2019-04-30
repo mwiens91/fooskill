@@ -53,9 +53,11 @@ class App extends Component {
     this.setLoggedOut();
   };
 
-  setLoggedIn = token => {
+  setLoggedIn = async token => {
     localStorage.setItem("token", token);
-    this.setState({ logged_in: true });
+    this.Api.setToken(token);
+    let user = await this.Api.getUserFromApiToken();
+    this.setState({ logged_in: true, user: user });
   };
 
   setLoggedOut = () => {
@@ -73,10 +75,7 @@ class App extends Component {
 
     // If logged in, get user info and give the token to the Api class
     if (this.state.loggedIn) {
-      this.Api.setToken(localStorage.getItem("token"));
-
-      let user = await this.Api.getUserFromApiToken();
-      this.setState({ user });
+      this.setLoggedIn(localStorage.getItem("token"));
     }
   }
 
