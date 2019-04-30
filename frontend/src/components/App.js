@@ -70,7 +70,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Navbar />
+        <Navbar loggedIn={this.state.loggedIn} user={this.state.user} />
         <Container>
           <br />
           <SignInForm handleSubmit={this.handleSignIn} />
