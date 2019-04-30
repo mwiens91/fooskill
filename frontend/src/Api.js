@@ -9,7 +9,7 @@ class Api {
   }
 
   getApiTokenWithBasicAuth = authData =>
-    fetch(`${this.baseApiUrl}/api-token-auth/`, {
+    fetch(`${this.baseApiUrl}/api-token-obtain/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -25,7 +25,7 @@ class Api {
       .catch(error => error);
 
   getUserFromApiToken = () =>
-    fetch(`${this.baseApiUrl}/api-token-current-user/${this.token}`)
+    fetch(`${this.baseApiUrl}/api-token-current-user/${this.token}/`)
       .then(response => response.json())
       .catch(error => error);
 
