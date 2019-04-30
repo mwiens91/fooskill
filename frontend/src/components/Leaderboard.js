@@ -1,7 +1,7 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
 
-const FooskillLeaderboard = ({ players }) => (
+const Leaderboard = ({ players }) => (
   <div>
     <h4>Top 10</h4>
 
@@ -29,4 +29,4 @@ const FooskillLeaderboard = ({ players }) => (
   </div>
 );
 
-export default FooskillLeaderboard;
+export default Leaderboard;

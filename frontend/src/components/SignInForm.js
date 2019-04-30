@@ -22,7 +22,6 @@ class SignInForm extends Component {
   render() {
     return (
       <Form onSubmit={e => this.props.handleSubmit(e, this.state)}>
-        <h4>Sign in</h4>
         <Form.Group controlId="formUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control

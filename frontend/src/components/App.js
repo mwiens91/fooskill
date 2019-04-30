@@ -13,6 +13,7 @@ import Row from "react-bootstrap/Row";
 import Leaderboard from "./Leaderboard";
 import Navbar from "./Navbar";
 import SignInForm from "./SignInForm";
+import SignInModal from "./SignInModal";
 import Api from "../Api";
 
 // Import FontAwesome stuff
@@ -27,6 +28,7 @@ class App extends Component {
     this.state = {
       loggedIn: localStorage.getItem("token") ? true : false,
       players: null,
+      signInModalShow: true,
       user: null
     };
 
@@ -65,6 +67,9 @@ class App extends Component {
   }
 
   render() {
+    // Modal parameters
+    let signInModalClose = () => this.setState({ signInModalShow: false });
+
     // Make sure we have the basics loaded
     if (!this.state.players || (this.state.loggedIn && !this.state.user)) {
       return null;
@@ -72,6 +77,10 @@ class App extends Component {
 
     return (
       <div className="App">
+        <SignInModal
+          show={this.state.signInModalShow}
+          onHide={signInModalClose}
+        />
         <Navbar loggedIn={this.state.loggedIn} user={this.state.user} />
 
         <br />
