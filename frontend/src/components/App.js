@@ -37,6 +37,8 @@ class App extends Component {
     this.handleSignOut = this.handleSignOut.bind(this);
     this.setLoggedIn = this.setLoggedIn.bind(this);
     this.setLoggedOut = this.setLoggedOut.bind(this);
+    this.setSignInModalOpen = this.setSignInModalOpen.bind(this);
+    this.setSignOutModalOpen = this.setSignOutModalOpen.bind(this);
   }
 
   handleSignIn = async (e, data) => {
@@ -78,6 +80,11 @@ class App extends Component {
     this.setState({ loggedIn: false, user: null });
   };
 
+  setSignInModalOpen = truthVal => this.setState({ signInModalShow: truthVal });
+
+  setSignOutModalOpen = truthVal =>
+    this.setState({ signOutModalShow: truthVal });
+
   async componentDidMount() {
     // Fetch list of players from API
     const players = await this.Api.getActivePlayers();
@@ -92,29 +99,25 @@ class App extends Component {
 
   render() {
     // Modal parameters
-    const signInModalOpen = () => this.setState({ signInModalShow: true });
-    const signOutModalOpen = () => this.setState({ signOutModalShow: true });
-    const signInModalClose = () => this.setState({ signInModalShow: false });
-    const signOutModalClose = () => this.setState({ signOutModalShow: false });
 
     return (
       <div className="App">
         <SignInModal
           show={this.state.signInModalShow}
-          onHide={signInModalClose}
+          onHide={() => this.setSignInModalOpen(false)}
           handleSubmit={this.handleSignIn}
         />
         <SignOutModal
           show={this.state.signOutModalShow}
-          onHide={signOutModalClose}
+          onHide={() => this.setSignOutModalOpen(false)}
           handleSubmit={this.handleSignOut}
         />
 
         <Navbar
           loggedIn={this.state.loggedIn}
           user={this.state.user}
-          signInHandle={signInModalOpen}
-          signOutHandle={signOutModalOpen}
+          signInHandle={() => this.setSignInModalOpen(true)}
+          signOutHandle={() => this.setSignOutModalOpen(true)}
         />
 
         <br />
