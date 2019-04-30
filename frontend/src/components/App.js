@@ -12,7 +12,6 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Leaderboard from "./Leaderboard";
 import Navbar from "./Navbar";
-import SignInForm from "./SignInForm";
 import SignInModal from "./SignInModal";
 import SignOutModal from "./SignOutModal";
 import Api from "../Api";
