@@ -1,12 +1,15 @@
 """Contains view(sets) for the API."""
 
 from django.core.exceptions import ObjectDoesNotExist
+from drf_yasg.openapi import Schema, TYPE_OBJECT, TYPE_STRING
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets
 from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework import status
 from .filters import (
     GameFilter,
@@ -53,6 +56,32 @@ def current_user(request, token):
         )
 
     return Response(UserReadOnlySerializer(user).data)
+
+
+class ObtainAuthTokenView(APIView):
+    """Return auth token for passed in user."""
+
+    permission_classes = (AllowAny,)
+    serializer_class = AuthTokenSerializer
+    queryset = Token.objects.all()
+
+    @swagger_auto_schema(
+        request_body=AuthTokenSerializer,
+        responses={
+            status.HTTP_200_OK: Schema(
+                type=TYPE_OBJECT,
+                properties={"token": Schema(type=TYPE_STRING)},
+            )
+        },
+    )
+    def post(self, request):
+        serializer = self.serializer_class(
+            data=request.data, context={"request": request}
+        )
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data["user"]
+        token, created = Token.objects.ge(user=user)
+        return Response({"token": token.key})
 
 
 class UserViewSet(viewsets.ModelViewSet):

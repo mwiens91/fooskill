@@ -4,10 +4,10 @@ from django.urls import include, path, re_path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
-from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.routers import DefaultRouter
 from .views import (
     current_user,
+    ObtainAuthTokenView,
     GameViewSet,
     MatchupStatsNodeViewSet,
     PlayerViewSet,
@@ -47,7 +47,6 @@ schema_view = get_schema_view(
     openapi.Info(title="fooskill API", default_version="v1"),
     validators=["flex", "ssv"],
     public=True,
-    permission_classes=(permissions.IsAuthenticatedOrReadOnly,),
 )
 
 
@@ -55,7 +54,7 @@ app_name = "api"
 urlpatterns = [
     path(r"", include(router.urls)),
     path(r"auth/", include("rest_framework.urls")),
-    path(r"api-token-obtain/", ObtainAuthToken.as_view()),
+    path(r"api-token-obtain/", ObtainAuthTokenView.as_view()),
     path(r"api-token-current-user/<str:token>/", current_user),
     path(
         r"redoc/",
