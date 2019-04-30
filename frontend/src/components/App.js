@@ -80,6 +80,7 @@ class App extends Component {
         <SignInModal
           show={this.state.signInModalShow}
           onHide={signInModalClose}
+          handleSubmit={this.handleSignIn}
         />
         <Navbar loggedIn={this.state.loggedIn} user={this.state.user} />
 
