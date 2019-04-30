@@ -1,9 +1,11 @@
 """Contains view(sets) for the API."""
 
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
 from .filters import (
     GameFilter,
     MatchupStatsNodeFilter,
@@ -36,9 +38,15 @@ from .serializers import (
 @api_view(["GET"])
 def current_user(request, token):
     """Determine the current user by their token, and return their data."""
-    return Response(
-        UserReadOnlySerializer(Token.objects.get(key=token).user).data
-    )
+    try:
+        user = Token.objects.get(key=token).user
+    except ObjectDoesNotExist:
+        return Response(
+            {"Bad request": "Token does not correspond to an existing user"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    return Response(UserReadOnlySerializer(user).data)
 
 
 class UserViewSet(viewsets.ModelViewSet):
