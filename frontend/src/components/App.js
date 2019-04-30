@@ -26,7 +26,7 @@ class App extends Component {
     this.Api = new Api(process.env.REACT_APP_FOOSKILL_API_URL);
 
     this.state = {
-      loggedIn: localStorage.getItem("token") ? true : false,
+      loggedIn: false,
       players: null,
       signInModalShow: false,
       signOutModalShow: false,
@@ -44,8 +44,8 @@ class App extends Component {
     e.preventDefault();
 
     // TODO some error catching here if login no good
-    let tokenJson = await this.Api.getApiTokenWithBasicAuth(data);
-    this.setLoggedIn(tokenJson.token);
+    const tokenJson = await this.Api.getApiTokenWithBasicAuth(data);
+    this.setLoggedIn({ token: tokenJson.token });
   };
 
   handleSignOut = async e => {
@@ -53,11 +53,19 @@ class App extends Component {
     this.setLoggedOut();
   };
 
-  setLoggedIn = async token => {
-    localStorage.setItem("token", token);
-    this.Api.setToken(token);
-    let user = await this.Api.getUserFromApiToken();
-    this.setState({ logged_in: true, user: user });
+  setLoggedIn = async ({ token = null, setToken = true }) => {
+    if (setToken) {
+      localStorage.setItem("token", token);
+      this.Api.setToken(token);
+    }
+
+    try {
+      const user = await this.Api.getUserFromApiToken();
+      this.setState({ logged_in: true, user: user });
+    } catch (e) {
+      this.Api.setToken(null);
+      localStorage.removeItem("token");
+    }
   };
 
   setLoggedOut = () => {
@@ -70,12 +78,12 @@ class App extends Component {
 
   async componentDidMount() {
     // Fetch list of players from API
-    let players = await this.Api.getActivePlayers();
+    const players = await this.Api.getActivePlayers();
     this.setState({ players });
 
     // If logged in, get user info and give the token to the Api class
-    if (this.state.loggedIn) {
-      this.setLoggedIn(localStorage.getItem("token"));
+    if (localStorage.getItem("token")) {
+      this.setLoggedIn({ setToken: false });
     }
   }
 

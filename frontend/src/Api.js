@@ -31,9 +31,14 @@ class Api {
       .catch(error => error);
 
   getUserFromApiToken = () =>
-    fetch(`${this.baseApiUrl}/api-token-current-user/${this.token}/`)
-      .then(response => response.json())
-      .catch(error => error);
+    fetch(`${this.baseApiUrl}/api-token-current-user/${this.token}/`).then(
+      response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.json();
+      }
+    );
 
   setToken = token => (this.token = token);
 }
