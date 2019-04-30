@@ -7,7 +7,9 @@ import {
   faEdit,
   faUserFriends
 } from "@fortawesome/free-solid-svg-icons";
+import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 import Leaderboard from "./Leaderboard";
 import Navbar from "./Navbar";
 import SignInForm from "./SignInForm";
@@ -71,14 +73,18 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar loggedIn={this.state.loggedIn} user={this.state.user} />
+
+        <br />
+
         <Container>
-          <br />
-          <SignInForm handleSubmit={this.handleSignIn} />
-
-          {this.state.loggedIn && <div>{this.state.user.username}</div>}
-          {!this.state.loggedIn && <div>fuck me</div>}
-
-          <Leaderboard players={this.state.players} />
+          <Row>
+            <Col>
+              <Leaderboard players={this.state.players} />
+            </Col>
+            <Col>
+              <SignInForm handleSubmit={this.handleSignIn} />
+            </Col>
+          </Row>
         </Container>
       </div>
     );
