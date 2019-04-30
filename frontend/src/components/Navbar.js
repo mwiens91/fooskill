@@ -5,7 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
-const FooskillNavbar = ({ loggedIn, user }) => (
+const FooskillNavbar = ({ loggedIn, user, signInHandle, signOutHandle }) => (
   <Navbar bg="primary" variant="dark" expand="sm">
     <Container>
       <Navbar.Brand>fooskill</Navbar.Brand>
@@ -47,6 +47,12 @@ const FooskillNavbar = ({ loggedIn, user }) => (
             >
               API spec
             </NavDropdown.Item>
+            <NavDropdown.Divider />
+            {loggedIn ? (
+              <NavDropdown.Item onClick={signOutHandle}>Sign out</NavDropdown.Item>
+            ) : (
+              <NavDropdown.Item onClick={signInHandle}>Sign in</NavDropdown.Item>
+            )}
           </NavDropdown>
         </Nav>
       </Navbar.Collapse>
