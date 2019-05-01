@@ -34,9 +34,9 @@ class App extends Component {
         localStorage.getItem("loggedIn") !== null
           ? localStorage.getItem("loggedIn")
           : false,
-      players:
-        localStorage.getItem("players") !== null
-          ? JSON.parse(localStorage.getItem("players"))
+      topPlayers:
+        localStorage.getItem("topPlayers") !== null
+          ? JSON.parse(localStorage.getItem("topPlayers"))
           : null,
       signInModalShow: false,
       signOutModalShow: false,
@@ -131,11 +131,11 @@ class App extends Component {
   // leaderboard and perform a log-in action if there's a token in local
   // storage
   async componentDidMount() {
-    // Fetch and save list of players from API
-    const players = await this.Api.getActivePlayers();
+    // Fetch and save list of top players from API
+    const topPlayers = await this.Api.getTopNPlayers();
 
-    this.setState({ players });
-    localStorage.setItem("players", JSON.stringify(players));
+    this.setState({ topPlayers });
+    localStorage.setItem("topPlayers", JSON.stringify(topPlayers));
 
     // If there's a token stored, get user info and give the token to
     // the Api class
@@ -170,7 +170,7 @@ class App extends Component {
         <Container>
           <Row>
             <Col md={5}>
-              <Leaderboard players={this.state.players} />
+              <Leaderboard players={this.state.topPlayers} />
             </Col>
             <Col>
               <h4>STUFF HERE</h4>

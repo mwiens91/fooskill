@@ -5,7 +5,7 @@ import Table from "react-bootstrap/Table";
 // Show a leaderboard (or spinner if the players haven't loaded yet)
 const Leaderboard = ({ players }) => (
   <div>
-    <h4>Top 10</h4>
+    <h4>Leaderboard</h4>
 
     {players ? (
       <Table striped bordered hover size="sm">
@@ -18,8 +18,6 @@ const Leaderboard = ({ players }) => (
         </thead>
         <tbody>
           {players
-            .sort((p1, p2) => p1.rating < p2.rating)
-            .slice(0, 10)
             .map((player, index) => (
               <tr key={player.id}>
                 <td>{index + 1}</td>

@@ -4,18 +4,11 @@ class Api {
     this.token = token;
 
     this.getApiTokenWithBasicAuth = this.getApiTokenWithBasicAuth.bind(this);
-    this.getActivePlayers = this.getActivePlayers.bind(this);
     this.getUser = this.getUser.bind(this);
     this.getUserFromApiToken = this.getUserFromApiToken.bind(this);
     this.setToken = this.setToken.bind(this);
+    this.getTopNPlayers = this.getTopNPlayers.bind(this);
   }
-
-  // Get a list of active players
-  getActivePlayers = () =>
-    fetch(`${this.baseApiUrl}/players`)
-      .then(response => response.json())
-      .then(players => players.filter(p => p.is_active))
-      .catch(error => error);
 
   // Get an API token by posting username and password. This will throw
   // an error if the request failed.
@@ -50,6 +43,18 @@ class Api {
         return response.json();
       }
     );
+
+  // Get the top N <= 10 active players
+  getTopNPlayers = (nMax = 10) =>
+    fetch(`${this.baseApiUrl}/players`)
+      .then(response => response.json())
+      .then(players =>
+        players
+          .filter(p => p.is_active)
+          .sort((p1, p2) => p1.rating < p2.rating)
+          .slice(0, 10)
+      )
+      .catch(error => error);
 
   // Set the API token for this instance
   setToken = token => (this.token = token);
