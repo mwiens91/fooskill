@@ -90,7 +90,7 @@ class App extends Component {
       // Store these so next page reload is smoother. Same reasoning as
       // comments above.
       localStorage.setItem("loggedIn", false);
-      localStorage.setItem("user", false);
+      localStorage.setItem("user", null);
     }
   };
 
