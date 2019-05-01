@@ -174,7 +174,7 @@ class App extends Component {
           <Container>
             <Row>
               <Col md={5}>
-                <Leaderboard players={this.state.topPlayers} />
+                <Leaderboard topPlayers={this.state.topPlayers} />
               </Col>
               <Col>
                 <h4>STUFF HERE</h4>

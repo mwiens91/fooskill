@@ -2,12 +2,12 @@ import React from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Table from "react-bootstrap/Table";
 
-// Show a leaderboard (or spinner if the players haven't loaded yet)
-const Leaderboard = ({ players }) => (
+// Show a leaderboard (or spinner if the top players haven't loaded yet)
+const Leaderboard = ({ topPlayers }) => (
   <div>
     <h4>Leaderboard</h4>
 
-    {players ? (
+    {topPlayers ? (
       <Table striped bordered hover size="sm">
         <thead>
           <tr>
@@ -17,7 +17,7 @@ const Leaderboard = ({ players }) => (
           </tr>
         </thead>
         <tbody>
-          {players
+          {topPlayers
             .map((player, index) => (
               <tr key={player.id}>
                 <td>{index + 1}</td>
