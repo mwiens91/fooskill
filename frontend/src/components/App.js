@@ -30,7 +30,10 @@ class App extends Component {
         localStorage.getItem("loggedIn") !== null
           ? localStorage.getItem("loggedIn")
           : false,
-      players: null,
+      players:
+        localStorage.getItem("players") !== null
+          ? JSON.parse(localStorage.getItem("players"))
+          : null,
       signInModalShow: false,
       signOutModalShow: false,
       user:
@@ -108,6 +111,7 @@ class App extends Component {
     // Fetch list of players from API
     const players = await this.Api.getActivePlayers();
     this.setState({ players });
+    localStorage.setItem("players", JSON.stringify(players));
 
     // If there's a token stored, get user info and give the token to
     // the Api class
