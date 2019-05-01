@@ -99,8 +99,6 @@ class App extends Component {
   }
 
   render() {
-    // Modal parameters
-
     return (
       <div className="App">
         <SignInModal
