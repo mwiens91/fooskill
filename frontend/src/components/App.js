@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import {
@@ -7,13 +8,15 @@ import {
   faEdit,
   faUserFriends
 } from "@fortawesome/free-solid-svg-icons";
-import Col from "react-bootstrap/Col";
+
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Leaderboard from "./Leaderboard";
+
+import Home from "./Home";
+
 import Navbar from "./Navbar";
 import SignInModal from "./SignInModal";
 import SignOutModal from "./SignOutModal";
+
 import Api from "../Api";
 
 // Import FontAwesome stuff
@@ -37,10 +40,6 @@ class App extends Component {
         localStorage.getItem("loggedIn") !== null
           ? localStorage.getItem("loggedIn")
           : false,
-      topPlayers:
-        localStorage.getItem("topPlayers") !== null
-          ? JSON.parse(localStorage.getItem("topPlayers"))
-          : null,
       signInModalShow: false,
       signOutModalShow: false,
       user:
@@ -130,16 +129,9 @@ class App extends Component {
   setSignOutModalOpen = truthVal =>
     this.setState({ signOutModalShow: truthVal });
 
-  // Do these this once when the component mounts: get players for the
-  // leaderboard and perform a log-in action if there's a token in local
-  // storage
+  // Do these this once when the component mounts: perform a log-in
+  // action if there's a token in local storage
   async componentDidMount() {
-    // Fetch and save list of top players from API
-    const topPlayers = await this.Api.getTopNPlayers();
-
-    this.setState({ topPlayers });
-    localStorage.setItem("topPlayers", JSON.stringify(topPlayers));
-
     // If there's a token stored, get user info and give the token to
     // the Api class
     if (localStorage.getItem("token")) {
@@ -172,25 +164,7 @@ class App extends Component {
           <br />
 
           <Container>
-            <Row>
-              <Col md={5}>
-                <Leaderboard topPlayers={this.state.topPlayers} />
-              </Col>
-              <Col>
-                <h4>STUFF HERE</h4>
-
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                </p>
-              </Col>
-            </Row>
+            <Home />
           </Container>
         </ApiContext.Provider>
       </div>
