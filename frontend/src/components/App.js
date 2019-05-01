@@ -36,10 +36,6 @@ class App extends Component {
     // page reloads are smooth. Generally they are recalculated after
     // the component mounts.
     this.state = {
-      loggedIn:
-        localStorage.getItem("loggedIn") !== null
-          ? localStorage.getItem("loggedIn")
-          : false,
       signInModalShow: false,
       signOutModalShow: false,
       user:
@@ -73,9 +69,9 @@ class App extends Component {
   };
 
   // Set the app to a logged-in state. Save the passed in API token to
-  // local storage (provided we want to reset the API token), grab the
-  // user corresponding to the API token we have (passed in or
-  // otherwise), and flip the logged-in variable to true.
+  // local storage (provided we want to reset the API token) and grab
+  // the user corresponding to the API token we have (passed in or
+  // otherwise).
   setLoggedIn = async ({ token = null, setTokenInStorage = true }) => {
     // Optionally save the passed in token to local storage
     if (setTokenInStorage) {
@@ -95,10 +91,9 @@ class App extends Component {
       // Fetch and set the user
       const user = await this.Api.getUserFromApiToken();
 
-      this.setState({ loggedIn: true, user: user });
+      this.setState({ user: user });
 
-      // Store the login state to local storage
-      localStorage.setItem("loggedIn", true);
+      // Store the user to local storage
       localStorage.setItem("user", JSON.stringify(user));
     } catch (e) {
       // Set the state of the app as logged-out (it probably is already
@@ -111,14 +106,13 @@ class App extends Component {
   setLoggedOut = () => {
     // Set the state of the app as logged-out (it probably is already
     // this way, but we'll make perform this action just in case)
-    this.setState({ loggedIn: false, user: null });
+    this.setState({ user: null });
 
     // Reset the API instance's token
     this.Api.setToken(null);
 
     // Clear login-related variables from local storage
     localStorage.removeItem("token");
-    localStorage.setItem("loggedIn", false);
     localStorage.setItem("user", null);
   };
 
@@ -155,7 +149,6 @@ class App extends Component {
           />
 
           <Navbar
-            loggedIn={this.state.loggedIn}
             user={this.state.user}
             signInHandle={() => this.setSignInModalOpen(true)}
             signOutHandle={() => this.setSignOutModalOpen(true)}

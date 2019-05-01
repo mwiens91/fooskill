@@ -5,19 +5,19 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
-const navDropdownTitle = ({ loggedIn, user }) => {
+const navDropdownTitle = user => {
   let title = "";
 
-  if (!loggedIn) {
+  if (!user) {
     title = " sign in";
-  } else if (user !== null) {
+  } else {
     title = ` ${user.username}`;
   }
 
   return title;
 };
 
-const FooskillNavbar = ({ loggedIn, user, signInHandle, signOutHandle }) => (
+const FooskillNavbar = ({ user, signInHandle, signOutHandle }) => (
   <Navbar bg="primary" variant="dark" expand="sm">
     <Container>
       <Navbar.Brand>fooskill</Navbar.Brand>
@@ -32,7 +32,7 @@ const FooskillNavbar = ({ loggedIn, user, signInHandle, signOutHandle }) => (
           </Nav.Link>
         </Nav>
         <Nav className="ml-auto">
-          {loggedIn && (
+          {user && (
             <Nav.Link href="#submit">
               <FontAwesomeIcon icon="edit" /> add game
             </Nav.Link>
@@ -41,7 +41,7 @@ const FooskillNavbar = ({ loggedIn, user, signInHandle, signOutHandle }) => (
             title={
               <span>
                 <FontAwesomeIcon icon="cog" />
-                {navDropdownTitle({ loggedIn, user })}
+                {navDropdownTitle(user)}
               </span>
             }
             id="basic-nav-dropdown"
@@ -58,7 +58,7 @@ const FooskillNavbar = ({ loggedIn, user, signInHandle, signOutHandle }) => (
               API spec
             </NavDropdown.Item>
             <NavDropdown.Divider />
-            {loggedIn ? (
+            {user ? (
               <NavDropdown.Item onClick={signOutHandle}>
                 Sign out
               </NavDropdown.Item>
