@@ -23,8 +23,12 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    // Instance to make backend API calls with
     this.Api = new Api(process.env.REACT_APP_FOOSKILL_API_URL);
 
+    // Some of these values are pulled from local storage to ensure that
+    // page reloads are smooth. Generally they are recalculated after
+    // the component mounts.
     this.state = {
       loggedIn:
         localStorage.getItem("loggedIn") !== null
@@ -50,66 +54,86 @@ class App extends Component {
     this.setSignOutModalOpen = this.setSignOutModalOpen.bind(this);
   }
 
+  // Function passed to sign in form and called on form submission.
   handleSignIn = async (e, data) => {
     e.preventDefault();
 
-    // This will throw an error if the request fails
+    // This will throw an error if the request fails. Catch it!
     const tokenJson = await this.Api.getApiTokenWithBasicAuth(data);
 
     this.setLoggedIn({ token: tokenJson.token });
   };
 
+  // Function passed to sign out form and called on form submission.
   handleSignOut = e => {
     e.preventDefault();
     this.setLoggedOut();
   };
 
+  // Set the app to a logged-in state. Save the passed in API token to
+  // local storage (provided we want to reset the API token), grab the
+  // user corresponding to the API token we have (passed in or
+  // otherwise), and flip the logged-in variable to true.
   setLoggedIn = async ({ token = null, setTokenInStorage = true }) => {
+    // Optionally save the passed in token to local storage
     if (setTokenInStorage) {
       localStorage.setItem("token", token);
     }
 
+    // Save the token on the API instance for convenient access
     if (token) {
       this.Api.setToken(token);
     } else {
       this.Api.setToken(localStorage.getItem("token"));
     }
 
+    // Try fetching the user from the API token and update corresponding
+    // variables. If fetching fails then reset these variables.
     try {
+      // Fetch and set the user
       const user = await this.Api.getUserFromApiToken();
+
       this.setState({ loggedIn: true, user: user });
 
-      // Store these so next page reload is smoother. We'll still double
-      // check these regardless when loading the page.
+      // Store the login state to local storage
       localStorage.setItem("loggedIn", true);
       localStorage.setItem("user", JSON.stringify(user));
     } catch (e) {
-      this.Api.setToken(null);
-      localStorage.removeItem("token");
-
-      // Store these so next page reload is smoother. Same reasoning as
-      // comments above.
-      localStorage.setItem("loggedIn", false);
-      localStorage.setItem("user", null);
+      // Set the state of the app as logged-out (it probably is already
+      // this way, but we'll make perform this action just in case)
+      this.setLoggedOut();
     }
   };
 
+  // Set the app to a logged-out state
   setLoggedOut = () => {
-    localStorage.removeItem("token");
-    this.Api.setToken(null);
+    // Set the state of the app as logged-out (it probably is already
+    // this way, but we'll make perform this action just in case)
     this.setState({ loggedIn: false, user: null });
+
+    // Reset the API instance's token
+    this.Api.setToken(null);
+
+    // Clear login-related variables from local storage
+    localStorage.removeItem("token");
     localStorage.setItem("loggedIn", false);
-    localStorage.setItem("user", false);
+    localStorage.setItem("user", null);
   };
 
+  // Set whether to display the sign in modal
   setSignInModalOpen = truthVal => this.setState({ signInModalShow: truthVal });
 
+  // Set whether to display the sign out modal
   setSignOutModalOpen = truthVal =>
     this.setState({ signOutModalShow: truthVal });
 
+  // Do these this once when the component mounts: get players for the
+  // leaderboard and perform a log-in action if there's a token in local
+  // storage
   async componentDidMount() {
-    // Fetch list of players from API
+    // Fetch and save list of players from API
     const players = await this.Api.getActivePlayers();
+
     this.setState({ players });
     localStorage.setItem("players", JSON.stringify(players));
 

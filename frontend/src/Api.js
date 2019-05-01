@@ -10,12 +10,15 @@ class Api {
     this.setToken = this.setToken.bind(this);
   }
 
+  // Get a list of active players
   getActivePlayers = () =>
     fetch(`${this.baseApiUrl}/players`)
       .then(response => response.json())
       .then(players => players.filter(p => p.is_active))
       .catch(error => error);
 
+  // Get an API token by posting username and password. This will throw
+  // an error if the request failed.
   getApiTokenWithBasicAuth = authData =>
     fetch(`${this.baseApiUrl}/api-token-obtain/`, {
       method: "POST",
@@ -30,11 +33,14 @@ class Api {
       return response.json();
     });
 
+  // Get the user corresponding to given a username
   getUser = username =>
     fetch(`${this.baseApiUrl}/users/${username}`)
       .then(response => response.json())
       .catch(error => error);
 
+  // Get a user corresponding to a given API token. This will throw an
+  // error if the request failed.
   getUserFromApiToken = () =>
     fetch(`${this.baseApiUrl}/api-token-current-user/${this.token}/`).then(
       response => {
@@ -45,6 +51,7 @@ class Api {
       }
     );
 
+  // Set the API token for this instance
   setToken = token => (this.token = token);
 }
 

@@ -2,6 +2,7 @@ import React from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Table from "react-bootstrap/Table";
 
+// Show a leaderboard (or spinner if the players haven't loaded yet)
 const Leaderboard = ({ players }) => (
   <div>
     <h4>Top 10</h4>
