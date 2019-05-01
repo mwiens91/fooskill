@@ -40,9 +40,16 @@ class SignInForm extends Component {
             placeholder="Password"
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
+        {this.props.error && (
+          <Form.Label>
+            <span style={{ color: "red" }}>{this.props.error}</span>
+          </Form.Label>
+        )}
+        <div>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+        </div>
       </Form>
     );
   }
@@ -51,5 +58,6 @@ class SignInForm extends Component {
 export default SignInForm;
 
 SignInForm.propTypes = {
+  error: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired
 };
