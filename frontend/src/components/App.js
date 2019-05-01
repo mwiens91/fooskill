@@ -22,8 +22,9 @@ import Api from "../Api";
 // Import FontAwesome stuff
 library.add(fab, faChartBar, faCog, faEdit, faUserFriends);
 
-// Context for the API instance
+// Contexts for the API instance and logged-in user
 const ApiContext = React.createContext();
+const UserContext = React.createContext();
 
 class App extends Component {
   constructor(props) {
@@ -137,28 +138,30 @@ class App extends Component {
     return (
       <div className="App">
         <ApiContext.Provider value={this.Api}>
-          <SignInModal
-            show={this.state.signInModalShow}
-            onHide={() => this.setSignInModalOpen(false)}
-            handleSubmit={this.handleSignIn}
-          />
-          <SignOutModal
-            show={this.state.signOutModalShow}
-            onHide={() => this.setSignOutModalOpen(false)}
-            handleSubmit={this.handleSignOut}
-          />
+          <UserContext.Provider value={this.state.user}>
+            <SignInModal
+              show={this.state.signInModalShow}
+              onHide={() => this.setSignInModalOpen(false)}
+              handleSubmit={this.handleSignIn}
+            />
+            <SignOutModal
+              show={this.state.signOutModalShow}
+              onHide={() => this.setSignOutModalOpen(false)}
+              handleSubmit={this.handleSignOut}
+            />
 
-          <Navbar
-            user={this.state.user}
-            signInHandle={() => this.setSignInModalOpen(true)}
-            signOutHandle={() => this.setSignOutModalOpen(true)}
-          />
+            <Navbar
+              user={this.state.user}
+              signInHandle={() => this.setSignInModalOpen(true)}
+              signOutHandle={() => this.setSignOutModalOpen(true)}
+            />
 
-          <br />
+            <br />
 
-          <Container>
-            <Home />
-          </Container>
+            <Container>
+              <Home />
+            </Container>
+          </UserContext.Provider>
         </ApiContext.Provider>
       </div>
     );
@@ -166,4 +169,4 @@ class App extends Component {
 }
 
 export default App;
-export { ApiContext };
+export { ApiContext, UserContext };
