@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { LinkContainer } from "react-router-bootstrap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -27,13 +28,17 @@ function FooskillNavbar({ signInHandle, signOutHandle }) {
   return (
     <Navbar bg="primary" variant="dark" expand="sm">
       <Container>
-        <Navbar.Brand>fooskill</Navbar.Brand>
+        <LinkContainer to="/">
+          <Navbar.Brand>fooskill</Navbar.Brand>
+        </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="#players">
-              <FontAwesomeIcon icon="user-friends" /> players
-            </Nav.Link>
+            <LinkContainer to="/players">
+              <Nav.Link>
+                <FontAwesomeIcon icon="user-friends" /> players
+              </Nav.Link>
+            </LinkContainer>
             <Nav.Link href="#rankings">
               <FontAwesomeIcon icon="chart-bar" /> rankings
             </Nav.Link>

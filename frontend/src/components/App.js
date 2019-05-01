@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
@@ -12,6 +13,7 @@ import {
 import Container from "react-bootstrap/Container";
 
 import Home from "./Home";
+import Players from "./Players";
 
 import Navbar from "./Navbar";
 import SignInModal from "./SignInModal";
@@ -136,34 +138,37 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <ApiContext.Provider value={this.Api}>
-          <UserContext.Provider value={this.state.user}>
-            <SignInModal
-              show={this.state.signInModalShow}
-              onHide={() => this.setSignInModalOpen(false)}
-              handleSubmit={this.handleSignIn}
-            />
-            <SignOutModal
-              show={this.state.signOutModalShow}
-              onHide={() => this.setSignOutModalOpen(false)}
-              handleSubmit={this.handleSignOut}
-            />
+      <Router>
+        <div className="App">
+          <ApiContext.Provider value={this.Api}>
+            <UserContext.Provider value={this.state.user}>
+              <SignInModal
+                show={this.state.signInModalShow}
+                onHide={() => this.setSignInModalOpen(false)}
+                handleSubmit={this.handleSignIn}
+              />
+              <SignOutModal
+                show={this.state.signOutModalShow}
+                onHide={() => this.setSignOutModalOpen(false)}
+                handleSubmit={this.handleSignOut}
+              />
 
-            <Navbar
-              user={this.state.user}
-              signInHandle={() => this.setSignInModalOpen(true)}
-              signOutHandle={() => this.setSignOutModalOpen(true)}
-            />
+              <Navbar
+                user={this.state.user}
+                signInHandle={() => this.setSignInModalOpen(true)}
+                signOutHandle={() => this.setSignOutModalOpen(true)}
+              />
 
-            <br />
+              <br />
 
-            <Container>
-              <Home />
-            </Container>
-          </UserContext.Provider>
-        </ApiContext.Provider>
-      </div>
+              <Container>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/players" component={Players} />
+              </Container>
+            </UserContext.Provider>
+          </ApiContext.Provider>
+        </div>
+      </Router>
     );
   }
 }
