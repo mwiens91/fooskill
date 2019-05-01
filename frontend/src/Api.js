@@ -5,8 +5,16 @@ class Api {
 
     this.getApiTokenWithBasicAuth = this.getApiTokenWithBasicAuth.bind(this);
     this.getActivePlayers = this.getActivePlayers.bind(this);
+    this.getUser = this.getUser.bind(this);
     this.getUserFromApiToken = this.getUserFromApiToken.bind(this);
+    this.setToken = this.setToken(this);
   }
+
+  getActivePlayers = () =>
+    fetch(`${this.baseApiUrl}/players`)
+      .then(response => response.json())
+      .then(players => players.filter(p => p.is_active))
+      .catch(error => error);
 
   getApiTokenWithBasicAuth = authData =>
     fetch(`${this.baseApiUrl}/api-token-obtain/`, {
@@ -21,12 +29,6 @@ class Api {
       }
       return response.json();
     });
-
-  getActivePlayers = () =>
-    fetch(`${this.baseApiUrl}/players`)
-      .then(response => response.json())
-      .then(players => players.filter(p => p.is_active))
-      .catch(error => error);
 
   getUser = username =>
     fetch(`${this.baseApiUrl}/users/${username}`)
