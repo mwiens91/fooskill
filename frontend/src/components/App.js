@@ -26,11 +26,17 @@ class App extends Component {
     this.Api = new Api(process.env.REACT_APP_FOOSKILL_API_URL);
 
     this.state = {
-      loggedIn: false,
+      loggedIn:
+        localStorage.getItem("loggedIn") !== null
+          ? localStorage.getItem("loggedIn")
+          : false,
       players: null,
       signInModalShow: false,
       signOutModalShow: false,
-      user: null
+      user:
+        localStorage.getItem("user") !== null
+          ? JSON.parse(localStorage.getItem("user"))
+          : null
     };
 
     this.handleSignIn = this.handleSignIn.bind(this);
@@ -69,9 +75,19 @@ class App extends Component {
     try {
       const user = await this.Api.getUserFromApiToken();
       this.setState({ loggedIn: true, user: user });
+
+      // Store these so next page reload is smoother. We'll still double
+      // check these regardless when loading the page.
+      localStorage.setItem("loggedIn", true);
+      localStorage.setItem("user", JSON.stringify(user));
     } catch (e) {
       this.Api.setToken(null);
       localStorage.removeItem("token");
+
+      // Store these so next page reload is smoother. Same reasoning as
+      // comments above.
+      localStorage.setItem("loggedIn", false);
+      localStorage.setItem("user", false);
     }
   };
 
@@ -79,6 +95,8 @@ class App extends Component {
     localStorage.removeItem("token");
     this.Api.setToken(null);
     this.setState({ loggedIn: false, user: null });
+    localStorage.setItem("loggedIn", false);
+    localStorage.setItem("user", false);
   };
 
   setSignInModalOpen = truthVal => this.setState({ signInModalShow: truthVal });
