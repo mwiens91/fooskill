@@ -19,6 +19,9 @@ import Api from "../Api";
 // Import FontAwesome stuff
 library.add(fab, faChartBar, faCog, faEdit, faUserFriends);
 
+// Context for the API instance
+const ApiContext = React.createContext();
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -147,49 +150,53 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <SignInModal
-          show={this.state.signInModalShow}
-          onHide={() => this.setSignInModalOpen(false)}
-          handleSubmit={this.handleSignIn}
-        />
-        <SignOutModal
-          show={this.state.signOutModalShow}
-          onHide={() => this.setSignOutModalOpen(false)}
-          handleSubmit={this.handleSignOut}
-        />
+        <ApiContext.Provider value={this.Api}>
+          <SignInModal
+            show={this.state.signInModalShow}
+            onHide={() => this.setSignInModalOpen(false)}
+            handleSubmit={this.handleSignIn}
+          />
+          <SignOutModal
+            show={this.state.signOutModalShow}
+            onHide={() => this.setSignOutModalOpen(false)}
+            handleSubmit={this.handleSignOut}
+          />
 
-        <Navbar
-          loggedIn={this.state.loggedIn}
-          user={this.state.user}
-          signInHandle={() => this.setSignInModalOpen(true)}
-          signOutHandle={() => this.setSignOutModalOpen(true)}
-        />
+          <Navbar
+            loggedIn={this.state.loggedIn}
+            user={this.state.user}
+            signInHandle={() => this.setSignInModalOpen(true)}
+            signOutHandle={() => this.setSignOutModalOpen(true)}
+          />
 
-        <br />
+          <br />
 
-        <Container>
-          <Row>
-            <Col md={5}>
-              <Leaderboard players={this.state.topPlayers} />
-            </Col>
-            <Col>
-              <h4>STUFF HERE</h4>
+          <Container>
+            <Row>
+              <Col md={5}>
+                <Leaderboard players={this.state.topPlayers} />
+              </Col>
+              <Col>
+                <h4>STUFF HERE</h4>
 
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-            </Col>
-          </Row>
-        </Container>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </p>
+              </Col>
+            </Row>
+          </Container>
+        </ApiContext.Provider>
       </div>
     );
   }
 }
 
 export default App;
+export { ApiContext };
