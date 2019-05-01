@@ -7,7 +7,7 @@ class Api {
     this.getActivePlayers = this.getActivePlayers.bind(this);
     this.getUser = this.getUser.bind(this);
     this.getUserFromApiToken = this.getUserFromApiToken.bind(this);
-    this.setToken = this.setToken(this);
+    this.setToken = this.setToken.bind(this);
   }
 
   getActivePlayers = () =>
