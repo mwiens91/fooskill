@@ -32,9 +32,11 @@ const FooskillNavbar = ({ loggedIn, user, signInHandle, signOutHandle }) => (
           </Nav.Link>
         </Nav>
         <Nav className="ml-auto">
-          <Nav.Link href="#submit">
-            <FontAwesomeIcon icon="edit" /> add game
-          </Nav.Link>
+          {loggedIn && (
+            <Nav.Link href="#submit">
+              <FontAwesomeIcon icon="edit" /> add game
+            </Nav.Link>
+          )}
           <NavDropdown
             title={
               <span>
