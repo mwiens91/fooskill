@@ -1,5 +1,6 @@
 """Contains functions for calculating player ratings."""
 
+from django.conf import settings
 from . import models
 from .glicko2 import calculate_player_rating
 
@@ -87,11 +88,21 @@ def calculate_new_rating_period(start_datetime, end_datetime):
         else:
             new_player_inactivity = 0
 
+        # Determine if the player is labelled as active
+        if (
+            new_player_inactivity
+            < settings.NUMBER_OF_RATING_PERIODS_MISSED_TO_BE_INACTIVE
+        ):
+            new_player_is_active = True
+        else:
+            new_player_is_active = False
+
         new_ratings[player] = {
             "player_rating": new_player_rating,
             "player_rating_deviation": new_player_rating_deviation,
             "player_rating_volatility": new_player_rating_volatility,
             "player_inactivity": new_player_inactivity,
+            "player_is_active": new_player_is_active,
         }
 
     # Now save all ratings
@@ -103,4 +114,5 @@ def calculate_new_rating_period(start_datetime, end_datetime):
             rating_deviation=ratings_dict["player_rating_deviation"],
             rating_volatility=ratings_dict["player_rating_volatility"],
             inactivity=ratings_dict["player_inactivity"],
+            is_active=ratings_dict["player_is_active"],
         )

@@ -116,14 +116,12 @@ class Player(models.Model):
     @property
     def is_active(self):
         """Returns whether the player is active."""
-        if (
-            self.games
-            and self.inactivity
-            < settings.NUMBER_OF_RATING_PERIODS_MISSED_TO_BE_INACTIVE
-        ):
-            return True
+        node = self.get_latest_player_rating_node()
 
-        return False
+        if node is None:
+            return False
+
+        return node.is_active
 
     @property
     def games(self):
@@ -517,6 +515,9 @@ class PlayerRatingNode(models.Model):
     )
     inactivity = models.PositiveSmallIntegerField(
         help_text="How many rating periods the player has been inactive for."
+    )
+    is_active = models.BooleanField(
+        help_text="Whether the player was considered active during this rating period."
     )
 
     class Meta:
