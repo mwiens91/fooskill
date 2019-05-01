@@ -15,9 +15,12 @@ class Api {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(authData)
-    })
-      .then(response => response.json())
-      .catch(error => error);
+    }).then(response => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      return response.json();
+    });
 
   getActivePlayers = () =>
     fetch(`${this.baseApiUrl}/players`)

@@ -15,9 +15,13 @@ const SignInModal = ({ handleSubmit, onHide, show }) => (
     </Modal.Header>
     <Modal.Body>
       <SignInForm
-        handleSubmit={(e, data) => {
-          handleSubmit(e, data);
-          onHide();
+        handleSubmit={async (e, data) => {
+          try {
+            await handleSubmit(e, data);
+            onHide();
+          } catch (e) {
+            console.log(e);
+          }
         }}
       />
     </Modal.Body>

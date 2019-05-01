@@ -44,8 +44,9 @@ class App extends Component {
   handleSignIn = async (e, data) => {
     e.preventDefault();
 
-    // TODO some error catching here if login no good
+    // This will throw an error if the request fails
     const tokenJson = await this.Api.getApiTokenWithBasicAuth(data);
+
     this.setLoggedIn({ token: tokenJson.token });
   };
 
