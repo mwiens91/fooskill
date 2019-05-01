@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
+
 import Spinner from "react-bootstrap/Spinner";
 import Table from "react-bootstrap/Table";
+
 import { ApiContext } from "./App";
 
 const updateTopPlayers = async (api, setTopPlayers) => {
