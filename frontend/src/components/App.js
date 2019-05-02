@@ -14,6 +14,7 @@ import Container from "react-bootstrap/Container";
 
 import Home from "./Home";
 import Players from "./Players";
+import Rankings from "./Rankings";
 
 import Navbar from "./Navbar";
 import SignInModal from "./SignInModal";
@@ -164,6 +165,7 @@ class App extends Component {
               <Container>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/players" component={Players} />
+                <Route exact path="/rankings" component={Rankings} />
               </Container>
             </UserContext.Provider>
           </ApiContext.Provider>

@@ -39,9 +39,11 @@ function FooskillNavbar({ signInHandle, signOutHandle }) {
                 <FontAwesomeIcon icon="user-friends" /> players
               </Nav.Link>
             </LinkContainer>
-            <Nav.Link href="#rankings">
-              <FontAwesomeIcon icon="chart-bar" /> rankings
-            </Nav.Link>
+            <LinkContainer to="/rankings">
+              <Nav.Link>
+                <FontAwesomeIcon icon="chart-bar" /> rankings
+              </Nav.Link>
+            </LinkContainer>
           </Nav>
           <Nav className="ml-auto">
             {user && (
