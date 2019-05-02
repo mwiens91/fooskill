@@ -35,21 +35,23 @@ function FooskillNavbar({ signInHandle, signOutHandle }) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <LinkContainer to="/players">
-              <Nav.Link>
+              <Nav.Link active={false}>
                 <FontAwesomeIcon icon="user-friends" /> players
               </Nav.Link>
             </LinkContainer>
             <LinkContainer to="/rankings">
-              <Nav.Link>
+              <Nav.Link active={false}>
                 <FontAwesomeIcon icon="chart-bar" /> rankings
               </Nav.Link>
             </LinkContainer>
           </Nav>
           <Nav className="ml-auto">
             {user && (
-              <Nav.Link href="#submit">
-                <FontAwesomeIcon icon="edit" /> add game
-              </Nav.Link>
+              <LinkContainer to="/submit">
+                <Nav.Link active={false}>
+                  <FontAwesomeIcon icon="edit" /> add game
+                </Nav.Link>
+              </LinkContainer>
             )}
             <NavDropdown
               title={

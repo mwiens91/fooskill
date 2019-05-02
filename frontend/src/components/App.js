@@ -12,6 +12,7 @@ import {
 
 import Container from "react-bootstrap/Container";
 
+import AddGame from "./AddGame";
 import Home from "./Home";
 import Players from "./Players";
 import Rankings from "./Rankings";
@@ -164,8 +165,9 @@ class App extends Component {
 
               <Container>
                 <Route exact path="/" component={Home} />
-                <Route exact path="/players" component={Players} />
-                <Route exact path="/rankings" component={Rankings} />
+                <Route path="/players" component={Players} />
+                <Route path="/rankings" component={Rankings} />
+                <Route path="/submit" component={AddGame} />
               </Container>
             </UserContext.Provider>
           </ApiContext.Provider>
