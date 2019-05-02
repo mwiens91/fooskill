@@ -15,7 +15,9 @@ const updateTopPlayers = async (api, setTopPlayers) => {
 function Leaderboard() {
   const api = useContext(ApiContext);
   const [topPlayers, setTopPlayers] = useState(
-    JSON.parse(localStorage.getItem("topPlayers"))
+    localStorage.getItem("topPlayers") !== null
+      ? JSON.parse(localStorage.getItem("topPlayers"))
+      : null
   );
 
   // Fetch and save list of top players from API
