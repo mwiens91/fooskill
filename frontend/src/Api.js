@@ -7,8 +7,12 @@ class Api {
     this.getUser = this.getUser.bind(this);
     this.getUserFromApiToken = this.getUserFromApiToken.bind(this);
     this.setToken = this.setToken.bind(this);
+    this.getPlayers = this.getPlayers.bind(this);
     this.getTopNPlayers = this.getTopNPlayers.bind(this);
   }
+
+  // Set the API token for this instance
+  setToken = token => (this.token = token);
 
   // Get an API token by posting username and password. This will throw
   // an error if the request failed.
@@ -44,6 +48,12 @@ class Api {
       }
     );
 
+  // Get players
+  getPlayers = () =>
+    fetch(`${this.baseApiUrl}/players`)
+      .then(response => response.json())
+      .catch(error => error);
+
   // Get the top N <= 10 active players
   getTopNPlayers = (nMax = 10) =>
     fetch(`${this.baseApiUrl}/players`)
@@ -55,9 +65,6 @@ class Api {
           .slice(0, 10)
       )
       .catch(error => error);
-
-  // Set the API token for this instance
-  setToken = token => (this.token = token);
 }
 
 export default Api;
