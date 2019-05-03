@@ -279,12 +279,7 @@ class Game(models.Model):
 
     def __str__(self):
         """String representation of a game."""
-        return "%s vs %s (%s-%s)" % (
-            self.winner,
-            self.loser,
-            self.winner_score,
-            self.loser_score,
-        )
+        return str(self.id)
 
     @property
     def winner_player_stats_node(self):
@@ -398,7 +393,7 @@ class PlayerStatsNode(models.Model):
     game = models.ForeignKey(
         Game,
         on_delete=models.CASCADE,
-        help_text="The latest game which updated the player's stats.",
+        help_text="The game which updated the player's stats.",
     )
     games = models.PositiveIntegerField(
         help_text="The number of games a player has played."
@@ -455,7 +450,7 @@ class MatchupStatsNode(models.Model):
     game = models.ForeignKey(
         Game,
         on_delete=models.CASCADE,
-        help_text="The latest game which updated the matchup's stats.",
+        help_text="The game which updated the matchup's stats.",
     )
     games = models.PositiveIntegerField(
         help_text="The number of games played by the matchup."
@@ -528,7 +523,9 @@ class PlayerRatingNode(models.Model):
 
     def __str__(self):
         """String repesentation of a player rating node."""
-        return "[RP %s] r=%d, RD=%d, σ=%.2f" % (
+        return "[%s #%s] RP=%s r=%d, RD=%d, σ=%.2f" % (
+            self.player,
+            self.player.id,
             self.rating_period.id,
             self.rating,
             self.rating_deviation,
