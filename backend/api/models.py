@@ -523,9 +523,8 @@ class PlayerRatingNode(models.Model):
 
     def __str__(self):
         """String repesentation of a player rating node."""
-        return "[%s #%s] RP=%s r=%d, RD=%d, σ=%.2f" % (
+        return "%s RP=%s r=%d, RD=%d, σ=%.2f" % (
             self.player,
-            self.player.id,
             self.rating_period.id,
             self.rating,
             self.rating_deviation,
