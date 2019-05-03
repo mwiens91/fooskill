@@ -13,8 +13,21 @@ from .models import (
 )
 
 
+class ReadOnlyModelAdminMixin:
+    """Mixin to make models read-only on admin page."""
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
 @admin.register(RatingPeriod)
-class RatingPeriodAdmin(admin.ModelAdmin):
+class RatingPeriodAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
     """Settings for RatingPeriod model on admin page."""
 
     list_display = ("id", "start_datetime", "end_datetime")
@@ -60,7 +73,7 @@ class PlayerAdmin(admin.ModelAdmin):
 
 
 @admin.register(PlayerStatsNode)
-class PlayerStatsNodeAdmin(admin.ModelAdmin):
+class PlayerStatsNodeAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
     """Settings for PlayerStatsNode model on admin page."""
 
     list_display = (
@@ -75,7 +88,7 @@ class PlayerStatsNodeAdmin(admin.ModelAdmin):
 
 
 @admin.register(PlayerRatingNode)
-class PlayerRatingNodeAdmin(admin.ModelAdmin):
+class PlayerRatingNodeAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
     """Settings for PlayerRatingNode model on admin page."""
 
     list_display = (
@@ -90,7 +103,7 @@ class PlayerRatingNodeAdmin(admin.ModelAdmin):
 
 
 @admin.register(MatchupStatsNode)
-class MatchupStatsNodeAdmin(admin.ModelAdmin):
+class MatchupStatsNodeAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
     """Settings for MatchupStatsNode model on admin page."""
 
     list_display = (
