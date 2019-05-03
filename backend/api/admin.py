@@ -24,6 +24,7 @@ class RatingPeriodAdmin(admin.ModelAdmin):
 class GameAdmin(admin.ModelAdmin):
     """Settings for Game model on admin page."""
 
+    readonly_fields = ("rating_period",)
     list_max_show_all = 10000
     list_per_page = 200
 
