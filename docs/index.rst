@@ -1,20 +1,19 @@
-.. fooskill documentation master file, created by
-   sphinx-quickstart on Sat May  4 21:48:13 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+fooskill
+========
 
-Welcome to fooskill's documentation!
-====================================
+fooskill is a web app for managing foosball leagues and leaderboards!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Overview
 
+   overview/software_stack
+   overview/rating_system
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Hosting fooskill
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   hosting/introduction
+   hosting/backend
+   hosting/frontend
