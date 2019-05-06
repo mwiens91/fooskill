@@ -497,7 +497,7 @@ class PlayerRatingNode(models.Model):
     rating_period = models.ForeignKey(
         RatingPeriod,
         on_delete=models.CASCADE,
-        help_text="The rating period this rating was calculated in",
+        help_text="The rating period this rating was calculated in.",
     )
     rating = models.FloatField(
         help_text="The player's rating for this rating period."
