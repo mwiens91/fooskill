@@ -175,7 +175,7 @@ SWAGGER_SETTINGS = {
             "name": "Authorization",
             "in": "header",
         },
-    },
+    }
 }
 
 # CORS settings - separate the comma-separated hostnames and clean up
