@@ -21,12 +21,12 @@ Like Elo, if you win against a high rated opponent, your rating will
 increase more than against an average rated opponent; most of the
 intuition from Elo system will hold with Glicko-2.
 
-Each player will also have a rating devation, which starts and is capped
-at 350; it will decrease the more confident the system is that the
-player is truly at their corresponding rating. So the rating deviation
-gets smaller the more active you are and the more predictable your game
-outcomes are; conversely, the rating devation gets larger the less
-active you are and the more unpredictable your game outcomes are.
+Each player will also have a rating deviation, which starts and is
+capped at 350; it will decrease the more confident the system is that
+the player is truly at their corresponding rating. So the rating
+deviation gets smaller the more active you are and the more predictable
+your game outcomes are; conversely, the rating deviation gets larger the
+less active you are and the more unpredictable your game outcomes are.
 
 Glicko-2 states that you can be confident that a player's true rating
 :math:`r'` lies within
