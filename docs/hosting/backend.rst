@@ -1,3 +1,5 @@
+.. _backend_hosting:
+
 Hosting the backend server
 ==========================
 
