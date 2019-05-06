@@ -27,6 +27,7 @@ raise a pull request `here
    hosting/introduction
    hosting/backend
    hosting/frontend
+   hosting/processing_ratings
 
 
 .. _github.com/mwiens91/fooskill: https://github.com/mwiens91/fooskill/
