@@ -54,6 +54,8 @@ def create_player_stats_node(player, game, previous_node=None):
         avg=average_goals_per_game, N=wins + losses - 1, new_val=score
     )
 
+    win_rate = wins / games
+
     # Create the node
     models.PlayerStatsNode.objects.create(
         player=player,
@@ -61,6 +63,7 @@ def create_player_stats_node(player, game, previous_node=None):
         games=games,
         wins=wins,
         losses=losses,
+        win_rate=win_rate,
         average_goals_per_game=average_goals_per_game,
     )
 
@@ -104,6 +107,8 @@ def create_matchup_stats_node(player1, player2, game, previous_node=None):
 
         losses += 1
 
+    win_rate = wins / games
+
     average_goals_per_game = calculate_new_average(
         avg=average_goals_per_game, N=wins + losses - 1, new_val=score
     )
@@ -116,5 +121,6 @@ def create_matchup_stats_node(player1, player2, game, previous_node=None):
         games=games,
         wins=wins,
         losses=losses,
+        win_rate=win_rate,
         average_goals_per_game=average_goals_per_game,
     )

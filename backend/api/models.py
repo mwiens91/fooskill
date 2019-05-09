@@ -154,6 +154,16 @@ class Player(models.Model):
         return node.losses
 
     @property
+    def win_rate(self):
+        """Returns the players win rate."""
+        node = self.get_latest_player_stats_node()
+
+        if node is None:
+            return 0
+
+        return node.win_rate
+
+    @property
     def average_goals_per_game(self):
         """Returns the players average goals per game."""
         node = self.get_latest_player_stats_node()
@@ -404,6 +414,7 @@ class PlayerStatsNode(models.Model):
     losses = models.PositiveIntegerField(
         help_text="The number of losses the player has."
     )
+    win_rate = models.FloatField(help_text="The player's win rate.")
     average_goals_per_game = models.FloatField(
         help_text="The average number of goals scored per game by the player."
     )
@@ -460,6 +471,9 @@ class MatchupStatsNode(models.Model):
     )
     losses = models.PositiveIntegerField(
         help_text="The number of losses the player1 has."
+    )
+    win_rate = models.FloatField(
+        help_text="player1's win rate against player2."
     )
     average_goals_per_game = models.FloatField(
         help_text="The average number of goals scored per game by player1."

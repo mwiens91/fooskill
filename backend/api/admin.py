@@ -68,6 +68,7 @@ class PlayerAdmin(admin.ModelAdmin):
         "games",
         "wins",
         "losses",
+        "win_rate",
         "average_goals_per_game",
     )
 
