@@ -1,6 +1,8 @@
 Hosting the frontend server
 ===========================
 
+.. highlight:: console
+
 This section assumes you've successfully set up a development backend
 server (see the :ref:`backend_hosting` section).
 
