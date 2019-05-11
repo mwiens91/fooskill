@@ -11,6 +11,30 @@ const updateTopPlayers = async (api, setTopPlayers) => {
   localStorage.setItem("topPlayers", JSON.stringify(topPlayers));
 };
 
+const ratingDeltaDisplay = rating_delta => {
+  const spanStyle = { "font-weight": "bold" };
+
+  if (rating_delta === 0) {
+    return (
+      <span className="text-muted" style={spanStyle}>
+        -
+      </span>
+    );
+  } else if (rating_delta > 0) {
+    return (
+      <span className="text-success" style={spanStyle}>
+        +{rating_delta}
+      </span>
+    );
+  } else {
+    return (
+      <span className="text-warning" style={spanStyle}>
+        {rating_delta}
+      </span>
+    );
+  }
+};
+
 // Show a leaderboard (or spinner if the top players haven't loaded yet)
 function Leaderboard() {
   const api = useContext(ApiContext);
@@ -34,6 +58,7 @@ function Leaderboard() {
           <thead>
             <tr>
               <th>Rank</th>
+              <th style={{ "text-align": "center" }}>Δ</th>
               <th>Player</th>
               <th>Rating</th>
             </tr>
@@ -41,7 +66,10 @@ function Leaderboard() {
           <tbody>
             {topPlayers.map((player, index) => (
               <tr key={player.id}>
-                <td>{index + 1}</td>
+                <td>{player.ranking}</td>
+                <td style={{ "text-align": "center" }}>
+                  {ratingDeltaDisplay(player.ranking_delta)}
+                </td>
                 <td>{player.name}</td>
                 <td>{Math.round(player.rating)}</td>
               </tr>
