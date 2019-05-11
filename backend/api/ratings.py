@@ -131,7 +131,7 @@ def calculate_new_rating_period(start_datetime, end_datetime):
             )
         else:
             new_ratings[player]["player_ranking_delta"] = (
-                ranking - player.ranking
+                player.ranking - ranking
             )
 
     # Now save all ratings
