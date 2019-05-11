@@ -38,7 +38,7 @@ class RatingPeriod(models.Model):
         ordering = ["-end_datetime"]
 
     def __str__(self):
-        """String repesentation of a rating period."""
+        """String representation of a rating period."""
         return str(self.id)
 
 
@@ -200,7 +200,7 @@ class Player(models.Model):
     def get_latest_player_stats_node(self):
         """Returns the player's latest stats node.
 
-        Returns None if no stats nodes exist for the plyaer.
+        Returns None if no stats nodes exist for the player.
         """
         nodes = self.get_all_player_stats_nodes()
 
@@ -241,7 +241,7 @@ class Player(models.Model):
     def get_latest_player_rating_node(self):
         """Returns the player's latest rating node.
 
-        Returns None if no rating nodes exist for the plyaer.
+        Returns None if no rating nodes exist for the player.
         """
         nodes = self.get_all_player_rating_nodes()
 
@@ -446,7 +446,7 @@ class PlayerStatsNode(models.Model):
         ordering = ["-id"]
 
     def __str__(self):
-        """String repesentation of a player stats node."""
+        """String representation of a player stats node."""
         return "%s (game ID: %s; date: %s)" % (
             self.player,
             self.game.id,
@@ -506,7 +506,7 @@ class MatchupStatsNode(models.Model):
         ordering = ["-id"]
 
     def __str__(self):
-        """String repesentation of a matchup stats node."""
+        """String representation of a matchup stats node."""
         return "%s vs %s (game ID: %s; date: %s)" % (
             self.player1,
             self.player2,
@@ -563,7 +563,7 @@ class PlayerRatingNode(models.Model):
         ordering = ["-id"]
 
     def __str__(self):
-        """String repesentation of a player rating node."""
+        """String representation of a player rating node."""
         return "%s RP=%s r=%d, RD=%d, σ=%.2f" % (
             self.player,
             self.rating_period.id,

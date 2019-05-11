@@ -79,7 +79,7 @@ def reprocess_all_ratings(reset_id_counter=True):
             reset to ID counter for stats nodes back to 1.
     """
     # Wipe all existing rating periods and rating nodes. Note that
-    # manually deleting player rating nodes isn't strictly neccessary,
+    # manually deleting player rating nodes isn't strictly necessary,
     # since they should all be deleted when their corresponding rating
     # periods are deleted.
     RatingPeriod.objects.all().delete()
