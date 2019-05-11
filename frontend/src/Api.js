@@ -62,7 +62,7 @@ class Api {
         players
           .filter(p => p.is_active)
           .sort((p1, p2) => p1.rating < p2.rating)
-          .slice(0, 10)
+          .slice(0, nMax)
       )
       .catch(error => error);
 }
