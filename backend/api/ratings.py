@@ -89,13 +89,10 @@ def calculate_new_rating_period(start_datetime, end_datetime):
             new_player_inactivity = 0
 
         # Determine if the player is labelled as active
-        if (
+        new_player_is_active = bool(
             new_player_inactivity
             < settings.NUMBER_OF_RATING_PERIODS_MISSED_TO_BE_INACTIVE
-        ):
-            new_player_is_active = True
-        else:
-            new_player_is_active = False
+        )
 
         new_ratings[player] = {
             "player_rating": new_player_rating,
