@@ -74,6 +74,26 @@ class Player(models.Model):
         return self.name
 
     @property
+    def ranking(self):
+        """Returns the players ranking."""
+        node = self.get_latest_player_rating_node()
+
+        if node is None:
+            return None
+
+        return node.ranking
+
+    @property
+    def ranking_delta(self):
+        """Returns the players ranking change."""
+        node = self.get_latest_player_rating_node()
+
+        if node is None:
+            return None
+
+        return node.ranking_delta
+
+    @property
     def rating(self):
         """Returns the players rating."""
         node = self.get_latest_player_rating_node()
@@ -512,6 +532,13 @@ class PlayerRatingNode(models.Model):
         RatingPeriod,
         on_delete=models.CASCADE,
         help_text="The rating period this rating was calculated in.",
+    )
+    ranking = models.PositiveSmallIntegerField(
+        null=True, help_text="The player's rating for this rating period."
+    )
+    ranking_delta = models.SmallIntegerField(
+        null=True,
+        help_text="The player's rating change for this rating period.",
     )
     rating = models.FloatField(
         help_text="The player's rating for this rating period."

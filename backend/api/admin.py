@@ -61,6 +61,8 @@ class PlayerAdmin(admin.ModelAdmin):
         "name",
         "user",
         "is_active",
+        "ranking",
+        "ranking_delta",
         "rating",
         "rating_deviation",
         "rating_volatility",
@@ -96,6 +98,8 @@ class PlayerRatingNodeAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
     list_display = (
         "id",
         "player",
+        "ranking",
+        "ranking_delta",
         "rating_period",
         "rating",
         "rating_deviation",

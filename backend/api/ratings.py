@@ -95,6 +95,8 @@ def calculate_new_rating_period(start_datetime, end_datetime):
         )
 
         new_ratings[player] = {
+            "player_ranking": None,
+            "player_ranking_delta": None,
             "player_rating": new_player_rating,
             "player_rating_deviation": new_player_rating_deviation,
             "player_rating_volatility": new_player_rating_volatility,
@@ -102,11 +104,43 @@ def calculate_new_rating_period(start_datetime, end_datetime):
             "player_is_active": new_player_is_active,
         }
 
+    # Filter all active players and sort by rating
+    new_active_player_ratings = [
+        (player, new_rating["player_rating"])
+        for player, new_rating in new_ratings.items()
+        if new_rating["player_is_active"]
+    ]
+    new_active_player_ratings.sort(key=lambda x: x[1], reverse=True)
+
+    # Form a tuple of active players where the order is their ranking
+    new_active_player_rankings = [
+        player for player, _ in new_active_player_ratings
+    ]
+
+    # Process new rankings and ranking changes
+    num_active_players = len(new_active_player_rankings)
+
+    for ranking, player in enumerate(new_active_player_rankings, 1):
+        # Ranking
+        new_ratings[player]["player_ranking"] = ranking
+
+        # Ranking delta
+        if player.ranking is None:
+            new_ratings[player]["player_ranking_delta"] = (
+                num_active_players - ranking + 1
+            )
+        else:
+            new_ratings[player]["player_ranking_delta"] = (
+                ranking - player.ranking
+            )
+
     # Now save all ratings
     for player, ratings_dict in new_ratings.items():
         models.PlayerRatingNode.objects.create(
             player=player,
             rating_period=rating_period,
+            ranking=ratings_dict["player_ranking"],
+            ranking_delta=ratings_dict["player_ranking_delta"],
             rating=ratings_dict["player_rating"],
             rating_deviation=ratings_dict["player_rating_deviation"],
             rating_volatility=ratings_dict["player_rating_volatility"],
