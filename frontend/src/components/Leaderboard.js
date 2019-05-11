@@ -6,7 +6,7 @@ import Table from "react-bootstrap/Table";
 import { ApiContext } from "./App";
 
 const updateTopPlayers = async (api, setTopPlayers) => {
-  const topPlayers = await api.getTopNPlayers();
+  const topPlayers = await api.getTopNPlayers(100);
   setTopPlayers(topPlayers);
   localStorage.setItem("topPlayers", JSON.stringify(topPlayers));
 };
