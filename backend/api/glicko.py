@@ -63,6 +63,11 @@ def calculate_player_rating(
     # Intermediate RD value
     RD_int = min(sqrt(RD ** 2 + _c ** 2), settings.GLICKO_BASE_RD)
 
+    # Deal with degenerate case first when no games have been played by
+    # the player
+    if opponent_rs is None:
+        return (r, RD_int)
+
     # d is used in a bunch of calculations
     d = _d(r, opponent_rs, opponent_RDs)
 
