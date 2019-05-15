@@ -3,8 +3,33 @@
 See http://www.glicko.net/glicko/glicko.pdf implementation details.
 """
 
-from math import exp, log, pi, sqrt
+from math import pi, sqrt
 from django.conf import settings
+
+# Glicko parameters
+_c = 77.5
+_q = 0.00575646273
+
+
+# Functions used in Glicko-2 calculations
+def _g(RD):
+    return 1 / sqrt(1 + 3 * RD ** 2 / pi ** 2)
+
+
+def _E(r, r_j, RD_j):
+    return 1 / (1 + 10 ** (-_g(RD_j) * (r - r_j) / 400))
+
+
+def _d(r, r_js, RD_js):
+    summands = []
+
+    for r_j, RD_j in zip(r_js, RD_js):
+        g_j = _g(RD_j)
+        E_j = _E(r, r_j, RD_j)
+
+        summands.append(g_j ** 2 * E_j * (1 - E_j))
+
+    return 1 / (_q ** 2 * sum(summands))
 
 
 # The "main" rating calculating function
@@ -35,4 +60,23 @@ def calculate_player_rating(
         A two-tuple containing the player's new rating and rating
         deviation.
     """
-    raise NotImplementedError
+    # Intermediate RD value
+    RD_int = min(sqrt(RD ** 2 + _c ** 2), settings.GLICKO_BASE_RD)
+
+    # d is used in a bunch of calculations
+    d = _d(r, opponent_rs, opponent_RDs)
+
+    # Calulate r_prime and RD_prime
+    summands = []
+
+    for s_j, r_j, RD_j in zip(scores, opponent_rs, opponent_RDs):
+        g_j = _g(RD_j)
+        E_j = _E(r, r_j, RD_j)
+
+        summands.append(g_j * (s_j - E_j))
+
+    r_prime = r + _q / (1 / RD_int ** 2 + 1 / d ** 2) * sum(summands)
+    RD_prime = sqrt(1 / (1 / RD_int ** 2 + 1 / d ** 2))
+
+    # Return the new ratings
+    return (r_prime, RD_prime)
