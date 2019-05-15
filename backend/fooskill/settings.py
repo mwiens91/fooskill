@@ -194,7 +194,15 @@ ROLLBAR = {
     "root": BASE_DIR,
 }
 
-# Glicko-2 settings
+# Rating algorithm settings
+RATING_ALGORITHM = os.environ["RATING_ALGORITHM"].lower()
+
+if RATING_ALGORITHM not in {"glicko", "glicko2"}:
+    raise ValueError("RATING_ALGORITHM must be 'GLICKO' or 'GLICKO2'")
+
+GLICKO_BASE_RATING = float(os.environ["GLICKO_BASE_RATING"])
+GLICKO_BASE_RD = float(os.environ["GLICKO_BASE_RD"])
+GLICKO_RATING_PERIOD_DAYS = int(os.environ["GLICKO_RATING_PERIOD_DAYS"])
 
 GLICKO2_BASE_RATING = float(os.environ["GLICKO2_BASE_RATING"])
 GLICKO2_BASE_RD = float(os.environ["GLICKO2_BASE_RD"])

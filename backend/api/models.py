@@ -115,7 +115,17 @@ class Player(models.Model):
 
     @property
     def rating_volatility(self):
-        """Returns the players rating volatility."""
+        """Returns the players rating volatility.
+
+        This parameter is only relevant if the rating algorithm is
+        Glicko-2 and will always be None if the rating algorithm is
+        Glicko (cf. Glicko-2).
+        """
+        # Get out if rating algorithm is Glicko
+        if settings.RATING_ALGORITHM == "glicko":
+            return None
+
+        # Rating algorithm is Glicko-2
         node = self.get_latest_player_rating_node()
 
         if node is None:
@@ -547,7 +557,8 @@ class PlayerRatingNode(models.Model):
         help_text="The player's rating deviation for this rating period."
     )
     rating_volatility = models.FloatField(
-        help_text="The player's rating volatility for this rating period."
+        null=True,
+        help_text="The player's rating volatility for this rating period. This is only used if the rating algorithm is Glicko-2.",
     )
     inactivity = models.PositiveSmallIntegerField(
         help_text="How many rating periods the player has been inactive for."
