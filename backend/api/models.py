@@ -99,6 +99,9 @@ class Player(models.Model):
         node = self.get_latest_player_rating_node()
 
         if node is None:
+            if settings.RATING_ALGORITHM == "glicko":
+                return settings.GLICKO_BASE_RATING
+
             return settings.GLICKO2_BASE_RATING
 
         return node.rating
@@ -109,6 +112,9 @@ class Player(models.Model):
         node = self.get_latest_player_rating_node()
 
         if node is None:
+            if settings.RATING_ALGORITHM == "glicko":
+                return settings.GLICKO_BASE_RD
+
             return settings.GLICKO2_BASE_RD
 
         return node.rating_deviation
