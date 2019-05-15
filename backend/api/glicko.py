@@ -7,20 +7,20 @@ from math import pi, sqrt
 from django.conf import settings
 
 # Glicko parameters
-_c = 77.5
-_q = 0.00575646273
+_c = 55
+_q = 0.0057565
 
 
 # Functions used in Glicko-2 calculations
 def _g(RD):
-    return 1 / sqrt(1 + 3 * RD ** 2 / pi ** 2)
+    return 1 / sqrt(1 + 3 * _q ** 2 * RD ** 2 / pi ** 2)
 
 
 def _E(r, r_j, RD_j):
     return 1 / (1 + 10 ** (-_g(RD_j) * (r - r_j) / 400))
 
 
-def _d(r, r_js, RD_js):
+def _d_squared(r, r_js, RD_js):
     summands = []
 
     for r_j, RD_j in zip(r_js, RD_js):
@@ -69,7 +69,7 @@ def calculate_player_rating(
         return (r, RD_int)
 
     # d is used in a bunch of calculations
-    d = _d(r, opponent_rs, opponent_RDs)
+    d_squared = _d_squared(r, opponent_rs, opponent_RDs)
 
     # Calulate r_prime and RD_prime
     summands = []
@@ -80,8 +80,8 @@ def calculate_player_rating(
 
         summands.append(g_j * (s_j - E_j))
 
-    r_prime = r + _q / (1 / RD_int ** 2 + 1 / d ** 2) * sum(summands)
-    RD_prime = sqrt(1 / (1 / RD_int ** 2 + 1 / d ** 2))
+    r_prime = r + _q / (1 / RD_int ** 2 + 1 / d_squared) * sum(summands)
+    RD_prime = 1 / sqrt(1 / RD_int ** 2 + 1 / d_squared)
 
     # Return the new ratings
     return (r_prime, RD_prime)
