@@ -23,15 +23,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG_RAW = os.environ["DEBUG"]
+DEBUG_RAW = os.environ["DEBUG"].lower()
 
-if DEBUG_RAW == "False":
+if DEBUG_RAW == "false":
     DEBUG = False
-elif DEBUG_RAW == "True":
+elif DEBUG_RAW == "true":
     DEBUG = True
 else:
     # Bad value in config file!
-    raise ValueError("DEBUG must be True/False")
+    raise ValueError("DEBUG must be True or False")
 
 # Hosts - separate the comma-separated hosts and clean up any empty
 # strings caused by a terminal comma in ".env"
