@@ -41,8 +41,8 @@ periods are processed. To process any new rating periods, run ::
 
 which will process any new rating periods that have yet to be evaluated.
 
-As before, during development you might want to reprocess all rating
-periods. This can be done with ::
+As with stats nodes, during development you might want to reprocess
+ratings over all rating periods. This can be done with ::
 
    $ ./manage.py reprocess_all_ratings --reset-id-counter
 

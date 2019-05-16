@@ -19,17 +19,17 @@ Rating parameters
 **Glicko**
 
 Glicko calculates two parameters for each player: their rating and their
-rating deviation. Each player starts at rating of 1500. Like Elo, if you
-win a game against a high rated opponent, your rating will increase more
-than against an average rated opponent; most of the intuition gained
-from the Elo algorithm will hold with the Glicko algorithm.
+rating deviation. Each player starts at a rating of 1500. Like Elo, if
+you win a game against a highly rated opponent, your rating will
+increase more than against an average rated opponent—most of the
+intuition for the Elo algorithm will hold with the Glicko algorithm.
 
-Each player will also have a rating deviation, which starts and is
-capped at 350; it will decrease the more confident the system is that
+Each player will also have a rating deviation, which starts (and is
+capped) at 350; it will decrease the more confident the system is that
 the player is at their "true rating". A player's rating deviation gets
 smaller the more active they are and the more predictable their game
-outcomes are; conversely, their rating deviation gets larger the less
-active they are and the more unpredictable their game outcomes are.
+outcomes are; conversely, a player's rating deviation gets larger the
+less active they are and the more unpredictable their game outcomes are.
 
 Glicko states that you can be confident that a player's "true rating"
 :math:`r'` lies within
@@ -46,15 +46,16 @@ Glicko-2 shares the rating and rating deviation parameters seen in
 Glicko, and they behave as explained above. It also adds an additional
 parameter: a player's rating volatility, which is a measure of how
 volatile the player's game outcomes are. This parameter is in general
-not interpretable to the same degree that the rating and rating
-deviation parameters are.
+not interpretable in the same way that the rating and rating deviation
+parameters are.
 
 Which rating algorithm should I use?
 ------------------------------------
 
 Glicko-2 works best when you have ~15–20 games per player per rating
-period. If you have significantly less than this game density, you won't
-see any benefits of Glicko-2 and may be better off using Glicko.
+period. If your game density is significantly less than this, you won't
+see any of the benefits Glicko-2 has over Glicko, and may be better off
+just using Glicko.
 
 .. _Elo rating system: https://en.wikipedia.org/wiki/Elo_rating_system
 .. _Glicko rating system: http://www.glicko.net/glicko/glicko.pdf
