@@ -9,9 +9,9 @@ Rating periods
 --------------
 
 Unlike the `Elo rating system`_, ratings are not calculated game-by-game
-with the Glicko algorithms. Instead, games are clustered into "rating
-periods" that run for fixed amounts of time; then, all games in a rating
-period are processed simultaneously.
+with the Glicko rating systems. Instead, games are clustered into
+"rating periods" that run for fixed amounts of time; then, all games in
+a rating period are processed simultaneously.
 
 Rating parameters
 -----------------
