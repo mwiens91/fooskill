@@ -45,7 +45,7 @@ to work with. Until there's some stock data available for everyone to
 use, I'll likely be happy to provide a database backup you can use to
 develop with—just contact me personally for this.
 
-.. _Black: https://github.com/ambv/black
+.. _Black: https://github.com/python/black
 .. _Django's Coding Style Guide: https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding-style/
 .. _Google's Python Style Guide: https://github.com/google/styleguide/blob/gh-pages/pyguide.md
 .. _Prettier: https://github.com/prettier/prettier
