@@ -15,8 +15,8 @@ Backend code style
 fooskill's backend code follows `Google's Python Style Guide`_ and
 `Django's Coding Style Guide`_ closely. While you don't need to
 intimately know both of these style guides before contributing, if you
-something submit doesn't follow them, you'll likely be asked to change
-your contribution so that it does.
+contribute something doesn't follow them, you'll likely be asked to
+change your contribution so that it does.
 
 For code formatting, life is a lot simpler. fooskill's backend uses
 `Black`_ to format all of its code. All you need to do, after installing
