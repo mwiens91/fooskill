@@ -30,8 +30,8 @@ automatically.
 Frontend code style
 -------------------
 
-fooskill's frontend code uses `Prettier`_ to format all of its code.
-After installing Prettier, simply run ::
+fooskill's frontend uses `Prettier`_ to format all of its code. After
+installing Prettier, simply run ::
 
    $ prettier --write modifiedFile.js
 
