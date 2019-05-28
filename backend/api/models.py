@@ -60,18 +60,11 @@ class Player(models.Model):
         """Model metadata."""
 
         # Order by name in ascending order
-        ordering = ["name"]
+        ordering = ["name", "id"]
 
     def __str__(self):
-        """String representation of a player.
-
-        Use the username of the player's user if there's a user linked;
-        otherwise just use the player name.
-        """
-        if self.user:
-            return self.user.username
-
-        return self.name
+        """String representation of a player."""
+        return "%s #%04d" % (self.name, self.id)
 
     @property
     def ranking(self):
