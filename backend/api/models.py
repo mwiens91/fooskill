@@ -573,7 +573,19 @@ class PlayerRatingNode(models.Model):
         ordering = ["-id"]
 
     def __str__(self):
-        """String representation of a player rating node."""
+        """String representation of a player rating node.
+
+        Only shows rating volatility if the rating algorithm is
+        Glicko-2.
+        """
+        if settings.RATING_ALGORITHM == "glicko":
+            return "%s RP=%s r=%d, RD=%d" % (
+                self.player,
+                self.rating_period.id,
+                self.rating,
+                self.rating_deviation,
+            )
+
         return "%s RP=%s r=%d, RD=%d, σ=%.2f" % (
             self.player,
             self.rating_period.id,
