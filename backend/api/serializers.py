@@ -46,38 +46,72 @@ class PlayerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = (
-            "id",
-            "name",
-            "user",
-            "is_active",
-            "ranking",
-            "ranking_delta",
-            "rating",
-            "rating_deviation",
-            "rating_volatility",
-            "inactivity",
-            "games",
-            "wins",
-            "losses",
-            "win_rate",
-            "average_goals_per_game",
-        )
-        read_only_fields = (
-            "id",
-            "is_active",
-            "ranking",
-            "ranking_delta",
-            "rating",
-            "rating_deviation",
-            "rating_volatility",
-            "inactivity",
-            "games",
-            "wins",
-            "losses",
-            "win_rate",
-            "average_goals_per_game",
-        )
+
+        # Only show rating volatility if rating algorithm is Glicko-2
+        if settings.RATING_ALGORITHM == "glicko":
+            fields = (
+                "id",
+                "name",
+                "user",
+                "is_active",
+                "ranking",
+                "ranking_delta",
+                "rating",
+                "rating_deviation",
+                "inactivity",
+                "games",
+                "wins",
+                "losses",
+                "win_rate",
+                "average_goals_per_game",
+            )
+            read_only_fields = (
+                "id",
+                "is_active",
+                "ranking",
+                "ranking_delta",
+                "rating",
+                "rating_deviation",
+                "inactivity",
+                "games",
+                "wins",
+                "losses",
+                "win_rate",
+                "average_goals_per_game",
+            )
+        else:
+            fields = (
+                "id",
+                "name",
+                "user",
+                "is_active",
+                "ranking",
+                "ranking_delta",
+                "rating",
+                "rating_deviation",
+                "rating_volatility",
+                "inactivity",
+                "games",
+                "wins",
+                "losses",
+                "win_rate",
+                "average_goals_per_game",
+            )
+            read_only_fields = (
+                "id",
+                "is_active",
+                "ranking",
+                "ranking_delta",
+                "rating",
+                "rating_deviation",
+                "rating_volatility",
+                "inactivity",
+                "games",
+                "wins",
+                "losses",
+                "win_rate",
+                "average_goals_per_game",
+            )
 
 
 class PlayerStatsNodeSerializer(serializers.ModelSerializer):
@@ -157,17 +191,31 @@ class PlayerRatingNodeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PlayerRatingNode
-        fields = (
-            "id",
-            "player",
-            "rating_period",
-            "ranking",
-            "ranking_delta",
-            "rating",
-            "rating_deviation",
-            "rating_volatility",
-            "inactivity",
-        )
+
+        # Only show rating volatility if rating algorithm is Glicko-2
+        if settings.RATING_ALGORITHM == "glicko":
+            fields = (
+                "id",
+                "player",
+                "rating_period",
+                "ranking",
+                "ranking_delta",
+                "rating",
+                "rating_deviation",
+                "inactivity",
+            )
+        else:
+            fields = (
+                "id",
+                "player",
+                "rating_period",
+                "ranking",
+                "ranking_delta",
+                "rating",
+                "rating_deviation",
+                "rating_volatility",
+                "inactivity",
+            )
 
 
 class GameSerializer(serializers.ModelSerializer):
