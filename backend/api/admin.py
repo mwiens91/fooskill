@@ -2,6 +2,7 @@
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.conf import settings
 from .models import (
     Game,
     MatchupStatsNode,
@@ -56,23 +57,42 @@ class GameAdmin(admin.ModelAdmin):
 class PlayerAdmin(admin.ModelAdmin):
     """Settings for Player model on admin page."""
 
-    list_display = (
-        "id",
-        "name",
-        "user",
-        "is_active",
-        "ranking",
-        "ranking_delta",
-        "rating",
-        "rating_deviation",
-        "rating_volatility",
-        "inactivity",
-        "games",
-        "wins",
-        "losses",
-        "win_rate",
-        "average_goals_per_game",
-    )
+    # Only show rating volatility if rating algorithm is Glicko-2
+    if settings.RATING_ALGORITHM == "glicko":
+        list_display = (
+            "id",
+            "name",
+            "user",
+            "is_active",
+            "ranking",
+            "ranking_delta",
+            "rating",
+            "rating_deviation",
+            "inactivity",
+            "games",
+            "wins",
+            "losses",
+            "win_rate",
+            "average_goals_per_game",
+        )
+    else:
+        list_display = (
+            "id",
+            "name",
+            "user",
+            "is_active",
+            "ranking",
+            "ranking_delta",
+            "rating",
+            "rating_deviation",
+            "rating_volatility",
+            "inactivity",
+            "games",
+            "wins",
+            "losses",
+            "win_rate",
+            "average_goals_per_game",
+        )
 
 
 @admin.register(PlayerStatsNode)
@@ -95,17 +115,30 @@ class PlayerStatsNodeAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
 class PlayerRatingNodeAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
     """Settings for PlayerRatingNode model on admin page."""
 
-    list_display = (
-        "id",
-        "player",
-        "ranking",
-        "ranking_delta",
-        "rating_period",
-        "rating",
-        "rating_deviation",
-        "rating_volatility",
-        "inactivity",
-    )
+    # Only show rating volatility if rating algorithm is Glicko-2
+    if settings.RATING_ALGORITHM == "glicko":
+        list_display = (
+            "id",
+            "player",
+            "ranking",
+            "ranking_delta",
+            "rating_period",
+            "rating",
+            "rating_deviation",
+            "inactivity",
+        )
+    else:
+        list_display = (
+            "id",
+            "player",
+            "ranking",
+            "ranking_delta",
+            "rating_period",
+            "rating",
+            "rating_deviation",
+            "rating_volatility",
+            "inactivity",
+        )
 
 
 @admin.register(MatchupStatsNode)
