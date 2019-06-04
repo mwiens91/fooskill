@@ -202,6 +202,16 @@ class Player(models.Model):
 
         return node.average_goals_per_game
 
+    @property
+    def average_goals_against_per_game(self):
+        """Returns the players average goals against per game."""
+        node = self.get_latest_player_stats_node()
+
+        if node is None:
+            return 0
+
+        return node.average_goals_against_per_game
+
     def get_all_player_stats_nodes(self):
         """Returns all of the player's stats nodes."""
         return PlayerStatsNode.objects.filter(player=self)
@@ -447,6 +457,9 @@ class PlayerStatsNode(models.Model):
     average_goals_per_game = models.FloatField(
         help_text="The average number of goals scored per game by the player."
     )
+    average_goals_against_per_game = models.FloatField(
+        help_text="The average number of goals scored against the player per game."
+    )
 
     class Meta:
         """Model metadata."""
@@ -506,6 +519,9 @@ class MatchupStatsNode(models.Model):
     )
     average_goals_per_game = models.FloatField(
         help_text="The average number of goals scored per game by player1."
+    )
+    average_goals_against_per_game = models.FloatField(
+        help_text="The average number of goals scored per game by player2."
     )
 
     class Meta:

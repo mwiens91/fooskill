@@ -31,27 +31,38 @@ def create_player_stats_node(player, game, previous_node=None):
         wins = previous_node.wins
         losses = previous_node.losses
         average_goals_per_game = previous_node.average_goals_per_game
+        average_goals_against_per_game = (
+            previous_node.average_goals_against_per_game
+        )
     else:
         games = 0
         wins = 0
         losses = 0
         average_goals_per_game = 0
+        average_goals_against_per_game = 0
 
     # Calculate new stats
     games += 1
 
     if game.winner == player:
-        # Grab the score
-        score = game.winner_score
+        # Grab the scores
+        player_score = game.winner_score
+        opponent_score = game.loser_score
 
         wins += 1
     else:
-        score = game.loser_score
+        player_score = game.loser_score
+        opponent_score = game.winner_score
 
         losses += 1
 
     average_goals_per_game = calculate_new_average(
-        avg=average_goals_per_game, N=wins + losses - 1, new_val=score
+        avg=average_goals_per_game, N=wins + losses - 1, new_val=player_score
+    )
+    average_goals_against_per_game = calculate_new_average(
+        avg=average_goals_against_per_game,
+        N=wins + losses - 1,
+        new_val=opponent_score,
     )
 
     win_rate = wins / games
@@ -65,6 +76,7 @@ def create_player_stats_node(player, game, previous_node=None):
         losses=losses,
         win_rate=win_rate,
         average_goals_per_game=average_goals_per_game,
+        average_goals_against_per_game=average_goals_against_per_game,
     )
 
 
@@ -88,30 +100,41 @@ def create_matchup_stats_node(player1, player2, game, previous_node=None):
         wins = previous_node.wins
         losses = previous_node.losses
         average_goals_per_game = previous_node.average_goals_per_game
+        average_goals_against_per_game = (
+            previous_node.average_goals_against_per_game
+        )
     else:
         games = 0
         wins = 0
         losses = 0
         average_goals_per_game = 0
+        average_goals_against_per_game = 0
 
     # Calculate new stats
     games += 1
 
     if game.winner == player1:
-        # Grab the score
-        score = game.winner_score
+        # Grab the scores
+        player_score = game.winner_score
+        opponent_score = game.loser_score
 
         wins += 1
     else:
-        score = game.loser_score
+        player_score = game.loser_score
+        opponent_score = game.winner_score
 
         losses += 1
 
-    win_rate = wins / games
-
     average_goals_per_game = calculate_new_average(
-        avg=average_goals_per_game, N=wins + losses - 1, new_val=score
+        avg=average_goals_per_game, N=wins + losses - 1, new_val=player_score
     )
+    average_goals_against_per_game = calculate_new_average(
+        avg=average_goals_against_per_game,
+        N=wins + losses - 1,
+        new_val=opponent_score,
+    )
+
+    win_rate = wins / games
 
     # Create the node
     models.MatchupStatsNode.objects.create(
@@ -123,4 +146,5 @@ def create_matchup_stats_node(player1, player2, game, previous_node=None):
         losses=losses,
         win_rate=win_rate,
         average_goals_per_game=average_goals_per_game,
+        average_goals_against_per_game=average_goals_against_per_game,
     )

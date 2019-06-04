@@ -64,6 +64,7 @@ class PlayerSerializer(serializers.ModelSerializer):
                 "losses",
                 "win_rate",
                 "average_goals_per_game",
+                "average_goals_against_per_game",
             )
             read_only_fields = (
                 "id",
@@ -78,6 +79,7 @@ class PlayerSerializer(serializers.ModelSerializer):
                 "losses",
                 "win_rate",
                 "average_goals_per_game",
+                "average_goals_against_per_game",
             )
         else:
             fields = (
@@ -96,6 +98,7 @@ class PlayerSerializer(serializers.ModelSerializer):
                 "losses",
                 "win_rate",
                 "average_goals_per_game",
+                "average_goals_against_per_game",
             )
             read_only_fields = (
                 "id",
@@ -111,6 +114,7 @@ class PlayerSerializer(serializers.ModelSerializer):
                 "losses",
                 "win_rate",
                 "average_goals_per_game",
+                "average_goals_against_per_game",
             )
 
 
@@ -145,6 +149,7 @@ class PlayerStatsNodeSerializer(serializers.ModelSerializer):
             "losses",
             "win_rate",
             "average_goals_per_game",
+            "average_goals_against_per_game",
         )
 
 
@@ -180,6 +185,7 @@ class MatchupStatsNodeSerializer(serializers.ModelSerializer):
             "losses",
             "win_rate",
             "average_goals_per_game",
+            "average_goals_against_per_game",
         )
 
 

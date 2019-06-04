@@ -74,6 +74,7 @@ class PlayerAdmin(admin.ModelAdmin):
             "losses",
             "win_rate",
             "average_goals_per_game",
+            "average_goals_against_per_game",
         )
     else:
         list_display = (
@@ -92,6 +93,7 @@ class PlayerAdmin(admin.ModelAdmin):
             "losses",
             "win_rate",
             "average_goals_per_game",
+            "average_goals_against_per_game",
         )
 
 
@@ -108,6 +110,7 @@ class PlayerStatsNodeAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
         "losses",
         "win_rate",
         "average_goals_per_game",
+        "average_goals_against_per_game",
     )
 
 
@@ -155,6 +158,7 @@ class MatchupStatsNodeAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
         "losses",
         "win_rate",
         "average_goals_per_game",
+        "average_goals_against_per_game",
     )
 
 
