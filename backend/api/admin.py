@@ -57,43 +57,28 @@ class GameAdmin(admin.ModelAdmin):
 class PlayerAdmin(admin.ModelAdmin):
     """Settings for Player model on admin page."""
 
+    list_display = (
+        "id",
+        "name",
+        "user",
+        "is_active",
+        "ranking",
+        "ranking_delta",
+        "rating",
+        "rating_deviation",
+        "inactivity",
+        "games",
+        "wins",
+        "losses",
+        "win_rate",
+        "average_goals_per_game",
+        "average_goals_against_per_game",
+    )
+
     # Only show rating volatility if rating algorithm is Glicko-2
-    if settings.RATING_ALGORITHM == "glicko":
+    if settings.RATING_ALGORITHM == "glicko2":
         list_display = (
-            "id",
-            "name",
-            "user",
-            "is_active",
-            "ranking",
-            "ranking_delta",
-            "rating",
-            "rating_deviation",
-            "inactivity",
-            "games",
-            "wins",
-            "losses",
-            "win_rate",
-            "average_goals_per_game",
-            "average_goals_against_per_game",
-        )
-    else:
-        list_display = (
-            "id",
-            "name",
-            "user",
-            "is_active",
-            "ranking",
-            "ranking_delta",
-            "rating",
-            "rating_deviation",
-            "rating_volatility",
-            "inactivity",
-            "games",
-            "wins",
-            "losses",
-            "win_rate",
-            "average_goals_per_game",
-            "average_goals_against_per_game",
+            list_display[:8] + ("rating_volatility",) + list_display[8:]
         )
 
 
@@ -118,29 +103,21 @@ class PlayerStatsNodeAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
 class PlayerRatingNodeAdmin(ReadOnlyModelAdminMixin, admin.ModelAdmin):
     """Settings for PlayerRatingNode model on admin page."""
 
+    list_display = (
+        "id",
+        "player",
+        "ranking",
+        "ranking_delta",
+        "rating_period",
+        "rating",
+        "rating_deviation",
+        "inactivity",
+    )
+
     # Only show rating volatility if rating algorithm is Glicko-2
-    if settings.RATING_ALGORITHM == "glicko":
+    if settings.RATING_ALGORITHM == "glicko2":
         list_display = (
-            "id",
-            "player",
-            "ranking",
-            "ranking_delta",
-            "rating_period",
-            "rating",
-            "rating_deviation",
-            "inactivity",
-        )
-    else:
-        list_display = (
-            "id",
-            "player",
-            "ranking",
-            "ranking_delta",
-            "rating_period",
-            "rating",
-            "rating_deviation",
-            "rating_volatility",
-            "inactivity",
+            list_display[:7] + ("rating_volatility",) + list_display[7:]
         )
 
 
