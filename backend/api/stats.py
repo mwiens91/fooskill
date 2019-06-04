@@ -57,12 +57,10 @@ def create_player_stats_node(player, game, previous_node=None):
         losses += 1
 
     average_goals_per_game = calculate_new_average(
-        avg=average_goals_per_game, N=wins + losses - 1, new_val=player_score
+        avg=average_goals_per_game, N=games - 1, new_val=player_score
     )
     average_goals_against_per_game = calculate_new_average(
-        avg=average_goals_against_per_game,
-        N=wins + losses - 1,
-        new_val=opponent_score,
+        avg=average_goals_against_per_game, N=games - 1, new_val=opponent_score
     )
 
     win_rate = wins / games
@@ -126,12 +124,10 @@ def create_matchup_stats_node(player1, player2, game, previous_node=None):
         losses += 1
 
     average_goals_per_game = calculate_new_average(
-        avg=average_goals_per_game, N=wins + losses - 1, new_val=player_score
+        avg=average_goals_per_game, N=games - 1, new_val=player_score
     )
     average_goals_against_per_game = calculate_new_average(
-        avg=average_goals_against_per_game,
-        N=wins + losses - 1,
-        new_val=opponent_score,
+        avg=average_goals_against_per_game, N=games - 1, new_val=opponent_score
     )
 
     win_rate = wins / games
