@@ -130,15 +130,31 @@ def calculate_new_rating_period(start_datetime, end_datetime):
     ]
     new_active_player_ratings.sort(key=lambda x: x[1], reverse=True)
 
-    # Form a tuple of active players where the order is their ranking
-    new_active_player_rankings = [
-        player for player, _ in new_active_player_ratings
-    ]
-
     # Process new rankings and ranking changes
-    num_active_players = len(new_active_player_rankings)
+    num_active_players = len(new_active_player_ratings)
 
-    for ranking, player in enumerate(new_active_player_rankings, 1):
+    # Keep track of the previous player's integer rating for ranking
+    # ties
+    last_integer_rating = None
+    last_ranking = None
+
+    for idx, player_tuple in enumerate(new_active_player_ratings, 1):
+        # Unpack the player tuple
+        player, rating = player_tuple
+
+        integer_rating = round(rating)
+
+        if (
+            last_integer_rating is not None
+            and last_integer_rating == integer_rating
+        ):
+            # Tie
+            ranking = last_ranking
+        else:
+            last_integer_rating = integer_rating
+            last_ranking = idx
+            ranking = idx
+
         # Ranking
         new_ratings[player]["player_ranking"] = ranking
 
