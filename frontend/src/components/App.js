@@ -1,17 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fab } from "@fortawesome/free-brands-svg-icons";
-import {
-  faChartBar,
-  faCog,
-  faEdit,
-  faUserFriends
-} from "@fortawesome/free-solid-svg-icons";
-
-import Container from "react-bootstrap/Container";
-
 import AddGame from "./AddGame";
 import Home from "./Home";
 import Players from "./Players";
@@ -22,9 +11,6 @@ import SignInModal from "./SignInModal";
 import SignOutModal from "./SignOutModal";
 
 import Api from "../Api";
-
-// Import FontAwesome stuff
-library.add(fab, faChartBar, faCog, faEdit, faUserFriends);
 
 // Contexts for the API instance and logged-in user
 const ApiContext = React.createContext();
@@ -163,12 +149,10 @@ class App extends Component {
 
               <br />
 
-              <Container>
-                <Route exact path="/" component={Home} />
-                <Route path="/players" component={Players} />
-                <Route path="/rankings" component={Rankings} />
-                <Route path="/submit" component={AddGame} />
-              </Container>
+              <Route exact path="/" component={Home} />
+              <Route path="/players" component={Players} />
+              <Route path="/rankings" component={Rankings} />
+              <Route path="/submit" component={AddGame} />
             </UserContext.Provider>
           </ApiContext.Provider>
         </div>

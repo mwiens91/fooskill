@@ -1,16 +1,12 @@
 import React from "react";
 
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-
 import Leaderboard from "./Leaderboard";
 
 const Home = () => (
-  <Row>
-    <Col md={5}>
-      <Leaderboard />
-    </Col>
-    <Col>
+  <div>
+    <Leaderboard />
+
+    <div>
       <h4>STUFF HERE</h4>
 
       <p>
@@ -22,8 +18,8 @@ const Home = () => (
         occaecat cupidatat non proident, sunt in culpa qui officia deserunt
         mollit anim id est laborum.
       </p>
-    </Col>
-  </Row>
+    </div>
+  </div>
 );
 
 export default Home;
