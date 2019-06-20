@@ -130,17 +130,6 @@ class App extends Component {
         <div className="App">
           <ApiContext.Provider value={this.Api}>
             <UserContext.Provider value={this.state.user}>
-              <SignInModal
-                show={this.state.signInModalShow}
-                onHide={() => this.setSignInModalOpen(false)}
-                handleSubmit={this.handleSignIn}
-              />
-              <SignOutModal
-                show={this.state.signOutModalShow}
-                onHide={() => this.setSignOutModalOpen(false)}
-                handleSubmit={this.handleSignOut}
-              />
-
               <Navbar
                 user={this.state.user}
                 signInHandle={() => this.setSignInModalOpen(true)}
