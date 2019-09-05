@@ -10,3 +10,10 @@ and leaderboards using Django, the Django REST Framework, and React.
 Details about the rating system, setting up a fooskill dev server, and
 how to contribute [are available in the
 docs](https://fooskill.readthedocs.io/en/latest/).
+
+## Project status
+
+The backend for fooskill is 100% finished. However, the frontend is
+still in development. Currently, the project is on an unofficial hiatus
+(waiting for a replacement foosball table in our school's common room,
+should one arrive).
